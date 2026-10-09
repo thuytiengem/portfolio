@@ -1,0 +1,179 @@
+{
+  "site": {
+    "defaultLang": "en",
+    "languages": {
+      "en": "English",
+      "vi": "Tiếng Việt"
+    },
+    "pageTitle": {
+      "en": "Thuytiengem · Portfolio",
+      "vi": "Thuytiengem · Portfolio"
+    }
+  },
+  "intro": {
+    "heroImage": "assets/images/hero.jpg",
+    "brand": "THUYTIENGEM",
+    "title": "PORTFOLIO",
+    "quote": {
+      "en": "“Hi, I’m Tran Thi Thuy Tien (Thuytiengem). Welcome to my Portfolio~~ Let’s take a look !!”",
+      "vi": "“Xin chào, mình là Trần Thị Thủy Tiên (Thuytiengem). Chào mừng đến với Portfolio của mình~~ Cùng xem nhé !!”"
+    }
+  },
+  "background": {
+    "rainWord": "thuytiengem"
+  },
+  "profile": {
+    "name": "TRAN THI THUY TIEN",
+    "photo": "assets/images/profile.jpg",
+    "email": "trantiengemini@gmail.com",
+    "phone": "+84 944 235 828",
+    "role": {
+      "en": "LEAD GAME ARTIST",
+      "vi": "LEAD GAME ARTIST"
+    },
+    "summary": {
+      "en": [
+        "Lorem ipsum dolor sit amet",
+        "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.",
+        "Lorem ipsum dolor sit amet",
+        "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida."
+      ],
+      "vi": [
+        "Lorem ipsum dolor sit amet",
+        "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida."
+      ]
+    }
+  },
+  "social": {
+    "whatsapp": "",
+    "instagram": "https://instagram.com/",
+    "linkedin": "https://linkedin.com/",
+    "bluesky": "",
+    "x": "",
+    "behance": "https://behance.net/",
+    "youtube": "",
+    "itchio": "",
+    "discord": ""
+  },
+  "experience": [
+    {
+      "role": {
+        "en": "LEAD GAME ARTIST",
+        "vi": "LEAD GAME ARTIST"
+      },
+      "company": "COMPANY NAME",
+      "period": "4/2024 - 10/2026",
+      "points": {
+        "en": [
+          "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.",
+          "Lorem ipsum dolor sit amet"
+        ],
+        "vi": [
+          "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Lorem ipsum dolor sit amet"
+        ]
+      }
+    },
+    {
+      "role": {
+        "en": "GAME ARTIST",
+        "vi": "GAME ARTIST"
+      },
+      "company": "COMPANY NAME",
+      "period": "1/2023 - 3/2024",
+      "points": {
+        "en": [
+          "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Lorem ipsum dolor sit amet"
+        ],
+        "vi": [
+          "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Lorem ipsum dolor sit amet"
+        ]
+      }
+    },
+    {
+      "role": {
+        "en": "JUNIOR 2D ARTIST",
+        "vi": "JUNIOR 2D ARTIST"
+      },
+      "company": "COMPANY NAME",
+      "period": "6/2021 - 12/2022",
+      "points": {
+        "en": [
+          "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Lorem ipsum dolor sit amet"
+        ],
+        "vi": [
+          "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Lorem ipsum dolor sit amet"
+        ]
+      }
+    }
+  ],
+  "links": {
+    "otherProjects": "#",
+    "artworks": "#",
+    "about": "#"
+  },
+  "i18n": {
+    "en": {
+      "nav_home": "Home",
+      "nav_portfolio": "Portfolio",
+      "nav_about": "About me",
+      "nav_contact": "Contact",
+      "featured_title": "FEATURED PROJECTS",
+      "blender_title": "3D BLENDER",
+      "artworks_title": "PERSONAL ARTWORKS",
+      "about_title": "ABOUT ME",
+      "description": "Description:",
+      "responsibilities": "Responsibilities:",
+      "explore": "Explore",
+      "other_title": "OTHER GAME PROJECTS",
+      "other_text": "Other Game Projects are ready to be explored!!<br>Click the button below to explore more",
+      "profile_suffix": "PROFILE",
+      "photo": "PHOTO",
+      "experience_title": "WORK EXPERIENCE",
+      "talk_title": "LET’S TALK!!",
+      "talk_text": "If you are interested in contacting me, learning more about my projects, or just wanna have a chat...<br><br>Feel free to leave me a message!",
+      "my_email": "My Email:",
+      "my_phone": "My Phone:",
+      "form_name": "Your Name*",
+      "form_email": "Your Email*",
+      "form_message": "Message (Optional)",
+      "form_send": "Explore",
+      "mail_subject": "Portfolio contact from {name}",
+      "mail_body": "{message}\n\n— {name} ({email})",
+      "copyright": "© Tran Thi Thuy Tien Portfolio - 2026"
+    },
+    "vi": {
+      "nav_home": "Trang chủ",
+      "nav_portfolio": "Dự án",
+      "nav_about": "Về tôi",
+      "nav_contact": "Liên hệ",
+      "featured_title": "DỰ ÁN NỔI BẬT",
+      "blender_title": "3D BLENDER",
+      "artworks_title": "TÁC PHẨM CÁ NHÂN",
+      "about_title": "VỀ TÔI",
+      "description": "Mô tả:",
+      "responsibilities": "Trách nhiệm:",
+      "explore": "Khám phá",
+      "other_title": "CÁC DỰ ÁN GAME KHÁC",
+      "other_text": "Các dự án game khác đang chờ bạn khám phá!!<br>Nhấn nút bên dưới để xem thêm",
+      "profile_suffix": "PROFILE",
+      "photo": "ẢNH",
+      "experience_title": "KINH NGHIỆM LÀM VIỆC",
+      "talk_title": "CÙNG TRÒ CHUYỆN!!",
+      "talk_text": "Nếu bạn muốn liên hệ, tìm hiểu thêm về các dự án của mình, hoặc chỉ đơn giản là muốn trò chuyện...<br><br>Đừng ngại để lại lời nhắn nhé!",
+      "my_email": "Email:",
+      "my_phone": "Điện thoại:",
+      "form_name": "Tên của bạn*",
+      "form_email": "Email của bạn*",
+      "form_message": "Lời nhắn (Không bắt buộc)",
+      "form_send": "Gửi",
+      "mail_subject": "Liên hệ từ Portfolio - {name}",
+      "mail_body": "{message}\n\n— {name} ({email})",
+      "copyright": "© Tran Thi Thuy Tien Portfolio - 2026"
+    }
+  }
+}

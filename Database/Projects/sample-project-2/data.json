@@ -1,0 +1,42 @@
+{
+  "title": "NAME PROJECT 2",
+  "tagline": {
+    "en": "Some information about the game",
+    "vi": "Một vài thông tin về game"
+  },
+  "tags": [
+    "Art Director",
+    "UI/UX Designer",
+    "Event Game Designer",
+    "Main Concept Artist"
+  ],
+  "video": {
+    "youtube": "FMr91afriiI",
+    "orientation": "portrait"
+  },
+  "description": {
+    "en": [
+      "Lorem ipsum dolor sit amet",
+      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida."
+    ],
+    "vi": [
+      "Lorem ipsum dolor sit amet",
+      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida."
+    ]
+  },
+  "responsibilities": {
+    "en": [
+      "Lorem ipsum dolor sit amet",
+      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.",
+      "Lorem ipsum dolor sit amet",
+      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida."
+    ],
+    "vi": [
+      "Lorem ipsum dolor sit amet",
+      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.",
+      "Lorem ipsum dolor sit amet",
+      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida."
+    ]
+  },
+  "exploreUrl": ""
+}

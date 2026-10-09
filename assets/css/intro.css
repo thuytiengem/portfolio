@@ -1,0 +1,114 @@
+/* ============ Hero / intro ============
+   Layers inside .hero (bottom → top):
+   art (1) · hud (3) · fx canvas (4) · titles + quote (5) · flash (6)
+   The hero has an opaque background, so the letter rain stays hidden here. */
+.hero {
+  position: relative; z-index: 1; height: 100vh; height: 100svh; min-height: 520px;
+  display: grid; place-items: center; overflow: hidden;
+  background: radial-gradient(ellipse at 50% 45%, #2e1752 0%, var(--bg) 60%, var(--bg-deep) 100%);
+}
+.hero-fx, .hero-flash { position: absolute; inset: 0; pointer-events: none; }
+.hero-fx { z-index: 4; width: 100%; height: 100%; }
+.hero-flash { z-index: 6; background: #fff; opacity: 0; }
+
+/* ---- hero art ---- */
+.hero-art {
+  position: absolute; z-index: 1; left: 50%; top: 47%; width: min(84vw, 1150px); aspect-ratio: 16 / 9;
+  transform: translate(-50%, -50%); perspective: 900px; opacity: 0;
+}
+.hero-art.on { opacity: 1; animation: art-in .3s steps(1) both; }
+@keyframes art-in {
+  0% { opacity: .2; } 20% { opacity: .8; translate: 2% 0; } 40% { opacity: .3; translate: 0; }
+  60% { opacity: 1; translate: -1% 0; } 100% { opacity: 1; translate: 0; }
+}
+.hero-art-img, .shard { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.hero-art-img { will-change: transform, filter; }
+.hero-art-glow { position: absolute; inset: 8%; background: radial-gradient(closest-side, #c08cffcc, transparent); filter: blur(30px); opacity: 0; transition: opacity .6s; }
+.hero-art.broken .hero-art-glow { opacity: 1; }
+@media (orientation: portrait) { .hero-art { width: 150vw; } }
+
+/* ---- cracks ---- */
+.cracks { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.cracks path { fill: none; stroke: #fff; stroke-width: .35; stroke-linejoin: round; filter: drop-shadow(0 0 1px #e3b8ff); stroke-dasharray: 1; stroke-dashoffset: 1; }
+.cracks.on path { animation: crack .14s ease-out forwards; }
+@keyframes crack { to { stroke-dashoffset: 0; } }
+
+/* ---- shards: stay in place and tremble slowly ---- */
+.shard-wrap { position: absolute; inset: 0; animation: tremble var(--td, 2.4s) ease-in-out var(--tdl, 0s) infinite; }
+@keyframes tremble {
+  0%, 100% { transform: none; }
+  25% { transform: translate(var(--ja), var(--jb)) rotate(var(--jr)); }
+  50% { transform: translate(calc(var(--ja) * -1), var(--jb)); }
+  75% { transform: translate(var(--jb), calc(var(--ja) * -1)) rotate(calc(var(--jr) * -1)); }
+}
+
+/* ---- HUD reticle ---- */
+.hud { position: absolute; z-index: 3; left: 50%; top: 47%; width: min(64vmin, 560px); aspect-ratio: 1; transform: translate(-50%, -50%); pointer-events: none; overflow: visible; }
+.hud * { transform-box: fill-box; transform-origin: center; }
+.hud .spin { animation: hud-spin var(--s, 3s) linear infinite; }
+.hud .spin.r { animation-direction: reverse; }
+@keyframes hud-spin { to { transform: rotate(360deg); } }
+.hud circle, .hud line, .hud path { fill: none; vector-effect: non-scaling-stroke; }
+
+/* ---- titles ---- */
+.hero-titles { position: relative; z-index: 5; text-align: center; margin-top: -4vh; padding: 0 12px; }
+.hero-brand { font: clamp(22px, 3.2vw, 48px)/1 var(--font-title); letter-spacing: .02em; min-height: 1em; margin-bottom: .1em; text-shadow: 0 0 12px #0008; }
+.glitch {
+  position: relative; display: inline-block; visibility: hidden;
+  font: clamp(56px, 14vw, 220px)/1 var(--font-title); letter-spacing: .02em; color: #fff;
+  text-shadow: -.035em 0 var(--magenta), .035em 0 var(--cyan);
+}
+.glitch::before, .glitch::after { content: attr(data-text); position: absolute; inset: 0; }
+.glitch::before { text-shadow: -.05em 0 var(--magenta); clip-path: inset(30% 0 52% 0); transform: translateX(-.04em); }
+.glitch::after  { text-shadow:  .05em 0 var(--cyan);    clip-path: inset(62% 0 20% 0); transform: translateX(.04em); }
+.glitch.in { visibility: visible; animation: glitch-in .55s steps(1) both; }
+.glitch.striped {
+  -webkit-mask-image: repeating-linear-gradient(180deg, #000 0 5px, #0005 5px 8px);
+          mask-image: repeating-linear-gradient(180deg, #000 0 5px, #0005 5px 8px);
+  filter: drop-shadow(0 0 18px var(--magenta)) brightness(1.2);
+}
+.glitch.in::before, .glitch.burst::before { animation: slice-a .5s steps(1) both; }
+.glitch.in::after,  .glitch.burst::after  { animation: slice-b .5s steps(1) both; }
+@keyframes glitch-in {
+  0%  { opacity: 1; transform: scaleX(1.6) scaleY(.08); }
+  10% { transform: translateX(-40px) skewX(-25deg); }
+  20% { opacity: .3; transform: translateX(30px) scaleY(1.2); filter: hue-rotate(80deg); }
+  30% { opacity: 1; transform: translateX(-14px); filter: none; }
+  45% { transform: translateX(10px) skewX(8deg); }
+  60% { opacity: .6; transform: translateX(-4px); }
+  70%, 100% { opacity: 1; transform: none; }
+}
+@keyframes slice-a {
+  0% { clip-path: inset(10% 0 80% 0); transform: translateX(-40px); }
+  15% { clip-path: inset(55% 0 30% 0); transform: translateX(32px); }
+  30% { clip-path: inset(80% 0 5% 0); transform: translateX(-18px); }
+  45% { clip-path: inset(25% 0 60% 0); transform: translateX(22px); }
+  60% { clip-path: inset(40% 0 45% 0); transform: translateX(-8px); }
+  100% { clip-path: inset(30% 0 52% 0); transform: translateX(-.04em); }
+}
+@keyframes slice-b {
+  0% { clip-path: inset(70% 0 10% 0); transform: translateX(40px); }
+  15% { clip-path: inset(5% 0 85% 0); transform: translateX(-34px); }
+  30% { clip-path: inset(45% 0 40% 0); transform: translateX(16px); }
+  45% { clip-path: inset(85% 0 2% 0); transform: translateX(-20px); }
+  60% { clip-path: inset(20% 0 70% 0); transform: translateX(10px); }
+  100% { clip-path: inset(62% 0 20% 0); transform: translateX(.04em); }
+}
+.caret { display: inline-block; width: .08em; margin-left: .06em; background: currentColor; animation: caret-blink .6s steps(1) infinite; height: .9em; vertical-align: -.08em; }
+@keyframes caret-blink { 50% { opacity: 0; } }
+
+/* ---- quote bar ---- */
+.hero-quote {
+  position: absolute; z-index: 5; left: 50%; bottom: 7vh; transform: translateX(-50%);
+  width: min(1100px, calc(100% - 32px)); min-height: 58px;
+  display: grid; place-items: center; padding: 12px 60px;
+  background:
+    repeating-linear-gradient(120deg, transparent 0 14px, #8d5fd6 14px 22px) left / 90px 100% no-repeat,
+    linear-gradient(90deg, #6b3fae, #7a4cc2 50%, #6b3fae);
+  clip-path: polygon(4% 0, 100% 0, 100% 72%, 97.5% 100%, 0 100%);
+  font-size: clamp(14px, 1.6vw, 22px); text-align: center;
+  visibility: hidden;
+}
+.hero-quote.in { visibility: visible; animation: open-bar .3s cubic-bezier(.7,0,.3,1) both; }
+@keyframes open-bar { from { clip-path: polygon(4% 0, 4% 0, 4% 72%, 4% 100%, 0 100%); } }
+@media (max-width: 760px) { .hero-quote { padding: 12px 24px 12px 40px; bottom: 6vh; } }

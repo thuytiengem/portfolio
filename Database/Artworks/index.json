@@ -1,0 +1,68 @@
+[
+  {
+    "src": "images/artwork-01.jpg",
+    "title": {
+      "en": "Artwork 01",
+      "vi": "Tác phẩm 01"
+    },
+    "desc": {
+      "en": "Short description of this artwork.",
+      "vi": "Mô tả ngắn về tác phẩm này."
+    }
+  },
+  {
+    "src": "images/artwork-02.jpg",
+    "title": {
+      "en": "Artwork 02",
+      "vi": "Tác phẩm 02"
+    },
+    "desc": {
+      "en": "Short description of this artwork.",
+      "vi": "Mô tả ngắn về tác phẩm này."
+    }
+  },
+  {
+    "src": "images/artwork-03.jpg",
+    "title": {
+      "en": "Artwork 03",
+      "vi": "Tác phẩm 03"
+    },
+    "desc": {
+      "en": "Short description of this artwork.",
+      "vi": "Mô tả ngắn về tác phẩm này."
+    }
+  },
+  {
+    "src": "images/artwork-04.jpg",
+    "title": {
+      "en": "Artwork 04",
+      "vi": "Tác phẩm 04"
+    },
+    "desc": {
+      "en": "Short description of this artwork.",
+      "vi": "Mô tả ngắn về tác phẩm này."
+    }
+  },
+  {
+    "src": "images/artwork-05.jpg",
+    "title": {
+      "en": "Artwork 05",
+      "vi": "Tác phẩm 05"
+    },
+    "desc": {
+      "en": "Short description of this artwork.",
+      "vi": "Mô tả ngắn về tác phẩm này."
+    }
+  },
+  {
+    "src": "images/artwork-06.jpg",
+    "title": {
+      "en": "Artwork 06",
+      "vi": "Tác phẩm 06"
+    },
+    "desc": {
+      "en": "Short description of this artwork.",
+      "vi": "Mô tả ngắn về tác phẩm này."
+    }
+  }
+]

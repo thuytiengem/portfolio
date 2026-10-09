@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Portfolio Studio</title>
+<link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="studio.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#/settings"><b>THUYTIENGEM</b> <span>Studio</span></a>
+  <div class="top-r">
+    <button class="btn ghost sm" id="pvToggle" type="button">Xem trước ▸</button>
+    <a class="lnk" href="/" target="_blank" rel="noopener">Mở site ↗</a>
+    <span class="srv" id="srv"><i></i><span>local</span></span>
+  </div>
+</header>
+
+<div class="layout" id="layout">
+  <nav class="side" id="side">
+    <a href="#/settings" data-view="settings">Intro &amp; Hồ sơ</a>
+    <a href="#/experience" data-view="experience">Kinh nghiệm</a>
+    <a href="#/projects" data-view="projects">Featured Projects</a>
+    <a href="#/blender" data-view="blender">3D Blender</a>
+    <a href="#/artworks" data-view="artworks">Personal Artworks</a>
+    <a href="#/texts" data-view="texts">Văn bản giao diện</a>
+    <div class="side-note">Dữ liệu được ghi thẳng vào <code>web-config.json</code> và <code>Database/</code>. Xong thì commit &amp; push để đăng lên GitHub Pages.</div>
+  </nav>
+  <main id="app"><div class="loading">Đang tải…</div></main>
+  <aside class="preview" id="preview" hidden>
+    <div class="pv-bar">
+      <span>Xem trước</span>
+      <div class="seg" id="pvSize"><button type="button" data-w="" class="on">Desktop</button><button type="button" data-w="390">Mobile</button></div>
+      <button class="icon-btn" id="pvReload" type="button" title="Tải lại">↻</button>
+    </div>
+    <div class="pv-frame"><iframe id="pvFrame" title="Preview"></iframe></div>
+  </aside>
+</div>
+
+<div class="dlg" id="dlg" hidden>
+  <div class="dlg-box" role="dialog" aria-modal="true" aria-labelledby="dlgT">
+    <h3 id="dlgT"></h3>
+    <div id="dlgB"></div>
+    <div class="dlg-a"><button class="btn ghost" id="dlgNo" type="button">Huỷ</button><button class="btn danger" id="dlgYes" type="button">Xoá</button></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="studio.js"></script>
+</body>
+</html>
