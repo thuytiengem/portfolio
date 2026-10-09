@@ -1,11 +1,11 @@
-// Intro runner: builds the context (elements, fx canvas, texts) and plays timeline.js.
+// Intro runner: builds the glass scene + particles, sets the texts and plays timeline.js.
 import { INTRO_ENABLED, TIMELINE } from "./timeline.js";
 import { STEPS } from "./steps.js";
-import { createFxCanvas, createSampler } from "./effects/fx-canvas.js";
-import { shatter } from "./effects/shatter.js";
-import { startIdleGlitch } from "./effects/title.js";
+import { preloadTextures, buildStage, tremble, errorGlitch } from "./effects/glass.js";
+import { createParticles } from "./effects/particles.js";
+import { idleGlitch } from "./effects/title.js";
 import { $, sleep, reducedMotion } from "../utils.js";
-import { tr, bindText } from "../i18n.js";
+import { bindText } from "../i18n.js";
 
 /**
  * @param config  web-config.json (uses config.intro)
@@ -14,47 +14,51 @@ import { tr, bindText } from "../i18n.js";
 export async function runIntro(config, onDone) {
   const intro = config.intro || {};
   const el = {
-    hero: $("#home"),
-    art: $("#heroArt"), artImg: $("#heroArtImg"), cracks: $("#heroCracks"),
-    hud: $("#heroHud"), flash: $("#heroFlash"),
-    brand: $("#heroBrand"), title: $("#heroTitle"),
-    quote: $("#heroQuote"), quoteText: $("#heroQuoteText"),
+    hero: $("#home"), stage: $("#heroStage"), ring: $("#heroRing"), fx: $("#heroFx"), flash: $("#heroFlash"),
+    brand: $("#heroBrand"), title: $("#heroTitle"), quote: $("#heroQuote"), quoteText: $("#heroQuoteText"),
   };
-  const heroImage = intro.heroImage || "assets/images/hero.jpg";
-  el.artImg.style.backgroundImage = `url("${heroImage}")`;
   el.title.textContent = intro.title || "PORTFOLIO";
   el.title.dataset.text = el.title.textContent;
+  el.brand.textContent = intro.brand || "";
+  bindText(el.quoteText, intro.quote);
 
-  const fx = createFxCanvas($("#heroFx"));
-  let finished = false;
+  const [, sprites] = await Promise.all([document.fonts?.ready, preloadTextures()]);
+  const scene = buildStage(el.stage);
+  const P = createParticles(el.fx, sprites);
+
+  // idle effects only run while the hero is on screen
+  let heroVisible = true;
+  new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; P.setActive(heroVisible); }).observe(el.hero);
+  const active = () => heroVisible;
+  const still = reducedMotion();
+
+  let settled = false, finished = false;
   const ctx = {
-    el, fx,
-    sample: createSampler(heroImage),
-    text: { brand: intro.brand || "", quote: () => tr(intro.quote) },
-    artRect() {
-      const a = el.art.getBoundingClientRect(), h = el.hero.getBoundingClientRect();
-      return { x: a.left - h.left, y: a.top - h.top, w: a.width, h: a.height };
+    el, scene, P,
+    /** shards tremble + idle "signal error" glitches */
+    settle() {
+      if (settled || still) return;
+      settled = true;
+      tremble(scene);
+      errorGlitch(scene, P, { active });
     },
-    artCenter() { const r = ctx.artRect(); return { x: r.x + r.w / 2, y: r.y + r.h / 2 }; },
     done() {
       if (finished) return;
       finished = true;
-      // final texts follow the language dropdown from now on
-      bindText(el.quoteText, intro.quote);
-      el.brand.textContent = ctx.text.brand;
-      startIdleGlitch(el.title, fx);
+      if (!still) idleGlitch(el.title, { active });
       onDone?.();
     },
   };
 
-  await Promise.all([document.fonts?.ready, preload(heroImage)]);
-
   // ?nointro (used by the Studio preview) opens directly on the final state
-  if (!INTRO_ENABLED || reducedMotion() || new URLSearchParams(location.search).has("nointro")) {
-    el.art.classList.add("on");
-    shatter({ art: el.art, img: el.artImg, cracks: el.cracks, instant: true });
+  if (!INTRO_ENABLED || still || new URLSearchParams(location.search).has("nointro")) {
+    scene.group.style.visibility = "hidden";
+    scene.shardsBox.hidden = false;
+    scene.glow.style.opacity = 0.8;
     el.title.classList.add("in");
-    el.quote.classList.add("in");
+    el.brand.classList.add("show");
+    el.quote.classList.add("show");
+    ctx.settle();
     ctx.done();
     return;
   }
@@ -67,12 +71,4 @@ export async function runIntro(config, onDone) {
     if (s.await) await result;
   }
   ctx.done();
-}
-
-function preload(src) {
-  return new Promise(resolve => {
-    const img = new Image();
-    img.onload = img.onerror = resolve;
-    img.src = src;
-  });
 }

@@ -1,6 +1,6 @@
 /* ============ Hero / intro ============
    Layers inside .hero (bottom → top):
-   art (1) · hud (3) · fx canvas (4) · titles + quote (5) · flash (6)
+   glass stage (1) · shockwave ring (3) · particle canvas (4) · titles + quote (5) · flash (6)
    The hero has an opaque background, so the letter rain stays hidden here. */
 .hero {
   position: relative; z-index: 1; height: 100vh; height: 100svh; min-height: 520px;
@@ -10,45 +10,34 @@
 .hero-fx, .hero-flash { position: absolute; inset: 0; pointer-events: none; }
 .hero-fx { z-index: 4; width: 100%; height: 100%; }
 .hero-flash { z-index: 6; background: #fff; opacity: 0; }
-
-/* ---- hero art ---- */
-.hero-art {
-  position: absolute; z-index: 1; left: 50%; top: 47%; width: min(84vw, 1150px); aspect-ratio: 16 / 9;
-  transform: translate(-50%, -50%); perspective: 900px; opacity: 0;
+.hero-ring {
+  position: absolute; z-index: 3; left: 50%; top: 47%; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%;
+  border: 3px solid #f0dcff; box-shadow: 0 0 20px #d38cff, inset 0 0 20px #d38cff; opacity: 0; pointer-events: none;
 }
-.hero-art.on { opacity: 1; animation: art-in .3s steps(1) both; }
-@keyframes art-in {
-  0% { opacity: .2; } 20% { opacity: .8; translate: 2% 0; } 40% { opacity: .3; translate: 0; }
-  60% { opacity: 1; translate: -1% 0; } 100% { opacity: 1; translate: 0; }
-}
-.hero-art-img, .shard { position: absolute; inset: 0; background-size: cover; background-position: center; }
-.hero-art-img { will-change: transform, filter; }
-.hero-art-glow { position: absolute; inset: 8%; background: radial-gradient(closest-side, #c08cffcc, transparent); filter: blur(30px); opacity: 0; transition: opacity .6s; }
-.hero-art.broken .hero-art-glow { opacity: 1; }
-@media (orientation: portrait) { .hero-art { width: 150vw; } }
 
-/* ---- cracks ---- */
-.cracks { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.cracks path { fill: none; stroke: #fff; stroke-width: .35; stroke-linejoin: round; filter: drop-shadow(0 0 1px #e3b8ff); stroke-dasharray: 1; stroke-dashoffset: 1; }
-.cracks.on path { animation: crack .14s ease-out forwards; }
-@keyframes crack { to { stroke-dashoffset: 0; } }
+/* ---- glass stage (coordinates follow intro-texture/glass-broken-demo.png: 1110 x 644) ---- */
+.stage {
+  position: absolute; z-index: 1; left: 50%; top: 47%; width: min(88vw, 1180px); aspect-ratio: 1110 / 644;
+  transform: translate(-50%, -50%); perspective: 1100px; transform-style: preserve-3d; pointer-events: none;
+}
+@media (orientation: portrait) { .stage { width: 150vw; } }
+.stage .glow { position: absolute; inset: 12%; background: radial-gradient(closest-side, #b47cffbb, transparent); filter: blur(40px); opacity: 0; }
+.stage .group { position: absolute; will-change: transform, filter; }
+.stage .group img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.stage .electric { mix-blend-mode: screen; filter: drop-shadow(0 0 4px #7ff3ff) drop-shadow(0 0 12px #3ef2ff); opacity: 0; }
+.stage .shards { position: absolute; inset: 0; transform-style: preserve-3d; }
+.stage .shard-wrap { position: absolute; transform-style: preserve-3d; }
+.stage .shard { display: block; width: 100%; height: auto; will-change: transform, opacity; transform-origin: 50% 50%; }
+.stage .slice { position: absolute; inset: 0; background-size: 100% 100%; }
 
 /* ---- shards: stay in place and tremble slowly ---- */
-.shard-wrap { position: absolute; inset: 0; animation: tremble var(--td, 2.4s) ease-in-out var(--tdl, 0s) infinite; }
+.stage .shard-wrap.tremble { animation: tremble var(--td, 2.6s) ease-in-out var(--tdl, 0s) infinite; }
 @keyframes tremble {
   0%, 100% { transform: none; }
   25% { transform: translate(var(--ja), var(--jb)) rotate(var(--jr)); }
   50% { transform: translate(calc(var(--ja) * -1), var(--jb)); }
   75% { transform: translate(var(--jb), calc(var(--ja) * -1)) rotate(calc(var(--jr) * -1)); }
 }
-
-/* ---- HUD reticle ---- */
-.hud { position: absolute; z-index: 3; left: 50%; top: 47%; width: min(64vmin, 560px); aspect-ratio: 1; transform: translate(-50%, -50%); pointer-events: none; overflow: visible; }
-.hud * { transform-box: fill-box; transform-origin: center; }
-.hud .spin { animation: hud-spin var(--s, 3s) linear infinite; }
-.hud .spin.r { animation-direction: reverse; }
-@keyframes hud-spin { to { transform: rotate(360deg); } }
-.hud circle, .hud line, .hud path { fill: none; vector-effect: non-scaling-stroke; }
 
 /* ---- titles ---- */
 .hero-titles { position: relative; z-index: 5; text-align: center; margin-top: -4vh; padding: 0 12px; }
@@ -58,6 +47,7 @@
   font: clamp(56px, 14vw, 220px)/1 var(--font-title); letter-spacing: .02em; color: #fff;
   text-shadow: -.035em 0 var(--magenta), .035em 0 var(--cyan);
 }
+.glitch .glitch-band { position: absolute; inset: 0; pointer-events: none; }
 .glitch::before, .glitch::after { content: attr(data-text); position: absolute; inset: 0; }
 .glitch::before { text-shadow: -.05em 0 var(--magenta); clip-path: inset(30% 0 52% 0); transform: translateX(-.04em); }
 .glitch::after  { text-shadow:  .05em 0 var(--cyan);    clip-path: inset(62% 0 20% 0); transform: translateX(.04em); }
@@ -67,8 +57,8 @@
           mask-image: repeating-linear-gradient(180deg, #000 0 5px, #0005 5px 8px);
   filter: drop-shadow(0 0 18px var(--magenta)) brightness(1.2);
 }
-.glitch.in::before, .glitch.burst::before { animation: slice-a .5s steps(1) both; }
-.glitch.in::after,  .glitch.burst::after  { animation: slice-b .5s steps(1) both; }
+.glitch.in::before { animation: slice-a .5s steps(1) both; }
+.glitch.in::after  { animation: slice-b .5s steps(1) both; }
 @keyframes glitch-in {
   0%  { opacity: 1; transform: scaleX(1.6) scaleY(.08); }
   10% { transform: translateX(-40px) skewX(-25deg); }
@@ -94,8 +84,6 @@
   60% { clip-path: inset(20% 0 70% 0); transform: translateX(10px); }
   100% { clip-path: inset(62% 0 20% 0); transform: translateX(.04em); }
 }
-.caret { display: inline-block; width: .08em; margin-left: .06em; background: currentColor; animation: caret-blink .6s steps(1) infinite; height: .9em; vertical-align: -.08em; }
-@keyframes caret-blink { 50% { opacity: 0; } }
 
 /* ---- quote bar ---- */
 .hero-quote {
@@ -109,6 +97,8 @@
   font-size: clamp(14px, 1.6vw, 22px); text-align: center;
   visibility: hidden;
 }
-.hero-quote.in { visibility: visible; animation: open-bar .3s cubic-bezier(.7,0,.3,1) both; }
-@keyframes open-bar { from { clip-path: polygon(4% 0, 4% 0, 4% 72%, 4% 100%, 0 100%); } }
+/* brand + quote fade in (see timeline.js: brandIn / quoteIn) */
+.hero-brand, .hero-quote { opacity: 0; visibility: hidden; }
+.hero-brand.show, .hero-quote.show { visibility: visible; animation: fade-up .9s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes fade-up { from { opacity: 0; filter: blur(6px); translate: 0 10px; } to { opacity: 1; filter: none; translate: 0 0; } }
 @media (max-width: 760px) { .hero-quote { padding: 12px 24px 12px 40px; bottom: 6vh; } }

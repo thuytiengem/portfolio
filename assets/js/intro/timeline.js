@@ -1,5 +1,7 @@
 // ============================================================================
 //  INTRO TIMELINE — edit this file to re-order, re-time or remove intro steps.
+//  ("Power Surge": circuit lines power on, the glass fades in behind, energy overloads,
+//   white-out and the glass explodes in 3D; a few small pieces stop mid-air.)
 //
 //  Steps run top to bottom:
 //    wait  : ms to wait BEFORE the step starts
@@ -13,19 +15,13 @@
 export const INTRO_ENABLED = true;
 
 export const TIMELINE = [
-  { step: "noise", dur: 260, amount: 1.2 },                        // 0.00s digital block noise
-  { wait: 120, step: "showArt" },                                  // 0.12s hero image glitches in
-  { step: "hudIn" },                                               //       reticle opens over it
-  { wait: 200, step: "shake", dur: 1000, maxPx: 11, dust: 1 },    // 0.32s organic shake + falling dust
-  { wait: 860, step: "cracks" },                                   // 1.18s cracks spread
-  { wait: 150, step: "shatter", chips: 170, sparks: 90 },          // 1.33s break: shards + debris + flash
-  { step: "warp", dur: 520 },                                      //       light-speed streaks
-  { step: "hudOut" },                                              //       reticle blows out
-  { wait: 180, step: "noise", dur: 420, amount: 0.8 },             // 1.51s
-  { step: "titleIn" },                                             //       PORTFOLIO glitches in (striped)
-  { wait: 420, step: "titleClean" },                               // 1.93s clean title
-  { step: "typeBrand", speed: 32, await: true },                   //       THUYTIENGEM typed
-  { step: "quoteOpen" },                                           //       quote bar opens
-  { wait: 220, step: "typeQuote", speed: 12, await: true },        //       quote typed
-  { step: "reveal" },                                              //       topbar slides in, page unlocks
+  { step: "powerOn" },                                             // 0.00s circuit lines flicker on in the dark
+  { wait: 450, step: "glassIn" },                                  // 0.45s glass fades in behind the lines
+  { wait: 350, step: "overload", dur: 1000, await: true },         // 0.80s glitch slices, brighter and brighter, shake
+  { step: "explode", particles: 24, settle: 1300 },                // 1.80s white-out + 3D explosion; shards tremble once settled
+  { wait: 450, step: "titleIn" },                                  // 2.25s PORTFOLIO glitches in (striped)
+  { wait: 420, step: "titleClean" },                               // 2.67s clean title
+  { step: "brandIn" },                                             //       THUYTIENGEM fades in
+  { wait: 250, step: "quoteIn" },                                  // 2.92s quote bar fades in
+  { wait: 500, step: "reveal" },                                   // 3.42s topbar fades in, page unlocks
 ];

@@ -53,9 +53,9 @@ main, footer { position: relative; z-index: 1; }
   display: flex; align-items: center; gap: 24px;
   padding: 0 max(16px, 12vw);
   background: #000;
-  transform: translateY(-120%); transition: transform .45s cubic-bezier(.2,.9,.25,1.1);
+  opacity: 0; visibility: hidden; transition: opacity .8s ease, visibility 0s .8s;
 }
-.topbar.show { transform: none; }
+.topbar.show { opacity: 1; visibility: visible; transition: opacity .8s ease; }
 .topbar::after { /* angled tab under the brand */
   content: ""; position: absolute; left: 0; top: 100%; height: 16px;
   width: calc(max(16px, 12vw) + 330px); background: #000;

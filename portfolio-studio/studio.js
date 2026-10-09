@@ -254,7 +254,6 @@ function viewSettings() {
   draftOf = () => CFG.d;
   return saveBar("Intro & Hồ sơ", "Nội dung chung lưu trong <code>web-config.json</code>.") +
     sec("Intro", `
-      ${imgPick("intro.heroImage", "Ảnh hero (tấm kính bị vỡ ở intro)", { name: "hero.jpg", hint: "Ảnh được ghi đè ngay vào <code>assets/images/hero.jpg</code> khi chọn." })}
       <div class="grid2">${inp("intro.brand", "Dòng chữ nhỏ phía trên", { key: "intro.brand" })}${inp("intro.title", "Tiêu đề lớn", { key: "intro.title" })}</div>
       ${bi("intro.quote", "Câu chào dưới tiêu đề", { area: true, key: "intro.quote" })}`) +
     sec("Hồ sơ (About me)", `

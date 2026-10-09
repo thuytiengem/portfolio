@@ -34,7 +34,7 @@ node portfolio-studio/server.mjs
 # → http://localhost:4100/portfolio-studio/   (PORT=4101 node … if the port is busy)
 ```
 
-- **Intro & Hồ sơ**: hero image, intro texts, profile, photo, social links, Explore links, rain word, default language.
+- **Intro & Hồ sơ**: intro texts, profile, photo, social links, Explore links, rain word, default language.
 - **Kinh nghiệm**: work-experience timeline.
 - **Featured Projects / 3D Blender**: add, edit, delete, drag to reorder; paste any YouTube / Shorts link.
 - **Personal Artworks**: drag & drop images (resized to JPG ≤ 2400px), titles / descriptions, reorder.
@@ -52,7 +52,6 @@ The server only listens on 127.0.0.1. On GitHub Pages the Studio page is static 
 | Featured projects | `Database/Projects/index.json` + `Database/Projects/<folder>/data.json` |
 | 3D Blender video | `Database/Blender/index.json` + `Database/Blender/<folder>/data.json` |
 | Personal artworks | `Database/Artworks/index.json` + images in `Database/Artworks/images/` |
-| Hero image (intro) | `assets/images/hero.jpg` (path set in `web-config.json → intro.heroImage`) |
 | Profile photo | put the file in `assets/images/` and set `web-config.json → profile.photo` |
 
 Any text value can be a plain string or `{ "en": "...", "vi": "..." }`. If the Vietnamese value is empty, English is shown.
@@ -97,16 +96,17 @@ The intro is split so it can be changed piece by piece:
 assets/js/intro/
 ├── timeline.js     ← order & timing of the steps (edit this first); INTRO_ENABLED to turn it off
 ├── steps.js        ← step name → effect call
-├── index.js        ← runner (builds the context, plays the timeline)
+├── index.js        ← runner (builds the glass scene + particles, plays the timeline)
 └── effects/
-    ├── fx-canvas.js  block noise, warp streaks, dust, debris particles
-    ├── hud.js        reticle rings
+    ├── glass.js      glass scene from the textures, shard layout, tremble, shard "signal error" glitch, flash, shockwave
+    ├── particles.js  sprite particles (particle-*.png) + error noise blocks
     ├── shake.js      organic pre-break shake
-    ├── shatter.js    cracks, shards (tremble speed/amount), flash
-    └── title.js      typing, idle glitch
+    └── title.js      idle glitch on the PORTFOLIO title
 ```
 
-Styles for the hero are in `assets/css/intro.css`. Visitors with "reduced motion" enabled get the final state directly.
+Textures are in `assets/images/intro-texture/` (`glass-demo.png` intact glass, `electric-fx.png` circuit lines,
+`glass-1..14.png` shards placed like `glass-broken-demo.png`, `particle-*.png` small pieces).
+Styles for the hero are in `assets/css/intro.css`. Visitors with "reduced motion" enabled get the final state directly (no idle glitches).
 
 ## Structure
 
