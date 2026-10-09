@@ -39,7 +39,7 @@ if errorlevel 1 (
   echo [*] Installing Claude Code ...
   powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://claude.ai/install.ps1 | iex"
   call :refreshpath
-  if exist "%USERPROFILE%\.local\bin\claude.exe" set "PATH=%USERPROFILE%\.local\bin;%PATH%"
+  if exist "%USERPROFILE%\.local\bin\claude.exe" set "PATH=%USERPROFILE%\.local\bin;!PATH!"
   where claude >nul 2>nul
   if errorlevel 1 (
     echo [*] Native installer did not finish - falling back to npm ...

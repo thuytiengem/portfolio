@@ -2,6 +2,13 @@
 
 Static site (HTML/CSS/JS, no build step) — ready for GitHub Pages.
 
+## New machine (Windows)
+
+Run `setup-windows.bat` (double-click). It installs Git, Node.js LTS, VS Code, Claude Code and the VS Code
+extensions (Live Preview, Claude Code), clones the repo if needed, and opens it in VS Code.
+Preview inside VS Code: open `index.html` → **Show Preview**, or *Run Task → Studio: start server*.
+On macOS the same tools: `brew install git node` + `brew install --cask visual-studio-code` + `curl -fsSL https://claude.ai/install.sh | bash`.
+
 ## Run locally
 
 The page loads JSON files, so it needs a local server (opening `index.html` directly will not work):

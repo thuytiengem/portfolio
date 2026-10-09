@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Studio: start server",
+      "detail": "Content editor + site preview at http://localhost:4100/",
+      "type": "shell",
+      "command": "node portfolio-studio/server.mjs",
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": { "regexp": "^__never__$" },
+        "background": { "activesBegin": true, "beginsPattern": "Portfolio Studio", "endsPattern": "Site:" }
+      },
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    }
+  ]
+}

@@ -1,3 +1,7 @@
 {
-    "liveServer.settings.port": 5501
+  // Live Preview (ms-vscode.live-server): open index.html → "Show Preview" button
+  "livePreview.defaultPreviewPath": "/index.html",
+  "livePreview.portNumber": 3000,
+  "files.eol": "\n",
+  "files.exclude": { "**/.DS_Store": true }
 }
