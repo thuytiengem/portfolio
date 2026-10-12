@@ -1,4 +1,5 @@
 {
+  "title": "Blossom Fairy",
   "tags": [
     "2D Concept Artist",
     "Content Creator",
@@ -12,8 +13,8 @@
     "orientation": "landscape"
   },
   "description": {
-    "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus",
-    "vi": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    "en": "This 3D project was created using Blender as the final project for the Basic Blender course at Indiecat. I independently handled the entire production process, from developing the initial concept and storyline to production, post-production, and the addition of music and visual effects, bringing the project to its final form.",
+    "vi": "Dự án 3D này được thực hiện bằng Blender, là dự án cuối khóa của khóa học Blender cơ bản tại Indiecat. Mình tự đảm nhiệm toàn bộ quy trình sản xuất, từ phát triển ý tưởng ban đầu và kịch bản đến khâu sản xuất, hậu kỳ và bổ sung âm nhạc cùng hiệu ứng hình ảnh, để hoàn thiện sản phẩm cuối cùng."
   },
   "exploreUrl": ""
 }

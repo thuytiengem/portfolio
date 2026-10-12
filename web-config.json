@@ -37,8 +37,9 @@
         "I am interested in exploring the intersection of art, design, and interactive media, continually expanding my artistic perspective through new creative challenges."
       ],
       "vi": [
-        "Lorem ipsum dolor sit amet",
-        "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida."
+        "Mình là Thủy Tiên, một họa sĩ còn được biết đến với nghệ danh Thuytiengem, từng học chuyên ngành Thiết kế đồ họa và có kinh nghiệm chuyên môn trong lĩnh vực Art game 2D.",
+        "Thông qua công việc trong ngành game, mình đã khám phá cách kể chuyện bằng hình ảnh, thẩm mỹ thị giác và mối quan hệ giữa thiết kế với các trải nghiệm tương tác. Kinh nghiệm làm việc ở cả vai trò họa sĩ và quản lý đã định hình cách mình tiếp cận truyền thông thị giác, hợp tác sáng tạo và phát triển các ý tưởng nghệ thuật.",
+        "Mình quan tâm đến việc khám phá sự giao thoa giữa nghệ thuật, thiết kế và truyền thông tương tác, đồng thời không ngừng mở rộng góc nhìn nghệ thuật của mình thông qua những thử thách sáng tạo mới."
       ]
     }
   },
@@ -65,52 +66,68 @@
         "en": "LEAD GAME ARTIST",
         "vi": "LEAD GAME ARTIST"
       },
-      "company": "COMPANY NAME",
+      "company": "CHAMPION GAME STUDIO",
       "period": "4/2024 - 10/2026",
       "points": {
         "en": [
-          "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.",
-          "Lorem ipsum dolor sit amet"
+          "Led the art team and mentored members through structured feedback sessions, overseeing visual production across multiple mobile game projects.",
+          "Collaborated with game designers and producers to streamline production workflows."
         ],
         "vi": [
-          "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "Lorem ipsum dolor sit amet"
+          "Dẫn dắt đội ngũ art và hướng dẫn các thành viên thông qua quá trình mentor và feedback, giám sát quá trình sản xuất hình ảnh cho nhiều dự án game mobile.",
+          "Phối hợp với Game Designer và Producer để cải thiện quy trình sản xuất."
         ]
       }
     },
     {
       "role": {
-        "en": "GAME ARTIST",
-        "vi": "GAME ARTIST"
+        "en": "2D GAME ARTIST",
+        "vi": "2D GAME ARTIST"
       },
-      "company": "COMPANY NAME",
-      "period": "1/2023 - 3/2024",
+      "company": "YUNERO STUDIOS",
+      "period": "3/2022 - 11/2023",
       "points": {
         "en": [
-          "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "Lorem ipsum dolor sit amet"
+          "Created and prepared 2D game assets following production standards and file requirements.",
+          "Collaborated with art and development teams to understand game production workflows and cross-team processes."
         ],
         "vi": [
-          "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "Lorem ipsum dolor sit amet"
+          "Sáng tạo và chuẩn bị các tài nguyên đồ họa 2D cho game theo tiêu chuẩn sản xuất và yêu cầu về định dạng file.",
+          "Phối hợp với đội ngũ artist và developer để nắm bắt quy trình sản xuất game cũng như quy trình làm việc giữa các team."
         ]
       }
     },
     {
       "role": {
-        "en": "JUNIOR 2D ARTIST",
-        "vi": "JUNIOR 2D ARTIST"
+        "en": "ART TEACHER",
+        "vi": "GIÁO VIÊN MỸ THUẬT"
       },
-      "company": "COMPANY NAME",
-      "period": "6/2021 - 12/2022",
+      "company": "STRAWBERRY ART GARDEN",
+      "period": "10/2020 - 10/2022",
       "points": {
         "en": [
-          "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "Lorem ipsum dolor sit amet"
+          "Developed lesson plans and taught online drawing classes for children and adults.",
+          "Adapted teaching methods and provided individual feedback to support students' artistic development."
         ],
         "vi": [
-          "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "Lorem ipsum dolor sit amet"
+          "Xây dựng giáo án và giảng dạy các lớp vẽ online cho trẻ em và người lớn.",
+          "Điều chỉnh phương pháp giảng dạy và đưa ra phản hồi cá nhân nhằm hỗ trợ sự phát triển năng lực nghệ thuật của học viên."
+        ]
+      }
+    },
+    {
+      "role": {
+        "en": "ART TEACHING ASSISTANT",
+        "vi": "TRỢ GIẢNG MỸ THUẬT"
+      },
+      "company": "RING RING HANOI BOOK ARTS",
+      "period": "9/2019 - 5/2020",
+      "points": {
+        "en": [
+          "Assisted the main teacher in drawing classes for children and provided guidance during practical exercises."
+        ],
+        "vi": [
+          "Hỗ trợ giáo viên chính trong các lớp học vẽ dành cho trẻ em và hướng dẫn học viên thực hiện các bài tập thực hành."
         ]
       }
     }
@@ -161,10 +178,10 @@
       "nav_portfolio": "Dự án",
       "nav_about": "Về tôi",
       "nav_contact": "Liên hệ",
-      "featured_title": "DỰ ÁN NỔI BẬT",
+      "featured_title": "FEATURED PROJECTS",
       "blender_title": "3D BLENDER",
-      "artworks_title": "TÁC PHẨM CÁ NHÂN",
-      "about_title": "VỀ TÔI",
+      "artworks_title": "PERSONAL ARTWORKS",
+      "about_title": "ABOUT ME",
       "description": "Mô tả:",
       "responsibilities": "Trách nhiệm:",
       "explore": "Khám phá",
@@ -174,12 +191,12 @@
       "store_app_store": "App Store",
       "store_apk_hint": "Tải trực tiếp",
       "store_apk": "File APK",
-      "other_title": "CÁC DỰ ÁN GAME KHÁC",
+      "other_title": "OTHER GAME PROJECTS",
       "other_text": "Các dự án game khác đang chờ bạn khám phá!!<br>Nhấn nút bên dưới để xem thêm",
       "profile_suffix": "PROFILE",
       "photo": "ẢNH",
-      "experience_title": "KINH NGHIỆM LÀM VIỆC",
-      "talk_title": "CÙNG TRÒ CHUYỆN!!",
+      "experience_title": "WORK EXPERIENCE",
+      "talk_title": "LET’S TALK!!",
       "talk_text": "Nếu bạn muốn liên hệ, tìm hiểu thêm về các dự án của mình, hoặc chỉ đơn giản là muốn trò chuyện...<br><br>Đừng ngại để lại lời nhắn nhé!",
       "my_email": "Email:",
       "my_phone": "Điện thoại:",
