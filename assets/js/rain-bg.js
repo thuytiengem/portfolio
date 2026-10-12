@@ -1,5 +1,6 @@
-// Full-screen "letter rain": each drop is the word falling as a whole (head = last letter),
-// moving continuously, wrapped in a soft teardrop-shaped glow.
+// Full-screen "letter rain": each column holds the word written over and over without gaps
+// ("thuytiengemthuytiengem…"), standing still. The drop — a soft teardrop-shaped glow — falls
+// over it like a mask: its head reveals the next letters, its tail lets them fade out again.
 export function createRain(canvas, opts = {}) {
   const o = Object.assign({
     word: "thuytiengem",
@@ -71,6 +72,7 @@ export function createRain(canvas, opts = {}) {
       col, depth, size,
       y: initial ? Math.random() * (H + size * 14) : -Math.random() * H * 0.5,
       v: (40 + Math.random() * 50) * depth,
+      offset: Math.floor(Math.random() * 1000),       // where the column's text starts in the word
     };
   }
 
@@ -105,21 +107,23 @@ export function createRain(canvas, opts = {}) {
       ctx.drawImage(bloom, x - bw / 2, d.y - bw / 2, bw, bw);
       ctx.globalCompositeOperation = "source-over";
 
-      // letters ride with the drop -> perfectly smooth motion
-      ctx.font = `${d.size}px Ebrima, "Segoe UI", sans-serif`;
-      for (let k = len - 1; k >= 0; k--) {
-        const y = d.y - k * lh;
-        if (y < -lh || y > H + lh) continue;
-        const ch = word[len - 1 - k];
-        if (k === 0) {
-          ctx.globalAlpha = fade;
-          ctx.fillStyle = "#f6f8ff";
-        } else {
-          ctx.globalAlpha = Math.pow(1 - k / len, 1.5) * fade;
-          const m = 1 - k / len;
-          ctx.fillStyle = `rgb(${150 + 70 * m},${130 + 90 * m},255)`;
-        }
-        ctx.fillText(ch, x, y);
+      // letters stand still on the column's grid; the drop is a moving mask over them
+      ctx.font = `${d.size}px Montserrat, "Segoe UI", sans-serif`;
+      const edge = lh * 0.6;                            // soft reveal edge below the head
+      const r0 = Math.max(0, Math.floor((d.y - span) / lh)), r1 = Math.floor((d.y + edge) / lh);
+      for (let r = r0; r <= r1; r++) {
+        const y = r * lh + lh / 2;
+        if (y > H + lh) break;
+        const up = d.y - y;                             // distance above the head (< 0 = just below it)
+        if (up > span || up < -edge) continue;
+        const m = 1 - Math.max(0, up) / span;           // 1 at the head → 0 at the tail
+        let a = Math.pow(m, 1.5) * fade;
+        if (up < 0) a *= 1 + up / edge;                 // being revealed
+        if (a <= 0.01) continue;
+        const head = Math.max(0, 1 - Math.abs(up) / lh); // the letter under the head glows white
+        ctx.globalAlpha = Math.min(1, a + head * 0.3);
+        ctx.fillStyle = `rgb(${Math.round(150 + 70 * m + 26 * head)},${Math.round(130 + 90 * m + 28 * head)},255)`;
+        ctx.fillText(word[(r + d.offset) % len], x, y);
       }
       ctx.globalAlpha = 1;
 

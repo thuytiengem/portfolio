@@ -96,5 +96,7 @@ export function createParticles(canvas, sprites) {
   function noise(area, dur = 200, n = 6) { blocks.push({ ...area, left: dur / 1000, n }); kick(); }
   /** false stops drawing (hero off screen); persistent particles resume where they were */
   function setActive(v) { on = v; kick(); }
-  return { emit, noise, setActive };
+  /** removes every particle and noise block (replay) */
+  function clear() { parts = []; blocks = []; }
+  return { emit, noise, setActive, clear };
 }

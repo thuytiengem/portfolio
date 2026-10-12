@@ -1,10 +1,13 @@
 // Portfolio Studio — UI. Talks to portfolio-studio/server.mjs; every write sends the X-Studio header.
 
 const SOCIALS = [
-  ["whatsapp", "WhatsApp", "https://wa.me/84…"], ["instagram", "Instagram", "https://instagram.com/…"],
-  ["linkedin", "LinkedIn", "https://linkedin.com/in/…"], ["bluesky", "Bluesky", "https://bsky.app/profile/…"],
-  ["x", "X", "https://x.com/…"], ["behance", "Behance", "https://behance.net/…"], ["youtube", "YouTube", "https://youtube.com/@…"],
-  ["itchio", "itch.io", "https://….itch.io"], ["discord", "Discord", "https://discord.gg/…"],
+  ["artstation", "ArtStation", "https://www.artstation.com/…"], ["patreon", "Patreon", "https://www.patreon.com/…"],
+  ["deviantart", "DeviantArt", "https://www.deviantart.com/…"], ["instagram", "Instagram", "https://instagram.com/…"],
+  ["facebook", "Facebook", "https://www.facebook.com/…"], ["x", "X (Twitter)", "https://x.com/…"],
+  ["tiktok", "TikTok", "https://www.tiktok.com/@…"], ["reddit", "Reddit", "https://www.reddit.com/user/…"],
+  ["linkedin", "LinkedIn", "https://linkedin.com/in/…"], ["behance", "Behance", "https://behance.net/…"],
+  ["youtube", "YouTube", "https://youtube.com/@…"], ["bluesky", "Bluesky", "https://bsky.app/profile/…"],
+  ["itchio", "itch.io", "https://….itch.io"], ["discord", "Discord", "https://discord.gg/…"], ["whatsapp", "WhatsApp", "https://wa.me/84…"],
 ];
 const KINDS = {
   projects: { title: "Featured Projects", noun: "dự án", dir: "Projects", section: "#featured" },
@@ -67,12 +70,13 @@ async function api(method, url, body) {
   if (!r.ok) throw new Error(j.error || `HTTP ${r.status}`);
   return j;
 }
-async function upload(target, name, blob) {
-  const r = await fetch(`/api/upload?target=${target}&name=${encodeURIComponent(name)}`, { method: "POST", headers: { "X-Studio": "1" }, body: blob });
+async function postFile(url, blob) {
+  const r = await fetch(url, { method: "POST", headers: { "X-Studio": "1" }, body: blob });
   const j = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error(j.error || "Upload thất bại");
   return j;
 }
+const upload = (target, name, blob) => postFile(`/api/upload?target=${target}&name=${encodeURIComponent(name)}`, blob);
 // resize + re-encode in the browser → JPG
 async function compress(file, max = 2400, quality = 0.88) {
   if (file.type === "image/gif") return file;
@@ -91,9 +95,9 @@ function pickFiles(accept = "image/*", multiple = false) {
     i.click();
   });
 }
-function confirmDlg(title, html, yes = "Xoá") {
+function confirmDlg(title, html, yes = "Xoá", kind = "danger") {
   return new Promise(resolve => {
-    $("dlgT").textContent = title; $("dlgB").innerHTML = html; $("dlgYes").textContent = yes;
+    $("dlgT").textContent = title; $("dlgB").innerHTML = html; $("dlgYes").textContent = yes; $("dlgYes").className = `btn ${kind}`;
     $("dlg").hidden = false; $("dlgNo").focus();
     const done = v => { $("dlg").hidden = true; $("dlgYes").onclick = $("dlgNo").onclick = null; resolve(v); };
     $("dlgYes").onclick = () => done(true); $("dlgNo").onclick = () => done(false);
@@ -105,6 +109,7 @@ const S = { config: {}, projects: null, blender: null, artworks: [] };
 let CFG = null;   // shared draft for the 3 config views: { d, saved }
 let ED = null;    // collection item editor: { kind, id, orig, d, folder, saved }
 let ART = null;   // artworks draft: { d, saved, removed }
+let UIF = null;   // UI frames: [{ name, d, saved, w, h, bust, zoom }] (loaded on first visit of #/ui)
 let VIEW = "";
 
 async function load() {
@@ -179,11 +184,39 @@ const artSnap = () => JSON.stringify(ART.d);
 const artDirty = () => ART && artSnap() !== ART.saved;
 function resetArt() { ART = { d: artToDraft(S.artworks), removed: new Set() }; ART.saved = artSnap(); }
 
-const anyDirty = () => cfgDirty() || edDirty() || artDirty();
+// ---- UI frames (assets/ui/<name>/frame.json) ----
+const UI_LABELS = { "description-frame": "Khung mô tả (Description)", "explore-button": "Nút Explore", "text-frame": "Khung câu chào (Quote)" };
+const EDGE_OPTS = [["stretch", "Kéo giãn (Sliced)"], ["repeat", "Lặp (Tiled)"], ["round", "Lặp vừa khít (Round)"], ["space", "Lặp có khoảng cách (Space)"]];
+const SIDE_LBL = [["left", "Trái"], ["top", "Trên"], ["right", "Phải"], ["bottom", "Dưới"]];
+let frameLib = null;   // assets/js/ui-frames.js (same CSS as the site), imported on demand
+function uiToDraft(c = {}) {
+  const n = v => (Number.isFinite(+v) && +v >= 0 ? +v : 0);
+  const sides = o => Object.fromEntries(SIDE_LBL.map(([k]) => [k, n(o?.[k])]));
+  return { ...clone(c), image: c.image || "frame.png", slice: sides(c.slice), scale: +c.scale > 0 ? +c.scale : 1,
+    edges: EDGE_OPTS.some(([k]) => k === c.edges) ? c.edges : "stretch", fill: c.fill !== false, padding: sides(c.padding), version: c.version ?? 0 };
+}
+const uiSnap = f => JSON.stringify(f.d);
+const uiDirty = () => !!UIF && UIF.some(f => uiSnap(f) !== f.saved);
+function resetUI() { UIF?.forEach(f => { f.d = JSON.parse(f.saved); }); }
+const uiImg = f => "/" + frameLib.frameImageUrl(f.name, { ...f.d, version: f.bust });
+const imgSize = src => new Promise(resolve => {
+  const im = new Image();
+  im.onload = () => resolve([im.naturalWidth, im.naturalHeight]); im.onerror = () => resolve([0, 0]);
+  im.src = src;
+});
+async function loadUI() {
+  const [list, lib] = await Promise.all([api("GET", "/api/ui"), frameLib || import("/assets/js/ui-frames.js")]);
+  frameLib = lib;
+  UIF = list.map(({ name, config }) => { const d = uiToDraft(config); return { name, d, saved: JSON.stringify(d), bust: Date.now(), zoom: "fit" }; });
+  await Promise.all(UIF.map(async f => { [f.w, f.h] = await imgSize(uiImg(f)); }));
+}
+
+const anyDirty = () => cfgDirty() || edDirty() || artDirty() || uiDirty();
 function updateDirty() {
-  const d = VIEW === "artworks" ? artDirty() : ED ? edDirty() : cfgDirty();
+  const d = VIEW === "artworks" ? artDirty() : VIEW === "ui" ? uiDirty() : ED ? edDirty() : cfgDirty();
   const el = $("dirtyFlag"); if (el) el.hidden = !d;
   const b = $("saveBtn"); if (b) b.disabled = !d;
+  gitSync();
 }
 
 // ══════════════ field builders (bound to the current draft) ══════════════
@@ -365,6 +398,245 @@ function viewArtworks() {
       <div class="drop" id="drop" data-act="addArt">Kéo thả ảnh vào đây<br>hoặc bấm để chọn (chọn được nhiều ảnh)</div></div>`;
 }
 
+// ---- UI frames: Unity-style sprite editor (9-slice) ----
+const ZOOMS = [["fit", "Vừa khung"], ["1", "1x"], ["2", "2x"], ["4", "4x"]];
+function viewUI() {
+  return saveBar("Giao diện", "Khung ảnh 9-slice trong <code>assets/ui/&lt;tên&gt;/</code> (<code>frame.png</code> + <code>frame.json</code>). Thay ảnh rồi chỉnh đường cắt — trang web tự cập nhật.") +
+    `<p class="hint ui-help">4 góc giữ nguyên kích thước, các cạnh giãn theo 1 chiều, phần giữa giãn cả 2 chiều — giống Sprite Border trong Unity.
+      Kéo các đường <b style="color:var(--green)">xanh lá</b> trên ảnh hoặc nhập số.</p>` +
+    (UIF.length ? UIF.map(uiCard).join("") : `<div class="empty">Chưa có khung nào trong <code>assets/ui/</code>.</div>`);
+}
+function uiCard(f) {
+  const d = f.d, n = f.name, k = (key, attrs = "") => `data-ui="${n}" data-uik="${key}" ${attrs}`;
+  const num = (key, label, o = "") => `<label class="sl-n"><span>${label}</span><input type="number" ${k(key, o)}></label>`;
+  const stageW = f.zoom === "fit" ? `min(100%, ${f.w * 8}px, ${Math.round(380 * f.w / (f.h || 1))}px)` : `${f.w * +f.zoom}px`;
+  const editor = f.w ? `<div class="sl-view"><div class="sl-stage${+f.zoom > 1 ? " px" : ""}" style="width:${stageW};aspect-ratio:${f.w} / ${f.h}">
+      <img src="${esc(uiImg(f))}" alt="" draggable="false">
+      <div class="sl-grid">${["góc", "cạnh", "góc", "cạnh", "giữa", "cạnh", "góc", "cạnh", "góc"].map((t, i) => `<span class="r${i}">${t}</span>`).join("")}</div>
+      ${SIDE_LBL.map(([s]) => `<div class="sl-g ${s === "left" || s === "right" ? "v" : "h"}" data-side="${s}" title="Kéo để chỉnh"><i></i></div>`).join("")}
+    </div></div>` : `<div class="empty">Không đọc được ảnh <code>assets/ui/${n}/${esc(d.image)}</code> — bấm “Thay ảnh…”.</div>`;
+  const quote = (L(S.config.intro?.quote).en || "Hi, welcome to my Portfolio~~").replace(/<[^>]*>/g, "");
+  const sample = n === "text-frame"
+    ? [[420, 56], [600, 64], [820, 72]].map(([w, h]) => `<div class="fr fr-line" style="width:${w}px;height:${h}px"><span class="fr-c">${esc(quote)}</span></div>`).join("")
+    : /button|btn/.test(n)
+    ? [[150, 48], [190, 58], [260, 64]].map(([w, h]) => `<div class="fr fr-btn" style="width:${w}px;height:${h}px"><span class="fr-c">EXPLORE</span></div>`).join("")
+    : [[300, 190], [420, 240], [560, 300]].map(([w, h]) => `<div class="fr fr-panel" style="width:${w}px;height:${h}px"><div class="fr-c">
+        <h4>Description</h4><ul><li>Lorem ipsum dolor sit amet</li><li>Consectetur adipiscing elit, sed do eiusmod</li></ul></div></div>`).join("");
+  return sec(`${esc(UI_LABELS[n] || n)}`, `<div class="sl" data-ui="${n}">
+      <div class="sl-tools"><div class="seg">${ZOOMS.map(([z, t]) => `<button type="button" data-act="uiZoom" data-ui="${n}" data-z="${z}" class="${f.zoom === z ? "on" : ""}">${t}</button>`).join("")}</div>
+        <span class="hint">Ảnh: <b>${f.w ? `${f.w} × ${f.h} px` : "—"}</b></span>
+        <button class="btn ghost sm" type="button" data-act="uiImage" data-ui="${n}" style="margin-left:auto">Thay ảnh…</button></div>
+      ${editor}
+      <div class="sl-form">
+        <div class="f"><span class="lbl">Vùng cắt <code>px trên ảnh</code></span><div class="sl-4">${SIDE_LBL.map(([s, t]) => num(`slice.${s}`, t, 'min="0" step="1"')).join("")}</div></div>
+        <div class="f"><span class="lbl">Padding nội dung <code>px CSS</code></span><div class="sl-4">${SIDE_LBL.map(([s, t]) => num(`padding.${s}`, t, 'min="0" step="1"')).join("")}</div>
+          <span class="hint">Khoảng cách từ mép khung tới nội dung (khung nét đứt trong phần xem thử).</span></div>
+        <div class="grid3">
+          <div class="f"><label>Tỉ lệ hiển thị <code>scale</code></label><input type="number" ${k("scale", 'min="0.05" step="0.05"')}>
+            <span class="hint">Số px trên màn hình cho mỗi px ảnh — 0.5 nếu ảnh vẽ ở 2x.</span></div>
+          <div class="f"><label>Cạnh &amp; phần giữa</label><select ${k("edges")}>${EDGE_OPTS.map(([v, t]) => `<option value="${v}">${t}</option>`).join("")}</select></div>
+          <div class="f"><label>&nbsp;</label><label class="sl-chk"><input type="checkbox" ${k("fill")}> Vẽ phần giữa</label></div>
+        </div>
+      </div>
+      <div class="f"><span class="lbl">Xem thử <code>kéo góc dưới-phải của mỗi ô để đổi kích thước</code></span>
+        <div class="sl-pv" id="uipv-${n}"><style id="uicss-${n}"></style>${sample}</div></div>
+    </div>`, `<code>assets/ui/${n}/</code>`);
+}
+// push the draft of one frame into its editor: guides, shaded regions, inputs (except the one being typed in), live preview
+function uiSync(f, except) {
+  const root = document.querySelector(`.sl[data-ui="${f.name}"]`); if (!root) return;
+  const s = f.d.slice, pc = (v, n) => `${(v / (n || 1) * 100).toFixed(4)}%`;
+  const stage = root.querySelector(".sl-stage");
+  if (stage) {
+    const pos = { left: s.left, right: f.w - s.right, top: s.top, bottom: f.h - s.bottom };
+    root.querySelectorAll(".sl-g").forEach(g => {
+      const side = g.dataset.side, v = side === "left" || side === "right";
+      g.style[v ? "left" : "top"] = pc(pos[side], v ? f.w : f.h);
+      g.firstElementChild.textContent = `${{ left: "L", right: "R", top: "T", bottom: "B" }[side]} ${s[side]}`;
+    });
+    const grid = root.querySelector(".sl-grid");
+    grid.style.gridTemplateColumns = `${pc(s.left, f.w)} 1fr ${pc(s.right, f.w)}`;
+    grid.style.gridTemplateRows = `${pc(s.top, f.h)} 1fr ${pc(s.bottom, f.h)}`;
+  }
+  root.querySelectorAll("[data-uik]").forEach(el => {
+    if (el === except) return;
+    const v = getPath(f.d, el.dataset.uik);
+    if (el.type === "checkbox") el.checked = v; else el.value = v;
+  });
+  $(`uicss-${f.name}`).textContent = frameLib.frameCSS(`#uipv-${f.name} .fr`, f.d, uiImg(f));
+  updateDirty();
+}
+// keep the slice inside the image: each side ≤ size, opposite sides never cross
+function clampSlice(f) {
+  const s = f.d.slice, r = v => Math.max(0, Math.round(v));
+  if (!f.w) return false;
+  const before = JSON.stringify(s);
+  s.left = Math.min(r(s.left), f.w); s.right = Math.min(r(s.right), f.w - s.left);
+  s.top = Math.min(r(s.top), f.h); s.bottom = Math.min(r(s.bottom), f.h - s.top);
+  return before !== JSON.stringify(s);
+}
+const uiFrame = name => UIF.find(f => f.name === name);
+function uiInput(el, commit) {
+  const f = uiFrame(el.dataset.ui), key = el.dataset.uik; if (!f) return;
+  if (key === "fill") f.d.fill = el.checked;
+  else if (key === "edges") f.d.edges = el.value;
+  else {
+    const v = parseFloat(el.value);
+    if (key === "scale") { if (v > 0) f.d.scale = v; }
+    else if (Number.isFinite(v)) {
+      setPath(f.d, key, Math.max(0, Math.round(v)));
+      if (key.startsWith("slice.")) {               // the edited side gives way to the opposite one
+        const side = key.split(".")[1], opp = { left: "right", right: "left", top: "bottom", bottom: "top" }[side];
+        const size = side === "left" || side === "right" ? f.w : f.h;
+        if (size) f.d.slice[side] = Math.min(f.d.slice[side], size - f.d.slice[opp]);
+      }
+    }
+  }
+  uiSync(f, commit ? null : el);
+}
+// drag the green guides (mouse + touch through pointer events)
+function bindUI() {
+  UIF.forEach(f => {
+    const root = document.querySelector(`.sl[data-ui="${f.name}"]`), stage = root?.querySelector(".sl-stage");
+    if (stage) {
+      if (f.zoom === "fit" && stage.clientWidth > f.w * 1.05) stage.classList.add("px");   // enlarged → crisp pixels
+      stage.querySelectorAll(".sl-g").forEach(g => {
+        const side = g.dataset.side;
+        g.addEventListener("pointerdown", e => {
+          e.preventDefault(); g.setPointerCapture(e.pointerId); g.classList.add("drag");
+          const move = ev => {
+            const b = stage.getBoundingClientRect(), s = f.d.slice;
+            const x = Math.round((ev.clientX - b.left) / b.width * f.w), y = Math.round((ev.clientY - b.top) / b.height * f.h);
+            const lim = (v, max) => Math.max(0, Math.min(v, max));
+            if (side === "left") s.left = lim(x, f.w - s.right);
+            else if (side === "right") s.right = lim(f.w - x, f.w - s.left);
+            else if (side === "top") s.top = lim(y, f.h - s.bottom);
+            else s.bottom = lim(f.h - y, f.h - s.top);
+            uiSync(f);
+          };
+          const up = () => { g.classList.remove("drag"); g.removeEventListener("pointermove", move); g.removeEventListener("pointerup", up); g.removeEventListener("pointercancel", up); };
+          g.addEventListener("pointermove", move); g.addEventListener("pointerup", up); g.addEventListener("pointercancel", up);
+        });
+      });
+    }
+    uiSync(f);
+  });
+}
+// replace frame.png in place (same file name), then bump "version" in frame.json so browsers drop the cached image
+async function replaceFrameImage(f) {
+  const [file] = await pickFiles("image/png,image/jpeg,image/webp"); if (!file) return;
+  try {
+    const ext = f.d.image.split(".").pop().toLowerCase(), mime = { png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", webp: "image/webp" }[ext];
+    const bmp = await createImageBitmap(file);
+    let blob = file;
+    if (file.type !== mime) {                         // keep the file name → re-encode to its format
+      const c = document.createElement("canvas"); c.width = bmp.width; c.height = bmp.height;
+      c.getContext("2d").drawImage(bmp, 0, 0);
+      blob = await new Promise(r => c.toBlob(r, mime, 0.95));
+    }
+    await postFile(`/api/ui/${f.name}/image?name=${encodeURIComponent(f.d.image)}`, blob);
+    const r = await api("PUT", `/api/ui/${f.name}`, { config: { ...JSON.parse(f.saved), version: Date.now() } });
+    f.saved = JSON.stringify(uiToDraft(r.config)); f.d.version = r.config.version;
+    f.bust = r.config.version; f.w = bmp.width; f.h = bmp.height;
+    const clamped = clampSlice(f);
+    render(); reloadPreview(); gitRefresh();
+    toast(clamped ? "Ảnh mới nhỏ hơn vùng cắt cũ — đã thu các đường cắt vào trong ảnh, kiểm tra rồi bấm Lưu" : `Đã thay ảnh (${f.w} × ${f.h} px)`, clamped ? "err" : "ok");
+  } catch (e) { toast(e.message, "err"); }
+}
+
+// ══════════════ commit & push panel (bottom of every view) ══════════════
+// paths must match GIT_SCOPES in server.mjs (the server only receives the view key)
+const GIT_SCOPES = {
+  settings: [["web-config.json"], "Update profile"], experience: [["web-config.json"], "Update work experience"],
+  texts: [["web-config.json"], "Update UI texts"], projects: [["Database/Projects"], "Update projects"],
+  blender: [["Database/Blender"], "Update Blender"], artworks: [["Database/Artworks"], "Update artworks"], ui: [["assets/ui"], "Update UI frames"],
+};
+const GIT = { view: "", all: false, msg: {}, files: null, ahead: null, branch: "", error: "", busy: "", seq: 0 };
+const gitPaths = () => (GIT.all ? null : GIT_SCOPES[VIEW]?.[0]);
+const gitMsg = () => GIT.msg[GIT.all ? "@all" : VIEW] ?? (GIT.all ? "Update site" : GIT_SCOPES[VIEW]?.[1] || "Update");
+function gitCmd(push) {
+  const p = gitPaths(), m = `"${gitMsg().trim().replace(/["\\$`]/g, "\\$&")}"`;
+  return (p ? `git add ${p.join(" ")} && git commit -m ${m} -- ${p.join(" ")}` : `git add -A && git commit -m ${m}`) + (push ? " && git push" : "");
+}
+function gitPanel() {
+  if (!GIT_SCOPES[VIEW]) return "";
+  return `<section class="gitp" id="gitp">
+    <div class="gitp-l"><b>Xong thì commit để đăng lên web</b><span class="gitp-st" id="gitSt"></span></div>
+    <div class="gitp-r"><code class="gitp-cmd" id="gitCmd" title="Lệnh sẽ chạy"></code>
+      <button class="btn ghost" type="button" data-act="gitCopy">Copy</button>
+      <button class="btn pri" type="button" id="gitBtn" data-act="gitCommit">Commit &amp; Push</button></div>
+    <div class="gitp-o"><label class="gitp-msg"><span>Nội dung commit</span><input type="text" id="gitMsg" maxlength="200" value="${esc(gitMsg())}"></label>
+      <label class="sl-chk"><input type="checkbox" id="gitAll" ${GIT.all ? "checked" : ""}> Commit tất cả thay đổi <code>git add -A</code></label></div>
+  </section>`;
+}
+// update the panel in place (keeps focus in the message input)
+function gitSync() {
+  if (!$("gitp")) return;
+  const dirty = anyDirty(), n = GIT.files?.length ?? 0, ahead = GIT.ahead || 0;
+  $("gitCmd").textContent = gitCmd(false);
+  const st = $("gitSt"), b = $("gitBtn");
+  let text, cls = "";
+  if (dirty) { text = "Còn thay đổi chưa lưu — bấm Lưu trước"; cls = "warn"; }
+  else if (GIT.error) { text = GIT.error; cls = "bad"; }
+  else if (GIT.files === null) text = "Đang kiểm tra…";
+  else if (n) text = `${n} file thay đổi chưa commit${GIT.all ? " (cả repo)" : ""}`;
+  else text = "Không có thay đổi chưa commit.";
+  if (!dirty && !GIT.error && ahead) text += ` · ${ahead} commit chưa push`;
+  st.textContent = text; st.className = `gitp-st ${cls}`;
+  const pushOnly = !n && ahead > 0;
+  b.textContent = GIT.busy || (pushOnly ? "Push" : "Commit & Push");
+  b.disabled = !!GIT.busy || dirty || !!GIT.error || GIT.files === null || (!n && !pushOnly);
+}
+async function gitRefresh() {
+  if (!GIT_SCOPES[VIEW]) return;
+  const seq = ++GIT.seq, p = gitPaths();
+  GIT.view = VIEW; GIT.files = null; GIT.error = ""; gitSync();
+  try {
+    const r = await api("GET", `/api/git/status?paths=${encodeURIComponent(p ? p.join(",") : "all")}`);
+    if (seq !== GIT.seq) return;
+    Object.assign(GIT, { files: r.files, ahead: r.ahead, branch: r.branch });
+  } catch (e) {
+    if (seq !== GIT.seq) return;
+    // an older server.mjs (started before the git routes existed) answers "Unknown API route"
+    GIT.error = /Unknown API route/i.test(e.message)
+      ? "Server Studio đang chạy bản cũ — tắt (Ctrl+C) rồi chạy lại node portfolio-studio/server.mjs"
+      : `Không đọc được git: ${e.message}`;
+  }
+  gitSync();
+}
+const fileList = files => `<ul class="gitp-files">${files.slice(0, 40).map(f => `<li><code>${esc(f.status)}</code>${esc(f.path)}</li>`).join("")}
+  ${files.length > 40 ? `<li class="hint">… và ${files.length - 40} file khác</li>` : ""}</ul>`;
+async function gitCommitPush() {
+  const files = GIT.files || [], msg = gitMsg().trim(), scope = GIT.all ? "all" : VIEW;
+  const pushOnly = !files.length && GIT.ahead > 0;
+  if (!pushOnly && !msg) return toast("Cần nhập nội dung commit", "err");
+  const ok = await confirmDlg(pushOnly ? "Push lên GitHub?" : "Commit & push?", pushOnly
+    ? `<p>Đẩy <b>${GIT.ahead}</b> commit đang nằm trên máy lên GitHub (nhánh <code>${esc(GIT.branch)}</code>).</p>`
+    : `<p>Commit <b>${files.length}</b> file với nội dung <b>“${esc(msg)}”</b> rồi đẩy lên GitHub (nhánh <code>${esc(GIT.branch)}</code>):</p>${fileList(files)}`,
+    pushOnly ? "Push" : "Commit & Push", "pri");
+  if (!ok) return;
+  const step = t => { GIT.busy = t; gitSync(); };
+  try {
+    let hash = "", r;
+    if (!pushOnly) {
+      step("Đang commit…");
+      hash = (await api("POST", "/api/git/commit", { scope, message: msg, push: false })).commit;
+    }
+    step("Đang push…");
+    r = await api("POST", "/api/git/push").catch(e => ({ pushed: false, pushError: e.message }));
+    if (r.pushed) toast(`${hash ? `Đã commit ${hash} · ` : ""}Đã đẩy lên GitHub`);
+    else toast(hash ? `Đã commit ${hash} nhưng push lỗi: ${r.pushError}` : `Push lỗi: ${r.pushError}`, "err");
+  } catch (e) { toast(e.message, "err"); }
+  GIT.busy = ""; gitRefresh();
+}
+$("app").addEventListener("input", e => {
+  if (e.target.id === "gitMsg") { GIT.msg[GIT.all ? "@all" : VIEW] = e.target.value; gitSync(); }
+});
+addEventListener("focus", () => { if (!GIT.busy) gitRefresh(); });   // pick up files edited by hand outside the Studio
+$("app").addEventListener("change", e => {
+  if (e.target.id === "gitAll") { GIT.all = e.target.checked; $("gitMsg").value = gitMsg(); gitRefresh(); }
+});
+
 // ══════════════ render + routing ══════════════
 function render() {
   const y = scrollY;
@@ -381,11 +653,20 @@ function render() {
     VIEW = m[1]; $("app").innerHTML = viewCollection(VIEW); bindListDnD(VIEW);
   } else if (h === "#/artworks") {
     VIEW = "artworks"; if (!ART) resetArt(); $("app").innerHTML = viewArtworks(); bindDrop();
+  } else if (h === "#/ui") {
+    VIEW = "ui";
+    if (UIF) { $("app").innerHTML = viewUI(); bindUI(); }
+    else {
+      $("app").innerHTML = `<div class="loading">Đang tải khung giao diện…</div>`;
+      loadUI().then(() => { if (VIEW === "ui") render(); }, e => { $("app").innerHTML = `<div class="empty">Không tải được khung giao diện: ${esc(e.message)}</div>`; });
+    }
   } else if (h === "#/experience") { VIEW = "experience"; $("app").innerHTML = viewExperience(); }
   else if (h === "#/texts") { VIEW = "texts"; $("app").innerHTML = viewTexts(); bindFilter(); }
   else { VIEW = "settings"; $("app").innerHTML = viewSettings(); }
+  $("app").insertAdjacentHTML("beforeend", gitPanel());
   document.querySelectorAll(".side a").forEach(a => a.classList.toggle("on", a.dataset.view === VIEW));
   bindChips();
+  if (GIT.view !== VIEW) gitRefresh();
   updateDirty();
   scrollTo(0, y);
   syncPreview();
@@ -402,12 +683,14 @@ addEventListener("hashchange", () => {
   const leavingEditor = ED && !location.hash.startsWith(`#/${ED.kind}/`);
   const leavingArt = VIEW === "artworks" && location.hash !== "#/artworks";
   const leavingCfg = ["settings", "experience", "texts"].includes(VIEW) && !/^#\/(settings|experience|texts)?$/.test(location.hash);
-  if (((leavingEditor && edDirty()) || (leavingArt && artDirty()) || (leavingCfg && cfgDirty())) && !confirm("Bạn có thay đổi chưa lưu. Rời trang?")) {
+  const leavingUI = VIEW === "ui" && location.hash !== "#/ui";
+  if (((leavingEditor && edDirty()) || (leavingArt && artDirty()) || (leavingCfg && cfgDirty()) || (leavingUI && uiDirty())) && !confirm("Bạn có thay đổi chưa lưu. Rời trang?")) {
     history.replaceState(null, "", lastHash); return;
   }
   if (leavingEditor) ED = null;
   if (leavingArt) resetArt();
   if (leavingCfg) resetCfg();
+  if (leavingUI) UIF = null;                       // re-read from disk on the next visit
   lastHash = location.hash;
   render();
   scrollTo(0, 0);
@@ -417,6 +700,7 @@ addEventListener("beforeunload", e => { if (anyDirty()) { e.preventDefault(); e.
 // ══════════════ events ══════════════
 $("app").addEventListener("input", e => {
   const el = e.target, p = el.dataset.path;
+  if (el.dataset.uik) return uiInput(el);
   if (!p) return;
   if (p === "@folder") { ED.folder = el.value.trim(); $("folderErr").textContent = ED.folder && !/^[a-z0-9][a-z0-9-]{0,79}$/.test(ED.folder) ? "Tên không hợp lệ" : ""; }
   else setPath(draftOf(), p, el.value);
@@ -429,6 +713,7 @@ $("app").addEventListener("input", e => {
   updateDirty();
 });
 $("app").addEventListener("change", e => {
+  if (e.target.dataset.uik) return uiInput(e.target, true);
   // normalize a pasted YouTube link to its id
   if (e.target.dataset.yt !== undefined) { const id = parseYT(e.target.value); if (id) { e.target.value = id; setPath(draftOf(), "video.youtube", id); updateDirty(); } }
 });
@@ -437,7 +722,7 @@ const listAt = p => p === "@art" ? ART.d : getPath(draftOf(), p);
 const ACTS = {
   async save() { try { await doSave(); } catch (e) { toast(e.message, "err"); } },
   revert() {
-    if (VIEW === "artworks") resetArt(); else resetCfg();
+    if (VIEW === "artworks") resetArt(); else if (VIEW === "ui") resetUI(); else resetCfg();
     render(); toast("Đã hoàn tác");
   },
   seg(el) { setPath(draftOf(), el.dataset.path, el.dataset.v); render(); },
@@ -447,6 +732,12 @@ const ACTS = {
     const arr = listAt(el.dataset.path), i = +el.dataset.i, j = i + +el.dataset.d;
     if (j < 0 || j >= arr.length) return;
     [arr[i], arr[j]] = [arr[j], arr[i]]; render();
+  },
+  uiZoom(el) { uiFrame(el.dataset.ui).zoom = el.dataset.z; render(); },
+  uiImage(el) { replaceFrameImage(uiFrame(el.dataset.ui)); },
+  gitCommit() { gitCommitPush(); },
+  async gitCopy() {
+    try { await navigator.clipboard.writeText(gitCmd(true)); toast("Đã copy"); } catch { toast("Không copy được — chọn lệnh và copy tay", "err"); }
   },
   addExp() { CFG.d.experience.push({ role: { en: "", vi: "" }, company: "", period: "", points: [{ en: "", vi: "" }] }); render(); },
   async pickImg(el) {
@@ -471,7 +762,7 @@ const ACTS = {
     const ok = await confirmDlg(`Xoá ${K.noun}?`, `<p>Sẽ xoá vĩnh viễn thư mục <code>Database/${K.dir}/${esc(id)}/</code> và gỡ khỏi <code>index.json</code>.</p>
       <p><b>${esc(p?.title || id)}</b></p><p class="hint">Nếu đã commit trước đó, vẫn khôi phục được bằng git.</p>`);
     if (!ok) return;
-    try { await api("DELETE", `/api/${VIEW}/${id}`); await load(); render(); reloadPreview(); toast("Đã xoá"); } catch (e) { toast(e.message, "err"); }
+    try { await api("DELETE", `/api/${VIEW}/${id}`); await load(); render(); reloadPreview(); toast("Đã xoá"); gitRefresh(); } catch (e) { toast(e.message, "err"); }
   },
 };
 $("app").addEventListener("click", e => {
@@ -486,6 +777,11 @@ async function doSave() {
   if (VIEW === "artworks") {
     await api("PUT", "/api/artworks", { items: ART.d.map(a => ({ src: a.src, title: a.title, desc: a.desc })), remove: [...ART.removed] });
     S.artworks = clone(ART.d); resetArt();
+  } else if (VIEW === "ui") {
+    for (const f of UIF.filter(x => uiSnap(x) !== x.saved)) {
+      const r = await api("PUT", `/api/ui/${f.name}`, { config: { ...f.d, version: Date.now() } });
+      f.d = uiToDraft(r.config); f.saved = uiSnap(f);
+    }
   } else if (ED) {
     const kind = ED.kind;
     if (kind === "projects" && !ED.d.title.trim()) throw new Error("Cần nhập tên dự án");
@@ -496,7 +792,7 @@ async function doSave() {
                     : await api("POST", `/api/${kind}`, { id: folder, data });
     await load();
     ED = null;
-    toast("Đã lưu");
+    toast("Đã lưu"); gitRefresh();
     location.hash = `#/${kind}/edit/${r.id}`;
     if (location.hash === lastHash) render();
     reloadPreview();
@@ -505,7 +801,7 @@ async function doSave() {
     await api("PUT", "/api/config", { config: draftToCfg(CFG.d) });
     S.config = draftToCfg(CFG.d); resetCfg();
   }
-  render(); reloadPreview(); toast("Đã lưu");
+  render(); reloadPreview(); toast("Đã lưu"); gitRefresh();
 }
 
 // ---- tags (chips): Enter to add, drag to reorder ----
@@ -535,7 +831,7 @@ function bindChips() {
 
 // ---- collection order (drag & drop) ----
 async function saveOrder(kind, order) {
-  try { await api("PUT", `/api/order/${kind}`, { order }); S[kind].order = order; render(); reloadPreview(); toast("Đã lưu thứ tự"); }
+  try { await api("PUT", `/api/order/${kind}`, { order }); S[kind].order = order; render(); reloadPreview(); toast("Đã lưu thứ tự"); gitRefresh(); }
   catch (e) { toast(e.message, "err"); }
 }
 function bindListDnD(kind) {
@@ -572,7 +868,7 @@ async function addArtFiles(files) {
     const src = await uploadArt(f);
     if (src) ART.d.push({ src, title: { en: "", vi: "" }, desc: { en: "", vi: "" } });
   }
-  render(); toast("Đã thêm ảnh — điền tiêu đề / mô tả rồi bấm Lưu");
+  render(); toast("Đã thêm ảnh — điền tiêu đề / mô tả rồi bấm Lưu"); gitRefresh();
 }
 function bindDrop() {
   const d = $("drop"); if (!d) return;
@@ -592,7 +888,7 @@ function bindFilter() {
 }
 
 // ══════════════ preview ══════════════
-const PV_SECTION = { settings: "", experience: "#about", texts: "", projects: "#featured", blender: "#blender", artworks: "#artworks" };
+const PV_SECTION = { settings: "", experience: "#about", texts: "", projects: "#featured", blender: "#blender", artworks: "#artworks", ui: "#featured" };
 let pvOn = false, pvSection = null;
 function reloadPreview() { if (pvOn) $("pvFrame").src = `/?nointro&t=${Date.now()}${PV_SECTION[VIEW] ?? ""}`; }
 function syncPreview() { if (pvOn && pvSection !== PV_SECTION[VIEW]) { pvSection = PV_SECTION[VIEW]; reloadPreview(); } }

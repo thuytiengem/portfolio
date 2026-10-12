@@ -3,8 +3,11 @@ import { h, $ } from "../utils.js";
 import { bind, bindText, bindList, label } from "../i18n.js";
 
 // order shown in the footer; icon files live in assets/icons/<key>.svg
-const SOCIALS = ["whatsapp", "instagram", "linkedin", "bluesky", "x", "behance", "youtube", "itchio", "discord"];
-const SOCIAL_NAMES = { whatsapp: "WhatsApp", instagram: "Instagram", linkedin: "LinkedIn", bluesky: "Bluesky", x: "X", behance: "Behance", youtube: "YouTube", itchio: "itch.io", discord: "Discord" };
+const SOCIALS = ["artstation", "patreon", "deviantart", "instagram", "facebook", "x", "tiktok", "reddit", "linkedin",
+  "behance", "youtube", "bluesky", "itchio", "discord", "whatsapp"];
+const SOCIAL_NAMES = { artstation: "ArtStation", patreon: "Patreon", deviantart: "DeviantArt", instagram: "Instagram", facebook: "Facebook",
+  x: "X (Twitter)", tiktok: "TikTok", reddit: "Reddit", linkedin: "LinkedIn", behance: "Behance", youtube: "YouTube", bluesky: "Bluesky",
+  itchio: "itch.io", discord: "Discord", whatsapp: "WhatsApp" };
 
 export function renderAbout(config) {
   const p = config.profile || {};

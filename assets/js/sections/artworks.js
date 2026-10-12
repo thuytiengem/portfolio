@@ -2,6 +2,7 @@
 import { h, $, resolvePath } from "../utils.js";
 import { tr, onLangChange } from "../i18n.js";
 import { createCarousel } from "../carousel.js";
+import { setRich } from "../richtext.js";
 
 const BASE = "Database/Artworks/";
 
@@ -23,8 +24,8 @@ export function renderArtworks(artworks) {
   });
 
   function setCaption(i) {
-    caption.querySelector("h3").textContent = tr(artworks[i].title);
-    caption.querySelector("p").textContent = tr(artworks[i].desc);
+    setRich(caption.querySelector("h3"), tr(artworks[i].title));
+    setRich(caption.querySelector("p"), tr(artworks[i].desc));
   }
 
   function swapBackground(src) {

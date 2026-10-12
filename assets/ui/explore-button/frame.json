@@ -1,0 +1,9 @@
+{
+  "image": "frame.png",
+  "slice": { "left": 96, "top": 16, "right": 128, "bottom": 28 },
+  "scale": 0.5,
+  "edges": "stretch",
+  "fill": true,
+  "padding": { "left": 30, "top": 0, "right": 36, "bottom": 0 },
+  "version": 1
+}

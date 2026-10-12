@@ -1,0 +1,10 @@
+{
+  "image": "text-frame.png",
+  "slice": { "left": 270, "top": 22, "right": 440, "bottom": 20 },
+  "scale": 0.5,
+  "mobileScale": 0.3,
+  "edges": "stretch",
+  "fill": true,
+  "padding": { "left": 140, "top": 18, "right": 40, "bottom": 10 },
+  "version": 1
+}

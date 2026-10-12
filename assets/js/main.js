@@ -2,16 +2,19 @@
 import { $, $$, loadJSON, loadCollection, reveal } from "./utils.js";
 import { initI18n, tr, onLangChange } from "./i18n.js";
 import { createRain } from "./rain-bg.js";
+import { stripRich } from "./richtext.js";
+import { loadFrames } from "./ui-frames.js";
 import { runIntro } from "./intro/index.js";
 import { renderFeatured, renderBlender } from "./sections/projects.js";
 import { renderArtworks } from "./sections/artworks.js";
 import { renderAbout, renderContact } from "./sections/about.js";
 
 async function main() {
-  const config = await loadJSON("web-config.json");
+  // image frames (assets/ui/) load alongside the config so panels/buttons are styled before they show
+  const [config] = await Promise.all([loadJSON("web-config.json"), loadFrames()]);
   initI18n(config);
 
-  const setTitle = () => { document.title = tr(config.site?.pageTitle) || document.title; };
+  const setTitle = () => { document.title = stripRich(tr(config.site?.pageTitle)) || document.title; };
   setTitle();
   onLangChange(setTitle);
 
@@ -43,10 +46,17 @@ async function main() {
   // sections are rendered after load, so jump to a #hash once they exist
   if (location.hash.length > 1) document.querySelector(location.hash)?.scrollIntoView({ behavior: "instant" });
 
-  await runIntro(config, () => {
+  const replayIntro = await runIntro(config, () => {
     $("#topbar").classList.add("show");
     document.documentElement.classList.remove("intro-lock");
   });
+  // Home link + logo: the intro starts right away while the page scrolls back to the top (the topbar stays)
+  $$('#brand, #nav a[href="#home"]').forEach(a => a.addEventListener("click", e => {
+    e.preventDefault();
+    history.replaceState(null, "", location.pathname + location.search);
+    replayIntro();
+    scrollTo({ top: 0, behavior: "smooth" });
+  }));
 }
 
 function initNav() {

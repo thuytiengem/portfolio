@@ -10,6 +10,7 @@ import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { execFile } from "node:child_process";
 
 const PORT = Number(process.env.PORT) || 4100;
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -18,6 +19,7 @@ const DB = path.join(ROOT, "Database");
 const KINDS = { projects: path.join(DB, "Projects"), blender: path.join(DB, "Blender") };
 const ARTWORKS = path.join(DB, "Artworks");
 const UPLOAD_DIRS = { artworks: path.join(ARTWORKS, "images"), assets: path.join(ROOT, "assets", "images") };
+const UI = path.join(ROOT, "assets", "ui");     // 9-slice UI frames: assets/ui/<name>/frame.png + frame.json
 const ID_RE = /^[a-z0-9][a-z0-9-]{0,79}$/;
 const NAME_RE = /^[a-z0-9][a-z0-9._-]{0,119}$/i;
 const IMG_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif"]);
@@ -75,6 +77,123 @@ async function readCollection(kind) {
     catch (e) { broken[id] = e.code === "ENOENT" ? "thiếu data.json" : "data.json lỗi: " + e.message; }
   }
   return { order: Array.isArray(order) ? order : [], items, broken };
+}
+
+// ── UI frames (assets/ui/<name>/frame.json) ──
+const EDGES = ["stretch", "repeat", "round", "space"];
+const SIDES = ["left", "top", "right", "bottom"];
+const FRAME_IMG_EXT = new Set([".png", ".jpg", ".jpeg", ".webp"]);
+async function frameDir(name) {
+  const dir = path.join(UI, checkId(name));
+  if (!(await exists(path.join(dir, "frame.json")))) throw new HttpError(404, `Không có khung "${name}"`);
+  return dir;
+}
+async function listFrames() {
+  const dirs = (await fsp.readdir(UI, { withFileTypes: true }).catch(() => []))
+    .filter(d => d.isDirectory() && ID_RE.test(d.name)).map(d => d.name).sort();
+  const out = [];
+  for (const name of dirs) {
+    const config = await readJSONFile(path.join(UI, name, "frame.json"), null);
+    if (config) out.push({ name, config });
+  }
+  return out;
+}
+function checkFrameConfig(c) {
+  if (!c || typeof c !== "object" || Array.isArray(c)) throw new HttpError(400, "Config must be an object");
+  const sides = (o, what) => {
+    if (!o || typeof o !== "object") throw new HttpError(400, `Thiếu ${what}`);
+    return Object.fromEntries(SIDES.map(k => {
+      const v = o[k];
+      if (typeof v !== "number" || !Number.isFinite(v) || v < 0) throw new HttpError(400, `${what}.${k} phải là số ≥ 0`);
+      return [k, v];
+    }));
+  };
+  const image = String(c.image || "");
+  if (!NAME_RE.test(image) || !FRAME_IMG_EXT.has(path.extname(image).toLowerCase())) throw new HttpError(400, "Tên ảnh phải là file png / jpg / webp");
+  if (typeof c.scale !== "number" || !Number.isFinite(c.scale) || c.scale <= 0) throw new HttpError(400, "scale phải > 0");
+  if (!EDGES.includes(c.edges)) throw new HttpError(400, `edges phải là ${EDGES.join(" / ")}`);
+  if (typeof c.fill !== "boolean") throw new HttpError(400, "fill phải là true / false");
+  // keep unknown fields, normalize the known ones
+  return { ...c, image, slice: sides(c.slice, "slice"), scale: c.scale, edges: c.edges, fill: c.fill,
+    padding: sides(c.padding, "padding"), version: Number.isFinite(c.version) ? c.version : Date.now() };
+}
+
+// ── git (commit & push from the Studio) ──
+// Only these paths ever reach git; the client sends a view key (or "all"), never a path.
+const GIT_SCOPES = {
+  settings: ["web-config.json"], experience: ["web-config.json"], texts: ["web-config.json"],
+  projects: ["Database/Projects"], blender: ["Database/Blender"], artworks: ["Database/Artworks"], ui: ["assets/ui"],
+};
+const GIT_PATHS = new Set(Object.values(GIT_SCOPES).flat());
+const GIT_ENV = { ...process.env, GIT_TERMINAL_PROMPT: "0", GCM_INTERACTIVE: "never", LC_ALL: "C" };
+let gitBusy = false;
+function git(args, timeout = 20000) {
+  return new Promise(resolve => {
+    execFile("git", args, { cwd: ROOT, env: GIT_ENV, timeout, windowsHide: true, maxBuffer: 16 * 1024 * 1024 }, (err, stdout, stderr) =>
+      resolve({ ok: !err, code: err ? (err.killed ? "timeout" : err.code) : 0, out: String(stdout), err: String(stderr || err?.message || "").trim() }));
+  });
+}
+const gitFail = (r, what) => new HttpError(500, `${what}: ${r.code === "timeout" ? "quá thời gian chờ" : r.err.split("\n").filter(Boolean).slice(-3).join(" · ") || "lỗi git"}`);
+// "all" → null (whole repo); otherwise a list of whitelisted paths
+function gitPathsOf(list) {
+  if (list.length === 1 && list[0] === "all") return null;
+  if (!list.length || list.some(p => !GIT_PATHS.has(p))) throw new HttpError(400, "Đường dẫn không được phép");
+  return [...new Set(list)];
+}
+async function gitStatus(paths) {
+  const r = await git(["status", "--porcelain=v1", "-z", "--untracked-files=all", "--", ...(paths || ["."])]);
+  if (!r.ok) throw gitFail(r, "git status lỗi");
+  const files = [], parts = r.out.split("\0");
+  for (let i = 0; i < parts.length; i++) {
+    const e = parts[i]; if (e.length < 4) continue;
+    const status = e.slice(0, 2);
+    files.push({ status: status.trim() || status, path: e.slice(3) });
+    if (/[RC]/.test(status)) i++;                     // rename/copy: next entry is the old path
+  }
+  return files;
+}
+async function gitBranch() {
+  const b = await git(["rev-parse", "--abbrev-ref", "HEAD"]);
+  const branch = b.ok ? b.out.trim() : "";
+  const up = await git(["rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"]);
+  let ahead = null;
+  if (up.ok) { const c = await git(["rev-list", "--count", "@{u}..HEAD"]); if (c.ok) ahead = Number(c.out.trim()) || 0; }
+  return { branch, upstream: up.ok ? up.out.trim() : null, ahead };
+}
+async function gitPush() {
+  const r = await git(["push"], 90000);
+  return r.ok ? { pushed: true } : { pushed: false, pushError: gitFail(r, "git push lỗi").message.replace(/^git push lỗi: /, "") };
+}
+async function withGitLock(fn) {
+  if (gitBusy) throw new HttpError(409, "Đang chạy một lệnh git khác — thử lại sau");
+  gitBusy = true;
+  try { return await fn(); } finally { gitBusy = false; }
+}
+async function gitCommit({ scope, message, push = true }) {
+  const msg = String(message ?? "").trim();
+  if (!msg) throw new HttpError(400, "Cần nhập nội dung commit");
+  if (msg.length > 200) throw new HttpError(400, "Nội dung commit tối đa 200 ký tự");
+  if (/[\x00-\x1f\x7f]/.test(msg)) throw new HttpError(400, "Nội dung commit chỉ được 1 dòng");
+  if (scope !== "all" && !GIT_SCOPES[scope]) throw new HttpError(400, "Phạm vi commit không hợp lệ");
+  const paths = scope === "all" ? null : GIT_SCOPES[scope];
+  return withGitLock(async () => {
+    const add = await git(paths ? ["add", "-A", "--", ...paths] : ["add", "-A"]);
+    if (!add.ok) throw gitFail(add, "git add lỗi");
+    const staged = await git(["diff", "--cached", "--name-only", "-z", ...(paths ? ["--", ...paths] : [])]);
+    if (!staged.ok) throw gitFail(staged, "git diff lỗi");
+    const files = staged.out.split("\0").filter(Boolean);
+    if (!files.length) throw new HttpError(400, "Không có gì để commit");
+    // with a pathspec git commits only those paths — anything else already staged stays staged
+    const c = await git(paths ? ["commit", "-m", msg, "--", ...paths] : ["commit", "-m", msg], 60000);
+    if (!c.ok) throw gitFail(c, "git commit lỗi");
+    const h = await git(["rev-parse", "--short", "HEAD"]);
+    const out = { commit: h.out.trim(), files: files.length };
+    console.log(new Date().toLocaleTimeString(), "git commit", out.commit, `(${scope}, ${files.length} file)`, JSON.stringify(msg));
+    if (!push) return out;
+    const p = await gitPush();
+    console.log(new Date().toLocaleTimeString(), p.pushed ? "git push ok" : `git push failed: ${p.pushError}`);
+    return { ...out, ...p };
+  });
 }
 
 // ── API ──
@@ -157,6 +276,40 @@ async function api(req, res, url) {
       await fsp.rm(safeJoin(ARTWORKS, rel), { force: true });
     }
     return send(res, 200, { ok: true });
+  }
+
+  if (parts[0] === "ui") {
+    if (parts.length === 1 && m === "GET") return send(res, 200, await listFrames());
+    if (parts.length === 2 && m === "PUT") {
+      const dir = await frameDir(parts[1]);
+      const config = checkFrameConfig((await readBodyJSON(req)).config);
+      await writeJSON(path.join(dir, "frame.json"), config);
+      return send(res, 200, { config });
+    }
+    // replace the frame image in place (same file name → the site picks it up; the client bumps "version")
+    if (parts.length === 3 && parts[2] === "image" && m === "POST") {
+      const dir = await frameDir(parts[1]), name = url.searchParams.get("name") || "frame.png";
+      if (!NAME_RE.test(name) || !FRAME_IMG_EXT.has(path.extname(name).toLowerCase())) throw new HttpError(400, "Chỉ nhận ảnh png / jpg / webp");
+      const buf = await readBody(req, MAX_UPLOAD);
+      if (!buf.length) throw new HttpError(400, "File rỗng");
+      await fsp.writeFile(safeJoin(dir, name), buf);
+      return send(res, 201, { path: `assets/ui/${parts[1]}/${name}`, size: buf.length });
+    }
+  }
+
+  if (parts[0] === "git") {
+    if (parts[1] === "status" && m === "GET") {
+      const paths = gitPathsOf(String(url.searchParams.get("paths") || "").split(",").map(s => s.trim()).filter(Boolean));
+      const [files, info] = await Promise.all([gitStatus(paths), gitBranch()]);
+      return send(res, 200, { ...info, files });
+    }
+    if (parts[1] === "commit" && m === "POST") return send(res, 200, await gitCommit(await readBodyJSON(req)));
+    // push commits that are still local (e.g. after a failed push)
+    if (parts[1] === "push" && m === "POST") {
+      const r = await withGitLock(gitPush);
+      console.log(new Date().toLocaleTimeString(), r.pushed ? "git push ok" : `git push failed: ${r.pushError}`);
+      return send(res, 200, r);
+    }
   }
 
   if (parts[0] === "upload" && m === "POST") {

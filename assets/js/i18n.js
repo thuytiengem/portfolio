@@ -1,6 +1,7 @@
 // Language state. Any text value in the config/data can be a plain string
 // or { "en": ..., "vi": ... }; tr() picks the current language (falls back to English).
 import { $, $$, h } from "./utils.js";
+import { setRich } from "./richtext.js";
 
 const STORAGE_KEY = "portfolio-lang";
 const state = { lang: "en", fallback: "en", dict: {}, languages: {} };
@@ -30,16 +31,17 @@ export function bind(el, render) {
   render(el);
   return el;
 }
-export const bindText = (el, value) => bind(el, e => { e.textContent = tr(value); });
+// text fields support rich text tags (see richtext.js / RICHTEXT.md)
+export const bindText = (el, value) => bind(el, e => setRich(e, tr(value)));
 export const bindList = (ul, value) => bind(ul, e => {
   const items = tr(value);
-  e.replaceChildren(...(Array.isArray(items) ? items : [items]).filter(Boolean).map(t => h("li", {}, t)));
+  e.replaceChildren(...(Array.isArray(items) ? items : [items]).filter(Boolean).map(t => setRich(h("li"), t)));
 });
 export const onLangChange = fn => listeners.push(fn);
 
 function applyStatic() {
-  // labels may contain <br> — they come from the site owner's own web-config.json
-  $$("[data-i18n]").forEach(el => { el.innerHTML = label(el.dataset.i18n); });
+  // labels may contain rich text tags (<br>, <b>, <color=…> …)
+  $$("[data-i18n]").forEach(el => setRich(el, label(el.dataset.i18n)));
 }
 
 export function setLang(lang) {

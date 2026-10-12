@@ -55,6 +55,7 @@ The server only listens on 127.0.0.1. On GitHub Pages the Studio page is static 
 | Profile photo | put the file in `assets/images/` and set `web-config.json → profile.photo` |
 
 Any text value can be a plain string or `{ "en": "...", "vi": "..." }`. If the Vietnamese value is empty, English is shown.
+Text values accept Unity-style rich text tags (`<b>`, `<i>`, `<color=#hex>`, `<link=url>`, `<br>` …) — full list in [RICHTEXT.md](RICHTEXT.md).
 
 **Social links:** fill the URL in `web-config.json → social`; empty ones are hidden.
 
@@ -108,15 +109,31 @@ Textures are in `assets/images/intro-texture/` (`glass-demo.png` intact glass, `
 `glass-1..14.png` shards placed like `glass-broken-demo.png`, `particle-*.png` small pieces).
 Styles for the hero are in `assets/css/intro.css`. Visitors with "reduced motion" enabled get the final state directly (no idle glitches).
 
+## UI frames (9-slice images)
+
+The info panel and the Explore button are drawn from images, scaled like Unity's 9-slice sprites (CSS `border-image`):
+
+```
+assets/ui/
+├── description-frame/   frame.png + frame.json        (project / About panels)
+├── explore-button/      frame.png + frame.json        (every Explore button)
+└── text-frame/          text-frame.png + frame.json   (hero quote bar)
+```
+
+Replace `frame.png` (keep the name) and set the slice borders in the Studio → **Giao diện** (drag the 4 guide lines),
+or edit `frame.json` by hand: `slice` (px on the image), `scale` (0.5 for 2x art), `edges` (`stretch` / `repeat` / `round` / `space`),
+`fill`, `padding` (content inset in CSS px), optional `mobileScale` (smaller borders on phones). Loader: `assets/js/ui-frames.js`.
+
 ## Structure
 
 ```
 index.html · web-config.json · .nojekyll
-assets/fonts   Qualy (titles), Ebrima (body)
+assets/fonts   Qualy (titles), Montserrat (body)
 assets/css     base.css · intro.css · sections.css
-assets/js      main.js · i18n.js · utils.js · rain-bg.js · youtube.js · carousel.js · sections/ · intro/
+assets/js      main.js · i18n.js · richtext.js · ui-frames.js · utils.js · rain-bg.js · youtube.js · carousel.js · sections/ · intro/
+assets/ui      image frames (9-slice) for the panel and the Explore button
 assets/icons   social icons (Simple Icons, CC0)
 Database/      Projects · Blender · Artworks
 ```
 
-Font licenses: Qualy is free for personal use; Ebrima is a Microsoft font — replace both before any commercial use.
+Font licenses: Qualy is free for personal use only (replace before any commercial use); Montserrat is SIL OFL (free, see `assets/fonts/OFL-Montserrat.txt`).

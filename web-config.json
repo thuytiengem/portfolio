@@ -32,10 +32,9 @@
     },
     "summary": {
       "en": [
-        "Lorem ipsum dolor sit amet",
-        "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.",
-        "Lorem ipsum dolor sit amet",
-        "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida."
+        "I'm Thuy Tien, an artist also known as Thuytiengem, with a background in graphic design and professional experience in 2D game art.",
+        "Through my work in game industry, I have explored visual storytelling, stylized aesthetics, and the relationship between art and interactive experiences. My experience as both an artist and an art lead has shaped my approach to visual communication, creative collaboration, and the development of artistic ideas.",
+        "I am interested in exploring the intersection of art, design, and interactive media, continually expanding my artistic perspective through new creative challenges."
       ],
       "vi": [
         "Lorem ipsum dolor sit amet",
@@ -44,15 +43,21 @@
     }
   },
   "social": {
-    "whatsapp": "",
-    "instagram": "https://instagram.com/",
-    "linkedin": "https://linkedin.com/",
-    "bluesky": "",
-    "x": "",
-    "behance": "https://behance.net/",
+    "artstation": "https://www.artstation.com/thuytiengem",
+    "patreon": "",
+    "deviantart": "https://www.deviantart.com/thuytien-gem",
+    "instagram": "https://www.instagram.com/thuytien_gem",
+    "facebook": "https://www.facebook.com/thuytiengempage",
+    "x": "https://x.com/thuytien_gem",
+    "tiktok": "https://www.tiktok.com/@thuytiengem",
+    "reddit": "https://www.reddit.com/user/thuytiengem",
+    "linkedin": "https://www.linkedin.com/in/thuytien-gem",
+    "behance": "",
     "youtube": "",
+    "bluesky": "",
     "itchio": "",
-    "discord": ""
+    "discord": "",
+    "whatsapp": ""
   },
   "experience": [
     {

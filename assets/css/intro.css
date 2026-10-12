@@ -88,17 +88,13 @@
 /* ---- quote bar ---- */
 .hero-quote {
   position: absolute; z-index: 5; left: 50%; bottom: 7vh; transform: translateX(-50%);
-  width: min(1100px, calc(100% - 32px)); min-height: 58px;
-  display: grid; place-items: center; padding: 12px 60px;
-  background:
-    repeating-linear-gradient(120deg, transparent 0 14px, #8d5fd6 14px 22px) left / 90px 100% no-repeat,
-    linear-gradient(90deg, #6b3fae, #7a4cc2 50%, #6b3fae);
-  clip-path: polygon(4% 0, 100% 0, 100% 72%, 97.5% 100%, 0 100%);
+  width: min(1180px, calc(100% - 32px)); min-height: 60px;
+  display: grid; place-items: center;
   font-size: clamp(14px, 1.6vw, 22px); text-align: center;
-  visibility: hidden;
 }
+/* look = image frame assets/ui/text-frame/ (9-slice, see ui-frames.js) */
 /* brand + quote fade in (see timeline.js: brandIn / quoteIn) */
 .hero-brand, .hero-quote { opacity: 0; visibility: hidden; }
 .hero-brand.show, .hero-quote.show { visibility: visible; animation: fade-up .9s cubic-bezier(.2,.7,.2,1) both; }
 @keyframes fade-up { from { opacity: 0; filter: blur(6px); translate: 0 10px; } to { opacity: 1; filter: none; translate: 0 0; } }
-@media (max-width: 760px) { .hero-quote { padding: 12px 24px 12px 40px; bottom: 6vh; } }
+@media (max-width: 760px) { .hero .hero-quote { padding: 18px 28px 12px 64px; bottom: 6vh; } }

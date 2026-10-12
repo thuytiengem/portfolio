@@ -12,7 +12,6 @@ export function renderFeatured(projects) {
   projects.forEach((p, i) => {
     const portrait = p.video?.orientation === "portrait";
     const panel = h("div", { class: "panel" },
-      h("span", { class: "panel-edge" }),
       heading("description"),
       bindList(h("ul", { class: "list" }), p.description),
       heading("responsibilities"),
