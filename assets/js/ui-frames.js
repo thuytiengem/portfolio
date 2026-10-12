@@ -18,6 +18,7 @@ export const FRAMES = {
   "description-frame": ".panel",
   "explore-button": ".btn-explore",
   "text-frame": ".hero-quote",
+  "store-button": ".btn-store",
 };
 
 const SIDES = ["top", "right", "bottom", "left"];

@@ -182,6 +182,13 @@ main, footer { position: relative; z-index: 1; }
 .rt-link { color: var(--lilac); text-decoration: underline; text-underline-offset: 2px; }
 .rt-link:hover { color: #fff; }
 
+/* ============ Custom cursor (cursor.js) ============
+   The system pointer is hidden only once cursor.js has started (it adds .fx-cursor to <html>),
+   so touch devices / no-JS keep the normal cursor. */
+html.fx-cursor, html.fx-cursor * { cursor: none !important; }
+html.fx-cursor input, html.fx-cursor textarea, html.fx-cursor [contenteditable] { cursor: text !important; }
+#cursorfx { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; }
+
 /* ============ Reveal on scroll ============ */
 .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
 .reveal.in { opacity: 1; transform: none; }

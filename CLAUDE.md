@@ -32,6 +32,10 @@ The owner writes in Vietnamese — reply in Vietnamese.
 - Lists render with round bullets (no "- " prefix).
 - Letter rain: each column = the word written continuously and standing still; the falling drop (teardrop glow + bloom, unchanged)
   acts as a mask that reveals the next letters at its head and fades them at its tail. (The earlier random-character scramble was dropped.)
+- Featured projects: optional `"stores": { googlePlay, appStore, apk }` in data.json → buttons under the video (hidden when empty),
+  frame `assets/ui/store-button/` (owner picked design 1 "neon chamfer" of 10), labels `store_*` in web-config i18n, editable in Studio.
+- Custom cursor = "Laser comet" (owner picked design 8 of 10, built from their star-cursor reference): `assets/js/cursor.js`
+  (engine + design, `initCursor()` in main.js) + "Custom cursor" rules in base.css. Mouse only; add new clickable classes to CLICKABLE.
 - Clicking Home or the logo scrolls to the top and replays the intro; the topbar stays visible (`runIntro` returns `replay()`).
 - Description panel, Explore button and hero quote bar (`assets/ui/text-frame/text-frame.png`, owner's art) = image frames with 9-slice via CSS `border-image` (owner picked this over canvas / 9 files);
   slices edited visually in Studio → "Giao diện" (Unity Sprite Editor style). Default PNGs are generated at 2x (`scale: 0.5`).

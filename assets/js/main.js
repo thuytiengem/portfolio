@@ -4,12 +4,14 @@ import { initI18n, tr, onLangChange } from "./i18n.js";
 import { createRain } from "./rain-bg.js";
 import { stripRich } from "./richtext.js";
 import { loadFrames } from "./ui-frames.js";
+import { initCursor } from "./cursor.js";
 import { runIntro } from "./intro/index.js";
 import { renderFeatured, renderBlender } from "./sections/projects.js";
 import { renderArtworks } from "./sections/artworks.js";
 import { renderAbout, renderContact } from "./sections/about.js";
 
 async function main() {
+  initCursor();
   // image frames (assets/ui/) load alongside the config so panels/buttons are styled before they show
   const [config] = await Promise.all([loadJSON("web-config.json"), loadFrames()]);
   initI18n(config);

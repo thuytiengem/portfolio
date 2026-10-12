@@ -52,6 +52,7 @@ The server only listens on 127.0.0.1. On GitHub Pages the Studio page is static 
 | Featured projects | `Database/Projects/index.json` + `Database/Projects/<folder>/data.json` |
 | 3D Blender video | `Database/Blender/index.json` + `Database/Blender/<folder>/data.json` |
 | Personal artworks | `Database/Artworks/index.json` + images in `Database/Artworks/images/` |
+| Store / APK buttons under a project video | `Database/Projects/<folder>/data.json → "stores": { "googlePlay", "appStore", "apk" }` (empty = hidden) |
 | Profile photo | put the file in `assets/images/` and set `web-config.json → profile.photo` |
 
 Any text value can be a plain string or `{ "en": "...", "vi": "..." }`. If the Vietnamese value is empty, English is shown.
@@ -117,7 +118,8 @@ The info panel and the Explore button are drawn from images, scaled like Unity's
 assets/ui/
 ├── description-frame/   frame.png + frame.json        (project / About panels)
 ├── explore-button/      frame.png + frame.json        (every Explore button)
-└── text-frame/          text-frame.png + frame.json   (hero quote bar)
+├── text-frame/          text-frame.png + frame.json   (hero quote bar)
+└── store-button/        frame.png + frame.json        (Google Play / App Store / APK buttons)
 ```
 
 Replace `frame.png` (keep the name) and set the slice borders in the Studio → **Giao diện** (drag the 4 guide lines),
@@ -130,7 +132,7 @@ or edit `frame.json` by hand: `slice` (px on the image), `scale` (0.5 for 2x art
 index.html · web-config.json · .nojekyll
 assets/fonts   Qualy (titles), Montserrat (body)
 assets/css     base.css · intro.css · sections.css
-assets/js      main.js · i18n.js · richtext.js · ui-frames.js · utils.js · rain-bg.js · youtube.js · carousel.js · sections/ · intro/
+assets/js      main.js · i18n.js · richtext.js · ui-frames.js · cursor.js · utils.js · rain-bg.js · youtube.js · carousel.js · sections/ · intro/
 assets/ui      image frames (9-slice) for the panel and the Explore button
 assets/icons   social icons (Simple Icons, CC0)
 Database/      Projects · Blender · Artworks

@@ -9,6 +9,13 @@ const SOCIALS = [
   ["youtube", "YouTube", "https://youtube.com/@…"], ["bluesky", "Bluesky", "https://bsky.app/profile/…"],
   ["itchio", "itch.io", "https://….itch.io"], ["discord", "Discord", "https://discord.gg/…"], ["whatsapp", "WhatsApp", "https://wa.me/84…"],
 ];
+// store / download buttons of a featured project (data.json → "stores"); empty = button hidden on the site
+const STORES = [
+  ["googlePlay", "Google Play", "Play", "https://play.google.com/store/apps/details?id=…"],
+  ["appStore", "App Store", "iOS", "https://apps.apple.com/app/…"],
+  ["apk", "File APK", "APK", "https://… .apk", "Link tải trực tiếp file .apk, ví dụ Google Drive / GitHub Releases."],
+];
+const badUrl = v => !!String(v ?? "").trim() && !/^https?:\/\//i.test(String(v).trim());
 const KINDS = {
   projects: { title: "Featured Projects", noun: "dự án", dir: "Projects", section: "#featured" },
   blender: { title: "3D Blender", noun: "video", dir: "Blender", section: "#blender" },
@@ -155,6 +162,7 @@ function itemToDraft(kind, o = {}) {
     description: kind === "projects" ? pairs(o.description) : L(o.description),
     responsibilities: pairs(o.responsibilities),
     exploreUrl: o.exploreUrl || "",
+    ...(kind === "projects" ? { stores: Object.fromEntries(STORES.map(([k]) => [k, typeof o.stores?.[k] === "string" ? o.stores[k] : ""])) } : {}),
   };
 }
 function draftToItem(kind, d, orig = {}) {
@@ -165,6 +173,7 @@ function draftToItem(kind, d, orig = {}) {
     title: d.title.trim(), tagline: l(d.tagline), tags: d.tags.length ? d.tags : undefined,
     video: s(d.video.youtube) ? { youtube: d.video.youtube.trim(), orientation: d.video.orientation } : undefined,
     description: list(d.description), responsibilities: list(d.responsibilities), exploreUrl: d.exploreUrl.trim(),
+    stores: (st => (Object.keys(st).length ? st : undefined))(Object.fromEntries(STORES.map(([k]) => [k, s(d.stores[k])]).filter(([, v]) => v))),
   } : {
     title: s(d.title), tags: d.tags.length ? d.tags : undefined,
     video: s(d.video.youtube) ? { youtube: d.video.youtube.trim(), orientation: d.video.orientation } : undefined,
@@ -342,7 +351,8 @@ function viewCollection(kind) {
       <div class="thumb">${yt ? `<img src="${ytThumb(yt)}" alt="">` : "—"}</div>
       <div class="t"><b>${esc(broken ? id : p.title || "(không tiêu đề)")}</b><span>${esc(broken || `Database/${K.dir}/${id}`)}</span></div>
       <div class="badges">${yt ? `<span class="bdg c">▶ YouTube${p.video.orientation === "portrait" ? " · dọc" : ""}</span>` : `<span class="bdg r">chưa có video</span>`}
-        ${(p?.tags || []).length ? `<span class="bdg">${p.tags.length} tag</span>` : ""}</div>
+        ${(p?.tags || []).length ? `<span class="bdg">${p.tags.length} tag</span>` : ""}
+        ${(st => st.length ? `<span class="bdg g" title="Link tải game">⤓ ${st.join(" · ")}</span>` : "")(kind === "projects" ? STORES.filter(([k]) => String(p?.stores?.[k] ?? "").trim()).map(([, , short]) => short) : [])}</div>
       <div class="row-acts">
         ${listed ? "" : `<button class="btn ghost sm" type="button" data-act="addIndex" data-id="${id}">Thêm vào danh sách</button>`}
         ${broken ? "" : `<a class="btn ghost sm" href="#/${kind}/edit/${id}">Sửa</a>`}
@@ -379,6 +389,10 @@ function viewItemEditor() {
     <div class="savebar"><div></div><div style="display:flex;gap:10px;align-items:center"><span class="dirty" id="dirtyFlag" hidden>● Chưa lưu</span>
       <a class="btn ghost" href="#/${kind}">Huỷ</a><button class="btn pri" id="saveBtn" type="button" data-act="save" ${ED.id ? "disabled" : ""}>Lưu</button></div></div>
     ${sec("Nội dung", fields)}
+    ${kind === "projects" ? sec("Link tải game", `<div class="grid3" style="align-items:start">${STORES.map(([k, label, , ph, hint]) => `<div class="f"><label>${label}</label>
+        <input type="url" data-path="stores.${k}" data-store value="${esc(d.stores[k])}" placeholder="${esc(ph)}"${badUrl(d.stores[k]) ? ' class="bad"' : ""}>
+        ${hint ? `<span class="hint">${hint}</span>` : ""}</div>`).join("")}</div>
+      <span class="hint">Để trống thì nút đó bị ẩn trên web. Link phải bắt đầu bằng <code>http://</code> hoặc <code>https://</code>.</span>`, "các nút dưới video") : ""}
     ${sec("Khác", `<div class="grid2">
       <div class="f"><label>Tên thư mục <code>Database/${K.dir}/…</code></label><input type="text" data-path="@folder" value="${esc(ED.folder)}" placeholder="vd: fashion-star">
         <span class="hint">Chữ thường, số, dấu gạch ngang. Tự tạo từ tên nếu để trống.</span><span class="err" id="folderErr"></span></div>
@@ -708,6 +722,7 @@ $("app").addEventListener("input", e => {
     const id = parseYT(el.value), box = $("ytp");
     box.style.backgroundImage = id ? `url('${ytThumb(id)}')` : ""; box.textContent = id ? "" : (el.value ? "link không hợp lệ" : "chưa có video");
   }
+  if (el.dataset.store !== undefined) el.classList.toggle("bad", badUrl(el.value));
   if (p.startsWith("social.")) el.closest(".social").classList.toggle("empty", !el.value.trim());
   if (el.tagName === "TEXTAREA" && el.closest(".ktable")) autoGrow(el);
   updateDirty();
@@ -785,6 +800,8 @@ async function doSave() {
   } else if (ED) {
     const kind = ED.kind;
     if (kind === "projects" && !ED.d.title.trim()) throw new Error("Cần nhập tên dự án");
+    const badStore = kind === "projects" && STORES.find(([k]) => badUrl(ED.d.stores[k]));
+    if (badStore) throw new Error(`Link ${badStore[1]} phải bắt đầu bằng http:// hoặc https://`);
     const folder = ED.folder || slug(ED.d.title) || `${kind}-${Date.now().toString(36)}`;
     if (!/^[a-z0-9][a-z0-9-]{0,79}$/.test(folder)) throw new Error("Tên thư mục không hợp lệ");
     const data = draftToItem(kind, ED.d, ED.orig);

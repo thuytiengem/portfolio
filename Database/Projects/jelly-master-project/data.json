@@ -42,5 +42,9 @@
       "Cross-functional Collaboration: Đóng góp ý tưởng trong các buổi brainstorming, phối hợp với Game Designer và Developer để hoàn thiện ý tưởng, đồng thời đưa ra các giải pháp phù hợp cho các vấn đề phát sinh."
     ]
   },
-  "exploreUrl": ""
+  "exploreUrl": "",
+  "stores": {
+    "googlePlay": "https://play.google.com/store/apps/details?id=com.fc.p.cp.jelly.mukbang.asmr.live.diy&hl=en",
+    "appStore": "https://apps.apple.com/us/app/jelly-master-mukbang-asmr/id6738694162"
+  }
 }

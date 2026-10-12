@@ -26,6 +26,18 @@
 .project-head { text-align: center; margin-bottom: 28px; }
 .project-head h3 { font: clamp(28px, 3vw, 42px)/1.1 var(--font-title); letter-spacing: .02em; text-transform: uppercase; }
 .project-head p { font-size: 17px; }
+/* store / download buttons under the video — look = image frame assets/ui/store-button/ (9-slice) */
+.stores { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 18px; margin-top: 26px; }
+.btn-store {
+  display: inline-flex; align-items: center; gap: 10px; min-width: 176px; min-height: 56px;
+  color: #fff; text-decoration: none; text-align: left; line-height: 1.1;
+  transition: filter .2s, transform .2s;
+}
+.btn-store img { width: 26px; height: 26px; flex: none; filter: brightness(0) invert(1) drop-shadow(0 0 6px #d38cff); }
+.btn-store small { display: block; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; opacity: .85; }
+.btn-store b { display: block; font-size: 19px; font-weight: 700; }
+.btn-store:hover { filter: brightness(1.15) drop-shadow(0 0 12px #d38cff); transform: translateY(-2px); }
+@media (max-width: 600px) { .btn-store { min-width: 150px; min-height: 50px; } .btn-store b { font-size: 17px; } }
 .project-info { display: flex; flex-direction: column; gap: 26px; }
 .project-info .tags { justify-content: flex-start; }
 /* tall (portrait) videos: the info column stretches so the panel ends with the video */
