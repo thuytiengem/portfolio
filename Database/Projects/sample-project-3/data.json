@@ -1,14 +1,14 @@
 {
-  "title": "NAME PROJECT 3",
+  "title": "STICKER DIARY: RELAXING PUZZLE",
   "tagline": {
-    "en": "Some information about the game",
-    "vi": "Một vài thông tin về game"
+    "en": "15 members | puzzle mobile game",
+    "vi": "15 thành viên | puzzle mobile game"
   },
   "tags": [
     "Art Director",
-    "UI/UX Designer",
-    "Event Game Designer",
-    "Main Concept Artist"
+    "Lead Artist",
+    "Concept Artist",
+    "Asset Planner"
   ],
   "video": {
     "youtube": "bd1-CtXfTS0",
@@ -16,27 +16,30 @@
   },
   "description": {
     "en": [
-      "Lorem ipsum dolor sit amet",
-      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida."
+      "A cozy sticker puzzle game where every little piece has its place. Peel, place, and watch charming scenes come together one sticker at a time."
     ],
     "vi": [
-      "Lorem ipsum dolor sit amet",
-      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida."
+      "Một trò chơi giải đố xếp sticker nhẹ nhàng, nơi mỗi mảnh ghép đều có vị trí riêng. Bóc sticker, đặt vào đúng chỗ và ngắm nhìn những khung cảnh đáng yêu dần hoàn thiện qua từng miếng dán."
     ]
   },
   "responsibilities": {
     "en": [
-      "Lorem ipsum dolor sit amet",
-      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.",
-      "Lorem ipsum dolor sit amet",
-      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida."
+      "Defined the project's art direction and visual style.",
+      "Created the concepts for the first 10 levels of the game.",
+      "Mentored team members and reviewed art deliverables to maintain visual consistency and quality.",
+      "Created an art asset list and asset data documentation covering all in-game art assets.",
+      "Participated in brainstorming sessions and contributed ideas in collaboration with game designers and developers to support concept development and align artistic direction with gameplay requirements."
     ],
     "vi": [
-      "Lorem ipsum dolor sit amet",
-      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.",
-      "Lorem ipsum dolor sit amet",
-      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida."
+      "Xác định định hướng nghệ thuật và phong cách hình ảnh của dự án.",
+      "Xây dựng concept cho 10 level đầu tiên của game.",
+      "Hướng dẫn các thành viên trong nhóm và kiểm tra, đánh giá sản phẩm art nhằm duy trì tính đồng bộ và chất lượng hình ảnh.",
+      "Xây dựng danh sách tài nguyên art và tài liệu dữ liệu asset cho toàn bộ hình ảnh trong game.",
+      "Tham gia các buổi brainstorming và đóng góp ý tưởng cùng Game Designer và Developer nhằm hỗ trợ phát triển concept và đảm bảo định hướng nghệ thuật phù hợp với yêu cầu gameplay."
     ]
   },
-  "exploreUrl": ""
+  "exploreUrl": "",
+  "stores": {
+    "googlePlay": "https://play.google.com/store/apps/details?id=com.fc.p.cp.sticker.asmr.art.puzzle"
+  }
 }

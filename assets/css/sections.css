@@ -64,7 +64,9 @@
 .blender-item h3 { font: clamp(26px, 2.8vw, 38px)/1.1 var(--font-title); text-align: center; }
 .blender-item .tags { justify-content: space-between; }
 .blender-item .tag { flex: 1 1 140px; }
-.blender-desc { font-size: 19px; max-width: 520px; }
+/* the text spans the full width of the video above it */
+.blender-desc { font-size: 18px; line-height: 1.55; text-align: justify; }
+@media (max-width: 600px) { .blender-desc { text-align: left; font-size: 16px; } }
 .blender-item .cta { text-align: center; margin-top: 18px; }
 .blender-item.portrait { grid-template-columns: minmax(240px, 380px) minmax(0, 1fr); align-items: center; column-gap: 56px; }
 .blender-item.portrait > .video { grid-row: span 3; width: 100%; }
