@@ -1,0 +1,38 @@
+{
+  "title": "Grow a Garden",
+  "tagline": {
+    "en": "8 members | casual mobile game",
+    "vi": "8 thành viên | casual mobile game"
+  },
+  "tags": [
+    "Art Director",
+    "Lead Artist",
+    "Main Concept Artist",
+    "Map Game Designer"
+  ],
+  "description": {
+    "en": [
+      "A casual mobile farming game where players grow crops, harvest and sell produce, and expand their farmland."
+    ],
+    "vi": [
+      "Một trò chơi nông trại casual trên nền tảng di động, trong đó người chơi trồng cây, thu hoạch và bán nông sản, đồng thời mở rộng diện tích đất canh tác."
+    ]
+  },
+  "responsibilities": {
+    "en": [
+      "Defined the project's art direction and established its visual style.",
+      "Created the main concepts for the character roster, crops, and in-game assets.",
+      "Mentored team members and reviewed and approved art assets and animations to maintain visual consistency and quality.",
+      "Created map tilesets and designed and implemented in-game maps in Unity.",
+      "Participated in brainstorming sessions and contributed creative ideas in collaboration with game designers and developers to support gameplay and feature development."
+    ],
+    "vi": [
+      "Xây dựng định hướng nghệ thuật và xác lập phong cách hình ảnh cho dự án.",
+      "Phát triển concept chính cho hệ thống nhân vật, cây trồng và các tài nguyên hình ảnh trong game.",
+      "Hướng dẫn các thành viên trong nhóm, đồng thời kiểm tra và phê duyệt sản phẩm art và animation nhằm đảm bảo tính đồng bộ và chất lượng hình ảnh.",
+      "Xây dựng tileset cho bản đồ và thiết kế, triển khai bản đồ trong game bằng Unity.",
+      "Tham gia các buổi brainstorming và đóng góp ý tưởng sáng tạo cùng Game Designer và Developer nhằm hỗ trợ quá trình phát triển gameplay và tính năng của game."
+    ]
+  },
+  "exploreUrl": ""
+}
