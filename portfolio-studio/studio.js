@@ -153,7 +153,27 @@ const cfgDirty = () => CFG && cfgSnap() !== CFG.saved;
 function resetCfg() { CFG = { d: cfgToDraft(S.config) }; CFG.saved = cfgSnap(); }
 
 // ---- collection item draft <-> data.json ----
+const ID_RE = /^[a-z0-9][a-z0-9-]{0,79}$/;   // folder names + progression step ids (same rule as server.mjs)
+const isObj = v => !!v && typeof v === "object" && !Array.isArray(v);
+// fields of a nested object the Studio doesn't edit (kept as-is on save)
+const rest = (o, known) => (isObj(o) ? Object.fromEntries(Object.entries(o).filter(([k]) => !known.includes(k))) : {});
+const blankL = () => ({ en: "", vi: "" });
+// detail-page lists (project data.json → roles / progression / challenges / learned); "_" keys are Studio-only
+const roleDraft = (r = {}) => ({ title: L(r.title), text: pairs(r.text), _x: rest(r, ["title", "text"]) });
+const stepImgDraft = im => (isObj(im) ? { src: String(im.src || ""), caption: L(im.caption), _x: rest(im, ["src", "caption"]) } : { src: String(im || ""), caption: blankL(), _x: {} });
+const stepDraft = (p = {}) => ({
+  id: String(p.id || ""), name: L(p.name), text: pairs(p.text), images: (Array.isArray(p.images) ? p.images : []).map(stepImgDraft).filter(im => im.src),
+  _x: rest(p, ["id", "name", "text", "images"]),
+  _folder: p.id && ID_RE.test(p.id) ? p.id : null,   // folder of its images on disk (renamed on save when the id changes)
+  _auto: !p.id,                                      // id still follows the EN name
+  _files: null,                                      // file names found by the last folder scan (null = not scanned)
+});
+const challengeDraft = (c = {}) => ({ problem: L(c.problem), solution: L(c.solution), _x: rest(c, ["problem", "solution"]) });
+const learnedDraft = x => (isObj(x) && ("title" in x || "text" in x)
+  ? { title: L(x.title), text: L(x.text), _x: rest(x, ["title", "text"]) }
+  : { title: blankL(), text: L(x), _x: {} });
 function itemToDraft(kind, o = {}) {
+  const arr = v => (Array.isArray(v) ? v : []);
   return {
     title: o.title || "",
     tagline: L(o.tagline),
@@ -162,26 +182,51 @@ function itemToDraft(kind, o = {}) {
     description: kind === "projects" ? pairs(o.description) : L(o.description),
     responsibilities: pairs(o.responsibilities),
     exploreUrl: o.exploreUrl || "",
-    ...(kind === "projects" ? { stores: Object.fromEntries(STORES.map(([k]) => [k, typeof o.stores?.[k] === "string" ? o.stores[k] : ""])) } : {}),
+    ...(kind === "projects" ? {
+      stores: Object.fromEntries(STORES.map(([k]) => [k, typeof o.stores?.[k] === "string" ? o.stores[k] : ""])),
+      logo: typeof o.logo === "string" ? o.logo : "", cover: typeof o.cover === "string" ? o.cover : "",
+      studio: L(o.studio), period: L(o.period), genre: L(o.genre),
+      downloads: String(o.downloads ?? ""), members: String(o.members ?? ""),
+      roles: arr(o.roles).map(roleDraft), progression: arr(o.progression).map(stepDraft),
+      challenges: arr(o.challenges).map(challengeDraft), learned: arr(o.learned).map(learnedDraft),
+    } : {}),
   };
 }
 function draftToItem(kind, d, orig = {}) {
   const s = v => (String(v ?? "").trim() || undefined);
   const l = x => (x.en.trim() || x.vi.trim() ? { en: x.en.trim(), vi: x.vi.trim() } : undefined);
   const list = rows => { const u = unpairs(rows); return u.en.length || u.vi.length ? u : undefined; };
+  // detail-page fields: plain string when there is no (different) Vietnamese text, arrays only when filled
+  const lt = x => { const en = x.en.trim(), vi = x.vi.trim(); return !en && !vi ? undefined : vi && vi !== en ? { en, vi } : en; };
+  const lines = rows => { const u = unpairs(rows); return !u.en.length && !u.vi.length ? undefined : u.vi.length ? u : u.en; };
+  const many = a => (a.length ? a : undefined);
+  const obj = (o, x) => { const r = {}; Object.entries(o).forEach(([k, v]) => { if (v !== undefined) r[k] = v; }); return { ...r, ...x }; };
   const known = kind === "projects" ? {
     title: d.title.trim(), tagline: l(d.tagline), tags: d.tags.length ? d.tags : undefined,
     video: s(d.video.youtube) ? { youtube: d.video.youtube.trim(), orientation: d.video.orientation } : undefined,
     description: list(d.description), responsibilities: list(d.responsibilities), exploreUrl: d.exploreUrl.trim(),
     stores: (st => (Object.keys(st).length ? st : undefined))(Object.fromEntries(STORES.map(([k]) => [k, s(d.stores[k])]).filter(([, v]) => v))),
+    logo: s(d.logo), cover: s(d.cover), studio: lt(d.studio), period: lt(d.period), downloads: s(d.downloads),
+    members: (m => (m && /^\d+$/.test(m) ? Number(m) : m || undefined))(d.members.trim()), genre: lt(d.genre),
+    roles: many(d.roles.map(r => obj({ title: lt(r.title), text: lines(r.text) }, r._x)).filter(r => Object.keys(r).length)),
+    progression: many(d.progression.map(p => obj({
+      id: p.id.trim(), name: lt(p.name), text: lines(p.text),
+      images: many(p.images.map(im => { const c = lt(im.caption), x = Object.keys(im._x).length; return c || x ? obj({ src: im.src, caption: c }, im._x) : im.src; })),
+    }, p._x))),
+    challenges: many(d.challenges.map(c => obj({ problem: lt(c.problem), solution: lt(c.solution) }, c._x)).filter(c => Object.keys(c).length)),
+    learned: many(d.learned.map(x => { const t = lt(x.title), b = lt(x.text); return t || Object.keys(x._x).length ? obj({ title: t, text: b }, x._x) : b; }).filter(Boolean)),
   } : {
     title: s(d.title), tags: d.tags.length ? d.tags : undefined,
     video: s(d.video.youtube) ? { youtube: d.video.youtube.trim(), orientation: d.video.orientation } : undefined,
     description: l(d.description), exploreUrl: d.exploreUrl.trim(),
   };
+  // existing key order first (unknown fields kept as-is), then new fields in the order above
   const out = {};
-  Object.entries(known).forEach(([k, v]) => { if (v !== undefined) out[k] = v; });
-  Object.keys(orig).forEach(k => { if (!(k in known)) out[k] = orig[k]; });   // keep fields the Studio doesn't know
+  [...Object.keys(orig), ...Object.keys(known)].forEach(k => {
+    if (k in out) return;
+    const v = k in known ? known[k] : orig[k];
+    if (v !== undefined) out[k] = v;
+  });
   return out;
 }
 const edSnap = () => JSON.stringify([draftToItem(ED.kind, ED.d, ED.orig), ED.folder]);
@@ -267,11 +312,11 @@ function seg(path, opts) {
   const v = val(path);
   return `<div class="seg">${opts.map(([k, t]) => `<button type="button" data-act="seg" data-path="${path}" data-v="${k}" class="${v === k ? "on" : ""}">${t}</button>`).join("")}</div>`;
 }
-function itemHead(listPath, i, n, label) {
+function itemHead(listPath, i, n, label, rmAct = "rmItem") {
   return `<div class="item-h"><b>${label}</b>
     <button class="icon-btn" type="button" data-act="mvItem" data-path="${listPath}" data-i="${i}" data-d="-1" ${i ? "" : "disabled"} title="Lên">↑</button>
     <button class="icon-btn" type="button" data-act="mvItem" data-path="${listPath}" data-i="${i}" data-d="1" ${i < n - 1 ? "" : "disabled"} title="Xuống">↓</button>
-    <button class="icon-btn del" type="button" data-act="rmItem" data-path="${listPath}" data-i="${i}" title="Xoá">✕</button></div>`;
+    <button class="icon-btn del" type="button" data-act="${rmAct}" data-path="${listPath}" data-i="${i}" title="Xoá">✕</button></div>`;
 }
 const sec = (title, body, note = "") => `<section class="sec"><h2>${title}${note ? `<small>${note}</small>` : ""}</h2><div class="sec-b">${body}</div></section>`;
 const imgURL = p => (p ? `/${p.replace(/^\//, "")}?v=${Date.now()}` : "");
@@ -352,7 +397,8 @@ function viewCollection(kind) {
       <div class="t"><b>${esc(broken ? id : p.title || "(không tiêu đề)")}</b><span>${esc(broken || `Database/${K.dir}/${id}`)}</span></div>
       <div class="badges">${yt ? `<span class="bdg c">▶ YouTube${p.video.orientation === "portrait" ? " · dọc" : ""}</span>` : `<span class="bdg r">chưa có video</span>`}
         ${(p?.tags || []).length ? `<span class="bdg">${p.tags.length} tag</span>` : ""}
-        ${(st => st.length ? `<span class="bdg g" title="Link tải game">⤓ ${st.join(" · ")}</span>` : "")(kind === "projects" ? STORES.filter(([k]) => String(p?.stores?.[k] ?? "").trim()).map(([, , short]) => short) : [])}</div>
+        ${(st => st.length ? `<span class="bdg g" title="Link tải game">⤓ ${st.join(" · ")}</span>` : "")(kind === "projects" ? STORES.filter(([k]) => String(p?.stores?.[k] ?? "").trim()).map(([, , short]) => short) : [])}
+        ${kind === "projects" && p?.progression?.length ? `<span class="bdg" title="Trang chi tiết: quá trình sản xuất">◇ ${p.progression.length} bước</span>` : ""}</div>
       <div class="row-acts">
         ${listed ? "" : `<button class="btn ghost sm" type="button" data-act="addIndex" data-id="${id}">Thêm vào danh sách</button>`}
         ${broken ? "" : `<a class="btn ghost sm" href="#/${kind}/edit/${id}">Sửa</a>`}
@@ -385,7 +431,9 @@ function viewItemEditor() {
       ${inp("title", "Tiêu đề (không bắt buộc)", { hint: "Để trống như bản thiết kế." })}
       ${common}
       ${bi("description", "Đoạn mô tả dưới video", { area: true, rows: 3 })}`;
-  return `<div class="ph"><div><h1>${ED.id ? "Sửa" : "Thêm"} ${K.noun}</h1><p><a class="lnk" href="#/${kind}">← ${K.title}</a></p></div></div>
+  const detailLink = kind === "projects" && ED.id
+    ? `<div class="acts"><a class="btn ghost sm" href="/project.html?id=${encodeURIComponent(ED.id)}" target="_blank" rel="noopener" title="Mở trang chi tiết đã lưu">Xem trang chi tiết ↗</a></div>` : "";
+  return `<div class="ph"><div><h1>${ED.id ? "Sửa" : "Thêm"} ${K.noun}</h1><p><a class="lnk" href="#/${kind}">← ${K.title}</a></p></div>${detailLink}</div>
     <div class="savebar"><div></div><div style="display:flex;gap:10px;align-items:center"><span class="dirty" id="dirtyFlag" hidden>● Chưa lưu</span>
       <a class="btn ghost" href="#/${kind}">Huỷ</a><button class="btn pri" id="saveBtn" type="button" data-act="save" ${ED.id ? "disabled" : ""}>Lưu</button></div></div>
     ${sec("Nội dung", fields)}
@@ -393,10 +441,111 @@ function viewItemEditor() {
         <input type="url" data-path="stores.${k}" data-store value="${esc(d.stores[k])}" placeholder="${esc(ph)}"${badUrl(d.stores[k]) ? ' class="bad"' : ""}>
         ${hint ? `<span class="hint">${hint}</span>` : ""}</div>`).join("")}</div>
       <span class="hint">Để trống thì nút đó bị ẩn trên web. Link phải bắt đầu bằng <code>http://</code> hoặc <code>https://</code>.</span>`, "các nút dưới video") : ""}
+    ${kind === "projects" ? detailSections() : ""}
     ${sec("Khác", `<div class="grid2">
       <div class="f"><label>Tên thư mục <code>Database/${K.dir}/…</code></label><input type="text" data-path="@folder" value="${esc(ED.folder)}" placeholder="vd: fashion-star">
         <span class="hint">Chữ thường, số, dấu gạch ngang. Tự tạo từ tên nếu để trống.</span><span class="err" id="folderErr"></span></div>
       ${inp("exploreUrl", "Link nút Explore", { ph: "# (để sau)" })}</div>`)}`;
+}
+
+// ---- project detail page (project.html?id=<folder>): extra fields of a featured project ----
+const RT_HINT = `Hỗ trợ thẻ rich text (<code>&lt;b&gt;</code>, <code>&lt;color=#hex&gt;</code>, <code>&lt;br&gt;</code>… — xem <code>RICHTEXT.md</code>).`;
+const PROG_DIR = "images/product-progression";
+const projFile = rel => `/Database/Projects/${ED.id}/${rel.split("/").map(encodeURIComponent).join("/")}?v=${ED.bust}`;
+const stepFolder = st => st._folder || st.id.trim();
+// collapsible section (open state kept across re-renders)
+function csec(key, title, body, note = "") {
+  const open = ED.open[key] ?? true;
+  return `<details class="sec csec" data-sec="${key}"${open ? " open" : ""}><summary><h2>${title}${note ? `<small>${note}</small>` : ""}</h2></summary><div class="sec-b">${body}</div></details>`;
+}
+// logo / cover: stored in the project folder as images/<key>.<ext>
+function projImg(key, label, { hint = "", logo = false } = {}) {
+  const p = ED.d[key];
+  return `<div class="f"><span class="lbl">${label}</span><div class="imgpick">
+    <div class="ph-img${logo ? " sq ck" : ""}${logo ? " contain" : ""}" style="${p && ED.id ? `background-image:url('${esc(projFile(p))}')` : ""}">${p ? "" : "chưa có ảnh"}</div>
+    <div class="acts"><button class="btn ghost sm" type="button" data-act="pdImg" data-key="${key}" ${ED.id ? "" : "disabled"}>Chọn ảnh…</button>
+    ${p ? `<button class="btn ghost sm" type="button" data-act="clearImg" data-path="${key}">Bỏ ảnh</button>` : ""}
+    <span class="hint">${p ? `<code>${esc(p)}</code><br>` : ""}${ED.id ? hint : "Lưu dự án trước rồi mới tải ảnh lên."}</span></div></div></div>`;
+}
+function stepIdErr(i) {
+  const steps = ED.d.progression, id = steps[i].id.trim();
+  if (!id) return "";                                       // filled from the EN name on save
+  if (!ID_RE.test(id)) return "Chỉ dùng chữ thường không dấu, số và dấu gạch ngang (a-z 0-9 -)";
+  if (steps.some((o, j) => j !== i && o.id.trim() === id)) return "Trùng id với bước khác";
+  return "";
+}
+function stepSlug(base, i) {
+  const s = slug(base).slice(0, 60).replace(/-$/, "") || "step";
+  let n = s, k = 2;
+  while (ED.d.progression.some((o, j) => j !== i && o.id.trim() === n)) n = `${s}-${k++}`;
+  return n;
+}
+function stepPathHTML(i) {
+  const st = ED.d.progression[i], f = stepFolder(st), id = st.id.trim();
+  return `<code>Database/Projects/${esc(ED.id || ED.folder || "&lt;thư mục dự án&gt;")}/${PROG_DIR}/${f ? esc(f) : "&lt;id&gt;"}/</code>` +
+    (st._folder && id && id !== st._folder ? ` <span class="warn">→ đổi tên thành <code>${esc(id)}/</code> khi Lưu</span>` : "");
+}
+function stepImgs(i) {
+  const st = ED.d.progression[i], n = st.images.length, folder = stepFolder(st);
+  const tiles = st.images.map((im, j) => {
+    const miss = st._files && !st._files.has(im.src), p = `progression.${i}.images.${j}`;
+    const url = ED.id && folder ? projFile(`${PROG_DIR}/${folder}/${im.src}`) : "";
+    return `<div class="pimg${miss ? " miss" : ""}" data-j="${j}">
+      <div class="pimg-t" draggable="true" title="Kéo để đổi thứ tự" style="${url && !miss ? `background-image:url('${esc(url)}')` : ""}">
+        <span class="n">${String(j + 1).padStart(2, "0")}</span>${miss ? `<span class="bdg r">thiếu file</span>` : ""}</div>
+      <div class="pimg-h"><span class="pimg-name" title="${esc(im.src)}">${esc(im.src)}</span>
+        <button class="icon-btn" type="button" data-act="mvItem" data-path="progression.${i}.images" data-i="${j}" data-d="-1" ${j ? "" : "disabled"} title="Lên trước">←</button>
+        <button class="icon-btn" type="button" data-act="mvItem" data-path="progression.${i}.images" data-i="${j}" data-d="1" ${j < n - 1 ? "" : "disabled"} title="Ra sau">→</button>
+        <button class="icon-btn del" type="button" data-act="rmStepImg" data-i="${i}" data-j="${j}" title="Gỡ ảnh">✕</button></div>
+      <input type="text" data-path="${p}.caption.en" value="${esc(im.caption.en)}" placeholder="Chú thích EN (không bắt buộc)">
+      <input type="text" data-path="${p}.caption.vi" value="${esc(im.caption.vi)}" placeholder="Chú thích VI">
+    </div>`;
+  }).join("");
+  const missing = st._files ? st.images.filter(im => !st._files.has(im.src)).length : 0;
+  return `<div class="f"><span class="lbl">Ảnh của bước <code>${n} ảnh${missing ? ` · <span class="bad">${missing} thiếu file</span>` : ""}</code></span>
+    <div class="pimg-bar"><button class="btn ghost sm" type="button" data-act="stepUpload" data-i="${i}" ${ED.id ? "" : "disabled"}>⤒ Tải ảnh lên</button>
+      <button class="btn ghost sm" type="button" data-act="stepScan" data-i="${i}" ${ED.id ? "" : "disabled"}>⟳ Quét thư mục</button>
+      ${missing ? `<button class="btn danger sm" type="button" data-act="stepDropMissing" data-i="${i}">Gỡ ${missing} ảnh thiếu file</button>` : ""}
+      <span class="hint" data-step-path="${i}">${stepPathHTML(i)}</span></div>
+    <div class="pimgs" data-imgs="${i}">${tiles}<div class="pimg-drop" data-act="stepUpload" data-i="${i}">${ED.id ? "Kéo thả ảnh vào đây<br>hoặc bấm để chọn" : "Lưu dự án trước<br>rồi mới tải ảnh"}</div></div>
+    <span class="hint">Ảnh JPG được nén ≤ 2400px; PNG có nền trong suốt giữ nguyên PNG. Có thể tự chép ảnh vào thư mục trên rồi bấm <b>Quét thư mục</b>
+      (thêm ảnh mới theo tên file, đánh dấu ảnh bị thiếu). Kéo ảnh để đổi thứ tự; chú thích để trống thì không hiện.</span></div>`;
+}
+function detailSections() {
+  const d = ED.d, cnt = (a, w) => (a.length ? `${a.length} ${w}` : "trống");
+  const roles = d.roles.map((r, i) => `<div class="item">${itemHead("roles", i, d.roles.length, `#${i + 1} · ${esc(r.title.en || r.title.vi || "Vai trò mới")}`)}
+      ${bi(`roles.${i}.title`, "Tên vai trò")}
+      ${bullets(`roles.${i}.text`, "Công việc")}</div>`).join("");
+  const steps = d.progression.map((st, i) => { const err = stepIdErr(i); return `<div class="item step">${itemHead("progression", i, d.progression.length, `#${i + 1} · ${esc(st.name.en || st.name.vi || "Bước mới")}`, "rmStep")}
+      <div class="step-top">${bi(`progression.${i}.name`, "Tên bước (hiện trên web)")}
+        <div class="f"><label>Id bước <code>= tên thư mục ảnh</code></label>
+          <input type="text" data-path="progression.${i}.id" data-step-id="${i}" value="${esc(st.id)}" placeholder="tự tạo từ tên EN"${err ? ' class="bad"' : ""}>
+          <span class="err" data-step-err="${i}">${err}</span></div></div>
+      ${bullets(`progression.${i}.text`, "Nội dung")}
+      ${stepImgs(i)}</div>`; }).join("");
+  const chall = d.challenges.map((c, i) => `<div class="item">${itemHead("challenges", i, d.challenges.length, `#${i + 1} · ${esc((c.problem.en || c.problem.vi || "Thử thách mới").slice(0, 60))}`)}
+      ${bi(`challenges.${i}.problem`, "Thử thách (Problem)", { area: true, rows: 2 })}
+      ${bi(`challenges.${i}.solution`, "Giải pháp (Solution)", { area: true, rows: 3 })}</div>`).join("");
+  const learned = d.learned.map((x, i) => `<div class="item">${itemHead("learned", i, d.learned.length, `#${i + 1} · ${esc((x.title.en || x.title.vi || x.text.en || x.text.vi || "Bài học mới").slice(0, 60))}`)}
+      ${bi(`learned.${i}.title`, "Tiêu đề (không bắt buộc)")}
+      ${bi(`learned.${i}.text`, "Nội dung", { area: true, rows: 2 })}</div>`).join("");
+  const list = (html, act, label, empty) => `${html ? `<div class="items">${html}</div>` : `<div class="empty sm">${empty}</div>`}
+      <button class="btn ghost sm add" type="button" data-act="${act}">${label}</button>`;
+  return `<div class="pd-h"><h3>Trang chi tiết dự án</h3><span class="hint">Các mục dưới đây hiện ở trang <code>project.html?id=${esc(ED.id || "…")}</code> (bấm Explore).
+      Mục nào để trống thì không hiện. ${RT_HINT}</span></div>` +
+    csec("info", "Trang chi tiết — Thông tin chung", `
+      <div class="grid2">${projImg("logo", "Logo game", { logo: true, hint: "Lưu thành <code>images/logo.png</code> (giữ nền trong suốt)." })}
+        ${projImg("cover", "Ảnh nền header", { hint: "Hiện mờ phía sau header. Để trống thì dùng ảnh thumbnail YouTube." })}</div>
+      <div class="grid2">${bi("studio", "Studio / công ty")}${bi("period", "Thời gian", { hint: "vd: 2023 – 2024" })}</div>
+      <div class="grid2">${bi("genre", "Thể loại", { hint: "vd: Casual simulation" })}
+        <div class="grid2 tight">${inp("downloads", "Lượt tải", { ph: "70M+" })}${inp("members", "Số thành viên", { ph: "6", hint: "Số người trong team." })}</div></div>`) +
+    csec("roles", "Vai trò (My Roles)", list(roles, "addRole", "+ Thêm vai trò", "Chưa có vai trò nào — web sẽ dùng mục Responsibilities ở trên.") +
+      `<span class="hint">Để trống thì web dùng mục <b>Responsibilities</b>. Mỗi dòng “Công việc” là một gạch đầu dòng.</span>`, cnt(d.roles, "vai trò")) +
+    csec("progression", "Quá trình sản xuất (Product Progression)", list(steps, "addStep", "+ Thêm bước", "Chưa có bước nào.") +
+      `<span class="hint">Mỗi bước có một thư mục ảnh riêng <code>${PROG_DIR}/&lt;id&gt;/</code> trong thư mục dự án. Đổi id của bước đã có ảnh thì thư mục được đổi tên theo khi bấm Lưu.</span>`, cnt(d.progression, "bước")) +
+    csec("challenges", "Thử thách &amp; Giải pháp", list(chall, "addChallenge", "+ Thêm thử thách", "Chưa có mục nào."), cnt(d.challenges, "mục")) +
+    csec("learned", "Bài học (What I learned)", list(learned, "addLearned", "+ Thêm bài học", "Chưa có bài học nào.") +
+      `<span class="hint">Có tiêu đề thì hiện dạng tiêu đề + đoạn văn; không có thì chỉ là một dòng.</span>`, cnt(d.learned, "mục"));
 }
 
 function viewArtworks() {
@@ -663,6 +812,7 @@ function render() {
     if (!ED) return;
     VIEW = kind;
     $("app").innerHTML = viewItemEditor();
+    if (kind === "projects") bindStepImgs();
   } else if ((m = h.match(/^#\/(projects|blender)$/))) {
     VIEW = m[1]; $("app").innerHTML = viewCollection(VIEW); bindListDnD(VIEW);
   } else if (h === "#/artworks") {
@@ -689,8 +839,23 @@ function openEditor(kind, id) {
   const C = S[kind];
   if (id && !C.items[id]) { toast(`Không tìm thấy "${id}"`, "err"); location.hash = `#/${kind}`; return; }
   const orig = id ? C.items[id] : {};
-  ED = { kind, id, orig, d: itemToDraft(kind, orig), folder: id || "" };
+  // open: collapsed state of the detail sections · bust: image cache-busting · delFiles: step images to delete on save
+  ED = { kind, id, orig, d: itemToDraft(kind, orig), folder: id || "", open: {}, bust: Date.now(), delFiles: [] };
   ED.saved = edSnap();
+  if (kind === "projects" && id) checkStepFiles(ED);
+}
+// quietly look into each step folder once → flag list entries whose file is missing
+async function checkStepFiles(ed) {
+  let changed = false;
+  await Promise.all(ed.d.progression.map(async st => {
+    const f = stepFolder(st); if (!ID_RE.test(f)) return;
+    try {
+      const r = await api("GET", `/api/projects/${ed.id}/images?dir=${encodeURIComponent(`${PROG_DIR}/${f}`)}`);
+      st._files = new Set(r.files.filter(x => x.ok).map(x => x.name));
+      if (st.images.some(im => !st._files.has(im.src))) changed = true;
+    } catch { /* older server.mjs without the images route */ }
+  }));
+  if (changed && ED === ed) render();
 }
 let lastHash = location.hash;
 addEventListener("hashchange", () => {
@@ -709,6 +874,10 @@ addEventListener("hashchange", () => {
   render();
   scrollTo(0, 0);
 });
+// detail sections (<details>): remember which ones are collapsed; "toggle" does not bubble → capture
+$("app").addEventListener("toggle", e => { const k = e.target.dataset?.sec; if (k && ED) ED.open[k] = e.target.open; }, true);
+// a file dropped outside a drop zone must not open in the tab (would lose unsaved edits)
+["dragover", "drop"].forEach(t => addEventListener(t, e => { if (e.dataTransfer?.types.includes("Files")) e.preventDefault(); }));
 addEventListener("beforeunload", e => { if (anyDirty()) { e.preventDefault(); e.returnValue = ""; } });
 
 // ══════════════ events ══════════════
@@ -723,12 +892,28 @@ $("app").addEventListener("input", e => {
     box.style.backgroundImage = id ? `url('${ytThumb(id)}')` : ""; box.textContent = id ? "" : (el.value ? "link không hợp lệ" : "chưa có video");
   }
   if (el.dataset.store !== undefined) el.classList.toggle("bad", badUrl(el.value));
+  // progression step id: follows the EN name until edited by hand (only for steps without an image folder yet)
+  let m;
+  if (el.dataset.stepId !== undefined) { ED.d.progression[+el.dataset.stepId]._auto = false; stepIdSync(+el.dataset.stepId); }
+  else if ((m = p.match(/^progression\.(\d+)\.name\.en$/)) && ED) {
+    const i = +m[1], st = ED.d.progression[i];
+    if (st._auto && !st._folder) {
+      st.id = el.value.trim() ? stepSlug(el.value, i) : "";
+      const idEl = document.querySelector(`[data-step-id="${i}"]`); if (idEl) idEl.value = st.id;
+      stepIdSync(i);
+    }
+  }
   if (p.startsWith("social.")) el.closest(".social").classList.toggle("empty", !el.value.trim());
   if (el.tagName === "TEXTAREA" && el.closest(".ktable")) autoGrow(el);
   updateDirty();
 });
 $("app").addEventListener("change", e => {
   if (e.target.dataset.uik) return uiInput(e.target, true);
+  // tidy a typed step id ("Concept Art" → "concept-art")
+  if (e.target.dataset.stepId !== undefined) {
+    const i = +e.target.dataset.stepId, st = ED.d.progression[i], v = e.target.value.trim() ? slug(e.target.value) : "";
+    if (v !== st.id) { st.id = v; e.target.value = v; stepIdSync(i); updateDirty(); }
+  }
   // normalize a pasted YouTube link to its id
   if (e.target.dataset.yt !== undefined) { const id = parseYT(e.target.value); if (id) { e.target.value = id; setPath(draftOf(), "video.youtube", id); updateDirty(); } }
 });
@@ -771,6 +956,47 @@ const ACTS = {
     const src = await uploadArt(file); if (!src) return;
     ART.removed.add(ART.d[i].src); ART.d[i].src = src; render();
   },
+  // ---- project detail page ----
+  async pdImg(el) {
+    const key = el.dataset.key, [file] = await pickFiles(); if (!file || !ED?.id) return;
+    try {
+      const { blob, ext } = await prepImg(file, key === "logo" ? 1024 : 2400);
+      const r = await postFile(`/api/projects/${ED.id}/images?dir=images&name=${key}.${ext}&overwrite=1`, blob);
+      ED.d[key] = `images/${r.name}`; ED.bust = Date.now(); render(); gitRefresh();
+      toast("Đã tải ảnh lên — bấm Lưu để ghi vào data.json");
+    } catch (e) { toast(e.message, "err"); }
+  },
+  addRole() { ED.d.roles.push(roleDraft()); ED.open.roles = true; render(); },
+  addStep() { ED.d.progression.push(stepDraft()); ED.open.progression = true; render(); },
+  addChallenge() { ED.d.challenges.push(challengeDraft()); ED.open.challenges = true; render(); },
+  addLearned() { ED.d.learned.push(learnedDraft("")); ED.open.learned = true; render(); },
+  async rmStep(el) {
+    const i = +el.dataset.i, st = ED.d.progression[i];
+    if (st.images.length || st._folder) {
+      const ok = await confirmDlg("Xoá bước này?", `<p>Xoá bước <b>${esc(st.name.en || st.name.vi || st.id || `#${i + 1}`)}</b> khỏi trang chi tiết.</p>
+        <p class="hint">Thư mục ảnh <code>${PROG_DIR}/${esc(stepFolder(st))}/</code> vẫn được giữ trên ổ đĩa (xoá tay nếu không cần).</p>`, "Xoá bước");
+      if (!ok) return;
+    }
+    ED.d.progression.splice(i, 1); render();
+  },
+  stepUpload(el) { pickFiles("image/*", true).then(files => uploadStepFiles(+el.dataset.i, files)); },
+  stepScan(el) { scanStep(+el.dataset.i); },
+  stepDropMissing(el) {
+    const st = ED.d.progression[+el.dataset.i];
+    st.images = st.images.filter(im => st._files.has(im.src)); render();
+  },
+  async rmStepImg(el) {
+    const st = ED.d.progression[+el.dataset.i], j = +el.dataset.j, im = st.images[j];
+    const miss = st._files && !st._files.has(im.src);
+    if (!miss && ED.id && stepFolder(st)) {
+      const ok = await confirmDlg("Gỡ ảnh khỏi bước?", `<p>Gỡ <code>${esc(im.src)}</code> khỏi danh sách ảnh của bước.</p>
+        <label class="sl-chk"><input type="checkbox" id="dlgDelFile"> Xoá luôn file trên ổ đĩa (khi bấm Lưu)</label>
+        <p class="hint">Mặc định giữ file trong thư mục — bấm “Quét thư mục” để thêm lại.</p>`, "Gỡ ảnh");
+      if (!ok) return;
+      if ($("dlgDelFile").checked) ED.delFiles.push({ folder: stepFolder(st), name: im.src });
+    }
+    st.images.splice(j, 1); render();
+  },
   async addIndex(el) { const C = S[VIEW]; await saveOrder(VIEW, [...C.order, el.dataset.id]); },
   async delItem(el) {
     const id = el.dataset.id, K = KINDS[VIEW], p = S[VIEW].items[id];
@@ -804,6 +1030,7 @@ async function doSave() {
     if (badStore) throw new Error(`Link ${badStore[1]} phải bắt đầu bằng http:// hoặc https://`);
     const folder = ED.folder || slug(ED.d.title) || `${kind}-${Date.now().toString(36)}`;
     if (!/^[a-z0-9][a-z0-9-]{0,79}$/.test(folder)) throw new Error("Tên thư mục không hợp lệ");
+    if (kind === "projects" && !(await prepSteps())) return;
     const data = draftToItem(kind, ED.d, ED.orig);
     const r = ED.id ? await api("PUT", `/api/${kind}/${ED.id}`, { data, newId: folder })
                     : await api("POST", `/api/${kind}`, { id: folder, data });
@@ -892,6 +1119,129 @@ function bindDrop() {
   ["dragenter", "dragover"].forEach(t => d.addEventListener(t, e => { e.preventDefault(); d.classList.add("over"); }));
   ["dragleave", "drop"].forEach(t => d.addEventListener(t, () => d.classList.remove("over")));
   d.addEventListener("drop", e => { e.preventDefault(); addArtFiles([...e.dataTransfer.files]); });
+}
+
+// ---- project detail: progression step images ----
+// resize to ≤ max px; PNG / WebP with real transparency stay PNG, everything else → JPG (like artworks)
+async function prepImg(file, max = 2400) {
+  if (file.type === "image/gif") return { blob: file, ext: "gif" };
+  const bmp = await createImageBitmap(file);
+  const s = Math.min(1, max / Math.max(bmp.width, bmp.height));
+  const c = document.createElement("canvas");
+  c.width = Math.round(bmp.width * s); c.height = Math.round(bmp.height * s);
+  const g = c.getContext("2d", { willReadFrequently: true });
+  g.drawImage(bmp, 0, 0, c.width, c.height);
+  let alpha = false;
+  if (/png|webp/.test(file.type)) {
+    const px = g.getImageData(0, 0, c.width, c.height).data;
+    for (let i = 3; i < px.length; i += 4) if (px[i] < 255) { alpha = true; break; }
+  }
+  if (alpha) return { blob: await new Promise(r => c.toBlob(r, "image/png")), ext: "png" };
+  g.globalCompositeOperation = "destination-over"; g.fillStyle = "#000"; g.fillRect(0, 0, c.width, c.height);
+  return { blob: await new Promise(r => c.toBlob(r, "image/jpeg", 0.88)), ext: "jpg" };
+}
+const stepDirQ = f => `dir=${encodeURIComponent(`${PROG_DIR}/${f}`)}`;
+// refresh the id error + folder path of one step without re-rendering (keeps focus)
+function stepIdSync(i) {
+  const err = stepIdErr(i), e = document.querySelector(`[data-step-err="${i}"]`), p = document.querySelector(`[data-step-path="${i}"]`);
+  if (e) e.textContent = err;
+  document.querySelector(`[data-step-id="${i}"]`)?.classList.toggle("bad", !!err);
+  if (p) p.innerHTML = stepPathHTML(i);
+}
+// the step needs a valid id (= folder name) before files can go into its folder
+function stepReady(i) {
+  const st = ED.d.progression[i];
+  if (!ED.id) { toast("Lưu dự án trước rồi mới tải ảnh lên", "err"); return ""; }
+  if (st._folder) return st._folder;
+  if (!st.id.trim()) { toast("Nhập id cho bước trước (id = tên thư mục ảnh)", "err"); return ""; }
+  const err = stepIdErr(i); if (err) { toast(`Id bước: ${err}`, "err"); return ""; }
+  return st.id.trim();
+}
+async function uploadStepFiles(i, files) {
+  files = files.filter(f => f.type.startsWith("image/"));
+  const folder = files.length && stepReady(i); if (!folder) return;
+  const st = ED.d.progression[i], ed = ED;
+  let n = 0;
+  for (const f of files) {
+    toast(`Đang tải ảnh ${n + 1}/${files.length}…`);
+    try {
+      const { blob, ext } = await prepImg(f);
+      const base = slug(f.name.replace(/\.[^.]+$/, "")).slice(0, 80) || "image";
+      const r = await postFile(`/api/projects/${ed.id}/images?${stepDirQ(folder)}&name=${base}.${ext}`, blob);
+      st.images.push(stepImgDraft(r.name)); st._files?.add(r.name); n++;
+    } catch (e) { toast(`${f.name}: ${e.message}`, "err"); return finishUpload(); }
+  }
+  finishUpload();
+  toast(`Đã tải ${n} ảnh vào ${folder}/ — bấm Lưu để ghi danh sách vào data.json`);
+  function finishUpload() {
+    if (n) { st._folder = folder; st._auto = false; }
+    ed.bust = Date.now(); if (ED === ed) render(); gitRefresh();
+  }
+}
+// add files found in the step folder (sorted by name) + flag list entries whose file is gone
+async function scanStep(i) {
+  const folder = stepReady(i); if (!folder) return;
+  const st = ED.d.progression[i];
+  try {
+    const r = await api("GET", `/api/projects/${ED.id}/images?${stepDirQ(folder)}`);
+    if (!r.exists) {
+      st._files = new Set(); render();
+      return toast(`Chưa có thư mục ${PROG_DIR}/${folder}/ — tạo thư mục đó, chép ảnh vào rồi quét lại`, "err");
+    }
+    const ok = r.files.filter(f => f.ok).map(f => f.name), bad = r.files.filter(f => !f.ok).map(f => f.name);
+    const have = new Set(st.images.map(im => im.src)), add = ok.filter(nm => !have.has(nm));
+    add.forEach(nm => st.images.push(stepImgDraft(nm)));
+    st._files = new Set(ok); st._folder = folder; st._auto = false; ED.bust = Date.now();
+    const miss = st.images.filter(im => !st._files.has(im.src)).length;
+    render();
+    const msg = [add.length ? `Thêm ${add.length} ảnh mới` : "Không có ảnh mới", miss ? `${miss} ảnh thiếu file` : "",
+      bad.length ? `bỏ qua ${bad.length} file có tên không hợp lệ (${bad.slice(0, 3).join(", ")}${bad.length > 3 ? "…" : ""}) — đổi tên thành chữ không dấu, số, - _ rồi quét lại` : ""].filter(Boolean).join(" · ");
+    toast(msg, miss || bad.length ? "err" : "ok");
+  } catch (e) { toast(e.message, "err"); }
+}
+// drag tiles to reorder inside one step; drop files from the computer to upload
+function bindStepImgs() {
+  document.querySelectorAll("[data-imgs]").forEach(box => {
+    const i = +box.dataset.imgs; let from = -1;
+    box.addEventListener("dragstart", e => { const t = e.target.closest(".pimg"); if (t) { from = +t.dataset.j; t.classList.add("drag"); e.dataTransfer.effectAllowed = "move"; } });
+    box.addEventListener("dragend", e => { from = -1; e.target.closest(".pimg")?.classList.remove("drag"); box.classList.remove("over"); });
+    box.addEventListener("dragover", e => {
+      if (from < 0 && !e.dataTransfer.types.includes("Files")) return;
+      e.preventDefault(); box.classList.add("over");
+    });
+    box.addEventListener("dragleave", e => { if (!box.contains(e.relatedTarget)) box.classList.remove("over"); });
+    box.addEventListener("drop", e => {
+      e.preventDefault(); box.classList.remove("over");
+      if (from < 0) { if (e.dataTransfer.files.length) uploadStepFiles(i, [...e.dataTransfer.files]); return; }
+      const arr = ED.d.progression[i].images, t = e.target.closest(".pimg");
+      const to = t ? +t.dataset.j : arr.length - 1, [x] = arr.splice(from, 1);
+      arr.splice(to, 0, x); from = -1; render();
+    });
+  });
+}
+// before writing data.json: fill empty step ids, delete files the owner chose to delete, rename step folders whose id changed
+async function prepSteps() {
+  const steps = ED.d.progression;
+  steps.forEach((st, i) => { if (!st.id.trim()) st.id = stepSlug(st.name.en || st.name.vi || `step-${i + 1}`, i); });
+  steps.forEach((st, i) => { const err = stepIdErr(i); if (err) throw new Error(`Bước #${i + 1} (${st.id}): ${err}`); });
+  if (!ED.id) return true;
+  const ren = steps.filter(st => st._folder && st._folder !== st.id.trim());
+  const folders = new Set(steps.map(st => st._folder).filter(Boolean));
+  const cross = ren.find(st => folders.has(st.id.trim()));
+  if (cross) throw new Error(`Id "${cross.id}" đang là thư mục ảnh của bước khác — đổi id lần lượt từng bước (Lưu sau mỗi lần)`);
+  if (ren.length && !(await confirmDlg("Đổi tên thư mục ảnh?", `<p>Id bước đã đổi nên thư mục ảnh sẽ được đổi tên theo:</p>
+      <ul class="gitp-files">${ren.map(st => `<li><code>${esc(st._folder)}/</code> → <code>${esc(st.id)}/</code></li>`).join("")}</ul>
+      <p class="hint">Trong <code>Database/Projects/${esc(ED.id)}/${PROG_DIR}/</code></p>`, "Đổi tên & Lưu", "pri"))) return false;
+  for (const f of ED.delFiles) {
+    if (steps.some(st => stepFolder(st) === f.folder && st.images.some(im => im.src === f.name))) continue;   // added back
+    await api("DELETE", `/api/projects/${ED.id}/images?${stepDirQ(f.folder)}&name=${encodeURIComponent(f.name)}`);
+  }
+  ED.delFiles = [];
+  for (const st of ren) {
+    await api("POST", `/api/projects/${ED.id}/rename-step`, { from: st._folder, to: st.id.trim() });
+    st._folder = st.id.trim();
+  }
+  return true;
 }
 
 // ---- texts filter / autogrow ----

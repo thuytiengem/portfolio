@@ -6,6 +6,7 @@ import { preloadTextures, buildStage, tremble, errorGlitch } from "./effects/gla
 import { createParticles } from "./effects/particles.js";
 import { idleGlitch } from "./effects/title.js";
 import { $, sleep, reducedMotion } from "../utils.js";
+import { consumeSkipIntro } from "./skip.js";
 import { bindText } from "../i18n.js";
 
 /**
@@ -89,6 +90,7 @@ export async function runIntro(config, onDone) {
   }
 
   const canPlay = INTRO_ENABLED && !still;
-  await play(!canPlay || new URLSearchParams(location.search).has("nointro"));
+  // ?nointro (Studio preview) or coming back from a project page → final state right away
+  await play(!canPlay || new URLSearchParams(location.search).has("nointro") || consumeSkipIntro());
   return () => { if (canPlay) play(false); };
 }

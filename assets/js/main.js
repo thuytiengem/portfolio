@@ -5,6 +5,7 @@ import { createRain } from "./rain-bg.js";
 import { stripRich } from "./richtext.js";
 import { loadFrames } from "./ui-frames.js";
 import { initCursor } from "./cursor.js";
+import { initMenu } from "./topbar.js";
 import { runIntro } from "./intro/index.js";
 import { renderFeatured, renderBlender } from "./sections/projects.js";
 import { renderArtworks } from "./sections/artworks.js";
@@ -62,11 +63,7 @@ async function main() {
 }
 
 function initNav() {
-  const bar = $("#topbar"), btn = $("#menuBtn");
-  const setOpen = open => { bar.classList.toggle("menu-open", open); btn.setAttribute("aria-expanded", open); };
-  btn.addEventListener("click", e => { e.stopPropagation(); setOpen(!bar.classList.contains("menu-open")); });
-  $$("#nav a").forEach(a => a.addEventListener("click", () => setOpen(false)));
-  document.addEventListener("click", e => { if (!bar.contains(e.target)) setOpen(false); });
+  initMenu();
 
   // highlight the nav item of the section in view
   const map = { home: "#home", featured: "#featured", blender: "#featured", artworks: "#featured", about: "#about", contact: "#contact" };

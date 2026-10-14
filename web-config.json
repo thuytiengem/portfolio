@@ -171,7 +171,25 @@
       "form_send": "Explore",
       "mail_subject": "Portfolio contact from {name}",
       "mail_body": "{message}\n\n— {name} ({email})",
-      "copyright": "© Tran Thi Thuy Tien Portfolio - 2026"
+      "copyright": "© Tran Thi Thuy Tien Portfolio - 2026",
+      "pd_back": "← Back to projects",
+      "pd_roles": "My Roles",
+      "pd_progression": "Product Progression",
+      "pd_challenges": "Challenges & Solutions",
+      "pd_learned": "What I learned",
+      "pd_downloads": "Downloads",
+      "pd_team": "Team",
+      "pd_members": "{n} members",
+      "pd_genre": "Genre",
+      "pd_problem": "Problem",
+      "pd_solution": "Solution",
+      "pd_images": "{n} images",
+      "pd_image": "{n} image",
+      "pd_prev": "Previous",
+      "pd_next": "Next",
+      "pd_close": "Close",
+      "pd_not_found": "Project not found",
+      "pd_not_found_text": "This project does not exist or has been moved."
     },
     "vi": {
       "nav_home": "Trang chủ",
@@ -206,7 +224,25 @@
       "form_send": "Gửi",
       "mail_subject": "Liên hệ từ Portfolio - {name}",
       "mail_body": "{message}\n\n— {name} ({email})",
-      "copyright": "© Tran Thi Thuy Tien Portfolio - 2026"
+      "copyright": "© Tran Thi Thuy Tien Portfolio - 2026",
+      "pd_back": "← Quay lại dự án",
+      "pd_roles": "Vai trò của tôi",
+      "pd_progression": "Quá trình sản xuất",
+      "pd_challenges": "Thử thách & Giải pháp",
+      "pd_learned": "Điều tôi học được",
+      "pd_downloads": "Lượt tải",
+      "pd_team": "Đội ngũ",
+      "pd_members": "{n} thành viên",
+      "pd_genre": "Thể loại",
+      "pd_problem": "Vấn đề",
+      "pd_solution": "Giải pháp",
+      "pd_images": "{n} hình",
+      "pd_image": "{n} hình",
+      "pd_prev": "Trước",
+      "pd_next": "Tiếp",
+      "pd_close": "Đóng",
+      "pd_not_found": "Không tìm thấy dự án",
+      "pd_not_found_text": "Dự án này không tồn tại hoặc đã được chuyển đi."
     }
   }
 }

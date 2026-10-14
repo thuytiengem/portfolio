@@ -79,6 +79,66 @@ async function readCollection(kind) {
   return { order: Array.isArray(order) ? order : [], items, broken };
 }
 
+// ── project images (detail page): images/ (logo, cover) and images/product-progression/<step id>/ ──
+const PROJ_IMG_DIR_RE = /^images(?:\/product-progression\/[a-z0-9][a-z0-9-]{0,79})?$/;
+function projImgDir(itemDir, url) {
+  const rel = String(url.searchParams.get("dir") || "");
+  if (!PROJ_IMG_DIR_RE.test(rel)) throw new HttpError(400, "Thư mục ảnh không hợp lệ");
+  return safeJoin(itemDir, rel);
+}
+const imgName = n => { if (!NAME_RE.test(n || "") || !IMG_EXT.has(path.extname(n).toLowerCase())) throw new HttpError(400, "Tên file chỉ gồm chữ không dấu, số, . _ - và là ảnh jpg / png / webp / gif"); return n; };
+async function listImages(dir) {
+  const ents = await fsp.readdir(dir, { withFileTypes: true }).catch(e => { if (e.code === "ENOENT") return null; throw e; });
+  if (!ents) return { exists: false, files: [] };
+  const files = [];
+  for (const d of ents) {
+    if (!d.isFile() || d.name.startsWith(".") || !IMG_EXT.has(path.extname(d.name).toLowerCase())) continue;
+    const st = await fsp.stat(path.join(dir, d.name));
+    files.push({ name: d.name, size: st.size, ok: NAME_RE.test(d.name) });   // ok=false: name the site / API can't use safely
+  }
+  files.sort((a, b) => a.name.localeCompare(b.name, "en", { numeric: true }));
+  return { exists: true, files };
+}
+// "shot.png" → "shot-2.png", "shot-3.png"… until free
+async function freeName(dir, name) {
+  const ext = path.extname(name), base = name.slice(0, -ext.length);
+  for (let i = 1, n = name; i < 1000; n = `${base}-${++i}${ext}`) if (!(await exists(path.join(dir, n)))) return n;
+  throw new HttpError(409, "Không tìm được tên file trống");
+}
+async function projectImages(req, res, url, itemDir, sub) {
+  const m = req.method;
+  if (sub === "images") {
+    const dir = projImgDir(itemDir, url);
+    if (m === "GET") return send(res, 200, await listImages(dir));
+    if (m === "POST") {
+      let name = imgName(url.searchParams.get("name"));
+      const buf = await readBody(req, MAX_UPLOAD);
+      if (!buf.length) throw new HttpError(400, "File rỗng");
+      await fsp.mkdir(dir, { recursive: true });
+      if (url.searchParams.get("overwrite") !== "1") name = await freeName(dir, name);
+      await fsp.writeFile(safeJoin(dir, name), buf);
+      return send(res, 201, { name, size: buf.length });
+    }
+    if (m === "DELETE") {
+      const file = safeJoin(dir, imgName(url.searchParams.get("name")));
+      if (!(await exists(file))) return send(res, 200, { deleted: false });
+      await fsp.rm(file);
+      return send(res, 200, { deleted: true });
+    }
+  }
+  // rename the image folder of a progression step (the step id changed)
+  if (sub === "rename-step" && m === "POST") {
+    const { from, to } = await readBodyJSON(req);
+    checkId(from); checkId(to);
+    const base = path.join(itemDir, "images", "product-progression");
+    if (from === to || !(await exists(path.join(base, from)))) return send(res, 200, { renamed: false });
+    if (await exists(path.join(base, to))) throw new HttpError(409, `Thư mục ảnh "${to}" đã tồn tại`);
+    await fsp.rename(path.join(base, from), path.join(base, to));
+    return send(res, 200, { renamed: true });
+  }
+  throw new HttpError(404, "Unknown API route");
+}
+
 // ── UI frames (assets/ui/<name>/frame.json) ──
 const EDGES = ["stretch", "repeat", "round", "space"];
 const SIDES = ["left", "top", "right", "bottom"];
@@ -263,6 +323,11 @@ async function api(req, res, url) {
         await writeJSON(indexFile, (await readJSONFile(indexFile, [])).filter(x => x !== id));
         return send(res, 200, { deleted: id });
       }
+    }
+    if (parts.length === 3 && parts[0] === "projects") {
+      const itemDir = path.join(dir, checkId(parts[1]));
+      if (!(await exists(path.join(itemDir, "data.json")))) throw new HttpError(404, "Not found");
+      return projectImages(req, res, url, itemDir, parts[2]);
     }
   }
 

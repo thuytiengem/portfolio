@@ -81,6 +81,7 @@ Text values accept Unity-style rich text tags (`<b>`, `<i>`, `<color=#hex>`, `<l
 - `video.orientation`: `"landscape"` or `"portrait"` (Shorts / vertical videos) — the layout adapts.
 - Videos start muted when scrolled into view and pause when scrolled away.
 - To add a project: create the folder + `data.json`, then add the folder name to `index.json` (order = display order).
+- `exploreUrl`: where the project's **Explore** button goes; empty → the project detail page `project.html?id=<folder>`.
 
 Blender `data.json` uses the same `tags`, `video`, `exploreUrl`; `description` is a single paragraph; `title` is optional.
 
@@ -89,6 +90,30 @@ Blender `data.json` uses the same `tags`, `video`, `exploreUrl`; `description` i
 ```json
 [{ "src": "images/artwork-01.jpg", "title": { "en": "...", "vi": "..." }, "desc": { "en": "...", "vi": "..." } }]
 ```
+
+## Project detail page
+
+`project.html?id=<folder>` shows one project from `Database/Projects/<folder>/data.json` (the Featured **Explore** buttons link here).
+Owner's guide (Vietnamese, full field list + examples): [PROJECT-PAGE.md](PROJECT-PAGE.md). Every field is optional — empty = hidden.
+
+| Field | Type | Shown as |
+|---|---|---|
+| `logo`, `cover` | image path (relative to the project folder, or URL) | app icon · blurred header background (fallback: YouTube thumbnail, then logo) |
+| `studio`, `period` | text | small line under the title |
+| `downloads`, `members`, `genre` | text (`members`: number → "{n} members") | HUD stats |
+| `roles` | `[{ title, text }]` | **My Roles** cards (missing → `responsibilities` as one untitled card) |
+| `progression` | `[{ id, name, text, images }]` | **Product Progression** stages, a filmstrip + lightbox each |
+| `challenges` | `[{ problem, solution }]` | **Challenges & Solutions** split cards |
+| `learned` | `[text | { title, text }]` | **What I learned** checklist |
+
+Progression images are **file names** inside the stage's own folder (`id` = slug `a-z 0-9 -`):
+
+```
+Database/Projects/<folder>/images/product-progression/<step id>/01.jpg …
+```
+
+Labels: `i18n.<lang>.pd_*` in `web-config.json`. Code: `project.html`, `assets/css/project.css`, `assets/js/project/`
+(`main.js` entry · `model.js` data normalisation · `render.js` layout · `parts.js` · `gallery.js` · `lightbox.js`).
 
 ## Intro
 
@@ -129,10 +154,10 @@ or edit `frame.json` by hand: `slice` (px on the image), `scale` (0.5 for 2x art
 ## Structure
 
 ```
-index.html · web-config.json · .nojekyll
+index.html · project.html · web-config.json · .nojekyll
 assets/fonts   Qualy (titles), Montserrat (body)
-assets/css     base.css · intro.css · sections.css
-assets/js      main.js · i18n.js · richtext.js · ui-frames.js · cursor.js · utils.js · rain-bg.js · youtube.js · carousel.js · sections/ · intro/
+assets/css     base.css · intro.css · sections.css · project.css
+assets/js      main.js · i18n.js · richtext.js · ui-frames.js · cursor.js · utils.js · rain-bg.js · youtube.js · carousel.js · stores.js · topbar.js · sections/ · intro/ · project/
 assets/ui      image frames (9-slice) for the panel and the Explore button
 assets/icons   social icons (Simple Icons, CC0)
 Database/      Projects · Blender · Artworks

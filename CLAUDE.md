@@ -15,6 +15,8 @@ The owner writes in Vietnamese — reply in Vietnamese.
 - `assets/js/main.js` entry · `i18n.js` (tr/label/bind*; every text goes through `richtext.js` = Unity-style tags, list in `RICHTEXT.md`) · `ui-frames.js` (9-slice image frames from `assets/ui/<name>/frame.png + frame.json`) · `youtube.js` (autoplay muted when in view) · `carousel.js` · `rain-bg.js` (letter rain) · `sections/*`.
 - `assets/js/intro/` — intro "Power Surge": `timeline.js` (order/timing), `steps.js` (step registry), `effects/*`
   (`glass.js` scene + shard glitch, `particles.js`, `title.js` idle glitch, `shake.js`). Textures in `assets/images/intro-texture/`. Styles in `assets/css/intro.css`.
+- `project.html?id=<folder>` — project detail page (`assets/js/project/`: main.js entry, model.js normalize, render.js layout, parts.js, gallery.js filmstrip, lightbox.js; `assets/css/project.css`). Owner guide: `PROJECT-PAGE.md` (VI).
+- Shared helpers: `stores.js` (store buttons, home + detail), `topbar.js` (phone menu, home + detail).
 - `portfolio-studio/` — local editor (server.mjs = no-dependency Node server + API; studio.js UI). Writes need the `X-Studio: 1` header; localhost only.
 
 ## Decisions already made (don't re-ask)
@@ -26,7 +28,11 @@ The owner writes in Vietnamese — reply in Vietnamese.
 - Intro plays on every load, no skip button; shards stay and tremble slowly; topbar + brand/quote FADE in (no typing, no slide-down).
 - Featured/Blender: YouTube only, autoplay when scrolled into view, portrait (Shorts) layout supported; portrait video → info panel stretches to video height.
 - Artworks: looping coverflow carousel, auto snap, autoplay, background cross-fade "Dissolve + zoom", per-image title/description.
-- Explore buttons stay; the "explore" pages will be built later.
+- Explore buttons stay. Featured Explore → `exploreUrl` if set, else `project.html?id=<folder>`; Blender/Artworks/About Explore unchanged.
+- Project detail page = variant 3 "HUD" (owner's pick from 5 demos, demos deleted) with variant 1's numbered role cards and
+  variant 2's vertical stages + horizontal filmstrip + lightbox; Challenges = split cards, Learned = checklist. Every field optional,
+  empty = hidden, section numbers count only rendered sections; no `roles` → `responsibilities` as one untitled role.
+  Progression images = file names in `Database/Projects/<folder>/images/product-progression/<step id>/` (jelly-master has demo images).
 - Contact form opens `mailto:` with the filled fields. Social links hidden when empty (15 networks, icons = Simple Icons in assets/icons/<key>.svg).
 - Fonts: Qualy (titles; misses some Vietnamese glyphs, free for personal use only), Montserrat (body; self-hosted variable woff2, OFL, full Vietnamese).
 - Lists render with round bullets (no "- " prefix).
@@ -36,6 +42,8 @@ The owner writes in Vietnamese — reply in Vietnamese.
   frame `assets/ui/store-button/` (owner picked design 1 "neon chamfer" of 10), labels `store_*` in web-config i18n, editable in Studio.
 - Custom cursor = "Laser comet" (owner picked design 8 of 10, built from their star-cursor reference): `assets/js/cursor.js`
   (engine + design, `initCursor()` in main.js) + "Custom cursor" rules in base.css. Mouse only; add new clickable classes to CLICKABLE.
+- Coming back from a project page (Back to projects, Portfolio/About links, browser Back) opens the home page WITHOUT the intro
+  (sessionStorage flag, `assets/js/intro/skip.js`); Home / logo on the project page still play it.
 - Clicking Home or the logo scrolls to the top and replays the intro; the topbar stays visible (`runIntro` returns `replay()`).
 - Description panel, Explore button and hero quote bar (`assets/ui/text-frame/text-frame.png`, owner's art) = image frames with 9-slice via CSS `border-image` (owner picked this over canvas / 9 files);
   slices edited visually in Studio → "Giao diện" (Unity Sprite Editor style). Default PNGs are generated at 2x (`scale: 0.5`).
