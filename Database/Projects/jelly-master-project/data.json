@@ -51,13 +51,14 @@
   "progression": [
     {
       "id": "research",
-      "name": {
-        "en": "Research",
-        "vi": "Nghiên cứu"
-      },
+      "name": "Research",
       "text": {
-        "en": "Demo — replace with your own notes.",
-        "vi": "Demo — thay bằng nội dung của bạn."
+        "en": [
+          "Demo — replace with your own notes."
+        ],
+        "vi": [
+          "Demo — thay bằng nội dung của bạn."
+        ]
       },
       "images": [
         {
@@ -73,13 +74,14 @@
     },
     {
       "id": "sketches",
-      "name": {
-        "en": "Sketches",
-        "vi": "Phác thảo"
-      },
+      "name": "Sketches",
       "text": {
-        "en": "Demo — replace with your own notes.",
-        "vi": "Demo — thay bằng nội dung của bạn."
+        "en": [
+          "Demo — replace with your own notes."
+        ],
+        "vi": [
+          "Demo — thay bằng nội dung của bạn."
+        ]
       },
       "images": [
         "01.jpg",
@@ -98,13 +100,14 @@
     },
     {
       "id": "art-assets",
-      "name": {
-        "en": "Art Assets",
-        "vi": "Art Asset"
-      },
+      "name": "Art Assets",
       "text": {
-        "en": "Demo — replace with your own notes.",
-        "vi": "Demo — thay bằng nội dung của bạn."
+        "en": [
+          "Demo — replace with your own notes."
+        ],
+        "vi": [
+          "Demo — thay bằng nội dung của bạn."
+        ]
       },
       "images": [
         "01.jpg",
@@ -117,13 +120,14 @@
     },
     {
       "id": "gdd",
-      "name": {
-        "en": "GDD",
-        "vi": "GDD"
-      },
+      "name": "GDD",
       "text": {
-        "en": "Demo — replace with your own notes.",
-        "vi": "Demo — thay bằng nội dung của bạn."
+        "en": [
+          "Demo — replace with your own notes."
+        ],
+        "vi": [
+          "Demo — thay bằng nội dung của bạn."
+        ]
       },
       "images": [
         "01.jpg"
@@ -131,19 +135,53 @@
     },
     {
       "id": "ui-design",
-      "name": {
-        "en": "UI Design",
-        "vi": "Thiết kế UI"
-      },
+      "name": "UI Design",
       "text": {
-        "en": "Demo — replace with your own notes.",
-        "vi": "Demo — thay bằng nội dung của bạn."
+        "en": [
+          "Here are some UI/UX demos of the main gameplay, secondary game modes, and event minigames."
+        ],
+        "vi": [
+          "Đây là một số bản demo UI/UX của gameplay chính, các chế độ chơi phụ và minigame sự kiện."
+        ]
       },
       "images": [
-        "01.jpg",
-        "02.jpg",
-        "03.jpg",
-        "04.jpg"
+        "home.jpg",
+        "topping2.jpg",
+        "mukbang1.jpg",
+        "make-hamburger-2.jpg",
+        "sale-off.jpg",
+        "supermarket2.jpg",
+        "combo-buy.jpg",
+        "pay2.jpg",
+        "supermarket-end.jpg",
+        "shop1.jpg",
+        "gacha1.jpg",
+        "decor-cert1.jpg",
+        "daily-reward1.jpg",
+        "reward-coin.jpg",
+        "setting-profile.jpg",
+        "achievement-reach.jpg",
+        "connection-lost.jpg",
+        "remove-ads1.jpg",
+        "unlock-supermarket.jpg",
+        "easter-minigame.jpg",
+        "easter-play.jpg",
+        "easter-hatching.jpg",
+        "easter-reward.jpg",
+        "easter-info.jpg",
+        "easter-login.jpg",
+        "fishing-popup.jpg",
+        "seafood-fishing-2.jpg",
+        "wash-seafood-2.jpg",
+        "cooking.jpg",
+        "pick-topping-1.jpg",
+        "seafood-live.jpg",
+        "halloween-6.jpg",
+        "halloween-live.jpg",
+        "valentine-gameplay.jpg",
+        "valentine-stamp.jpg",
+        "valentine-scratch-prize.jpg",
+        "canteen-livestream.jpg"
       ]
     },
     {
@@ -153,10 +191,95 @@
         "vi": "Hoàn thiện & Ra mắt"
       },
       "text": {
-        "en": "Demo — replace with your own notes.",
-        "vi": "Demo — thay bằng nội dung của bạn."
-      },
-      "images": []
+        "en": [
+          "Demo — replace with your own notes."
+        ],
+        "vi": [
+          "Demo — thay bằng nội dung của bạn."
+        ]
+      }
+    }
+  ],
+  "roles": [
+    {
+      "title": "Art Director",
+      "text": {
+        "en": [
+          "Conducted market and target audience research to establish the project's art direction, mood boards, visual style, and art production guidelines.",
+          "Collaborated with game designers and developers to align visual design with gameplay requirements."
+        ],
+        "vi": [
+          "Nghiên cứu thị trường và tệp người chơi để xây dựng định hướng nghệ thuật, moodboard, phong cách hình ảnh và quy chuẩn sản xuất art.",
+          "Phối hợp với Game Designer và Developer để đảm bảo thiết kế hình ảnh phù hợp với yêu cầu gameplay."
+        ]
+      }
+    },
+    {
+      "title": "Lead Artist",
+      "text": {
+        "en": [
+          "Mentored artists and oversaw the art pipeline, from concept reviews and sketch feedback to final asset and animation approval.",
+          "Coordinated team workflows, maintained quality standards, and resolved production issues."
+        ],
+        "vi": [
+          "Hướng dẫn artist và giám sát quy trình sản xuất art, từ duyệt concept, góp ý sketch đến phê duyệt asset và animation cuối cùng.",
+          "Điều phối công việc của nhóm, duy trì tiêu chuẩn chất lượng và xử lý các vấn đề phát sinh trong sản xuất."
+        ]
+      }
+    },
+    {
+      "title": "UI/UX Designer",
+      "text": {
+        "en": [
+          "Designed and produced all in-game UI elements tailored to the target audience.",
+          "Collaborated with the game designer to refine UX wireframes based on player interaction patterns."
+        ],
+        "vi": [
+          "Thiết kế và sản xuất toàn bộ UI trong game, phù hợp với tệp người chơi hướng tới.",
+          "Phối hợp với Game Designer để hoàn thiện UX wireframe dựa trên thói quen tương tác của người chơi."
+        ]
+      }
+    },
+    {
+      "title": "Concept Artist",
+      "text": {
+        "en": [
+          "Designed Jiji, the main character, and core gameplay assets, including food, dining utensils, and packaging.",
+          "Created additional assets for selected secondary game modes."
+        ],
+        "vi": [
+          "Thiết kế Jiji, nhân vật chính, cùng các asset gameplay cốt lõi như đồ ăn, dụng cụ ăn uống và bao bì.",
+          "Phát triển thêm asset cho một số chế độ chơi phụ."
+        ]
+      }
+    },
+    {
+      "title": "Event Game Designer",
+      "text": {
+        "en": [
+          "Developed the Valentine's Day event GDD, covering gameplay, UX wireframes, and art asset documentation.",
+          "Designed UX wireframes for the Seafood event and collaborated with developers to ensure accurate implementation."
+        ],
+        "vi": [
+          "Xây dựng GDD cho sự kiện Valentine, bao gồm gameplay, UX wireframe và tài liệu danh sách asset art.",
+          "Thiết kế UX wireframe cho sự kiện Seafood và phối hợp với Developer để đảm bảo triển khai đúng ý tưởng."
+        ]
+      }
+    }
+  ],
+  "logo": "images/logo.png",
+  "downloads": "70M+",
+  "members": 7,
+  "genre": "Casual",
+  "period": {
+    "en": "since 2024",
+    "vi": "từ 2024"
+  },
+  "studio": "Champion Game Studio x Falcon Game Studio",
+  "cover": "images/cover.jpg",
+  "challenges": [
+    {
+      "problem": "Lack of Game Designers"
     }
   ]
 }

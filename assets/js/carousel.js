@@ -42,8 +42,13 @@ export function createCarousel(stage, { images, onChange, autoplayMs = 4500 }) {
     onChange?.(i);
   }
 
+  // every move (arrow, key, drag, wheel, autoplay) stops autoplay; it is re-armed only once the snap has
+  // finished, so an autoplay step can never start in the middle of another animation
+  let animating = false;
   function animateTo(target, dur = 650) {
     cancelAnimationFrame(anim);
+    stopAuto();
+    animating = true;
     target = Math.round(target);
     const from = pos, t0 = performance.now();
     setCurrent(wrap(target));
@@ -52,7 +57,7 @@ export function createCarousel(stage, { images, onChange, autoplayMs = 4500 }) {
       pos = from + (target - from) * (1 - Math.pow(1 - t, 4));
       render();
       if (t < 1) anim = requestAnimationFrame(tick);
-      else { pos = wrap(target); render(); }
+      else { pos = wrap(target); render(); animating = false; scheduleAuto(); }
     };
     anim = requestAnimationFrame(tick);
   }
@@ -60,15 +65,15 @@ export function createCarousel(stage, { images, onChange, autoplayMs = 4500 }) {
   const next = () => goTo(Math.round(pos) + 1);
   const prev = () => goTo(Math.round(pos) - 1);
 
-  stage.querySelector(".next")?.addEventListener("click", e => { e.stopPropagation(); next(); restartAuto(); });
-  stage.querySelector(".prev")?.addEventListener("click", e => { e.stopPropagation(); prev(); restartAuto(); });
+  stage.querySelector(".next")?.addEventListener("click", e => { e.stopPropagation(); next(); });
+  stage.querySelector(".prev")?.addEventListener("click", e => { e.stopPropagation(); prev(); });
 
   // ---- drag / swipe ----
   let dragging = false, moved = false, startX = 0, startPos = 0, lastX = 0, lastT = 0, vel = 0;
   stage.addEventListener("pointerdown", e => {
     if (e.target.closest(".carousel-arrow")) return;
     dragging = true; moved = false;
-    cancelAnimationFrame(anim);
+    cancelAnimationFrame(anim); animating = false; stopAuto();
     startX = lastX = e.clientX; startPos = pos; lastT = performance.now(); vel = 0;
     stage.setPointerCapture(e.pointerId);
     stage.classList.add("dragging");
@@ -87,10 +92,9 @@ export function createCarousel(stage, { images, onChange, autoplayMs = 4500 }) {
     if (!dragging) return;
     dragging = false;
     stage.classList.remove("dragging");
-    if (!moved) return;
+    if (!moved) { scheduleAuto(); return; }
     const fling = -vel * 260 / (W * 0.92);        // momentum, in items
     goTo(pos + Math.max(-3, Math.min(3, fling)));
-    restartAuto();
   };
   stage.addEventListener("pointerup", endDrag);
   stage.addEventListener("pointercancel", endDrag);
@@ -100,24 +104,26 @@ export function createCarousel(stage, { images, onChange, autoplayMs = 4500 }) {
   stage.addEventListener("wheel", e => {
     if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
     e.preventDefault();
-    cancelAnimationFrame(anim);
+    cancelAnimationFrame(anim); animating = false; stopAuto();
     pos += e.deltaX / (W * 1.5);
     render();
     clearTimeout(wheelTimer);
-    wheelTimer = setTimeout(() => { goTo(pos); restartAuto(); }, 120);
+    wheelTimer = setTimeout(() => goTo(pos), 120);
   }, { passive: false });
 
   stage.addEventListener("keydown", e => {
-    if (e.key === "ArrowRight") { next(); restartAuto(); }
-    if (e.key === "ArrowLeft") { prev(); restartAuto(); }
+    if (e.key === "ArrowRight") next();
+    if (e.key === "ArrowLeft") prev();
   });
 
-  // ---- autoplay (paused while hovered, dragged or off-screen) ----
+  // ---- autoplay: one step per cooldown, counted from the end of the last snap ----
+  // (skipped while hovered, dragged, animating or off-screen — then it simply waits another cooldown)
   let autoTimer = 0, hover = false, visible = false;
-  function restartAuto() {
-    clearInterval(autoTimer);
-    if (autoplayMs > 0 && n > 1) autoTimer = setInterval(() => {
-      if (!dragging && !hover && visible && !document.hidden) next();
+  function stopAuto() { clearTimeout(autoTimer); autoTimer = 0; }
+  function scheduleAuto() {
+    stopAuto();
+    if (autoplayMs > 0 && n > 1) autoTimer = setTimeout(() => {
+      if (!dragging && !hover && !animating && visible && !document.hidden) next(); else scheduleAuto();
     }, autoplayMs);
   }
   stage.addEventListener("pointerenter", () => hover = true);
@@ -127,7 +133,7 @@ export function createCarousel(stage, { images, onChange, autoplayMs = 4500 }) {
   window.addEventListener("resize", measure);
   measure();
   setCurrent(0);
-  restartAuto();
+  scheduleAuto();
 
   return { goTo: i => goTo(pos + offset(i)), next, prev };
 }

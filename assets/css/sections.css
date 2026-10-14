@@ -86,7 +86,9 @@
   filter: blur(7px) brightness(.42) saturate(1.15); transform: scale(1.08);
 }
 .artworks::after { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse at center, transparent 30%, #0a0414aa 100%); }
-.carousel { --w: 500px; position: relative; height: calc(var(--w) / 2 + 80px); perspective: 1300px; transform-style: preserve-3d; touch-action: pan-y; user-select: none; cursor: grab; outline: none; }
+/* no preserve-3d: each item is flattened with the shared perspective and stacked by z-index (set in carousel.js),
+   so tilted neighbours can never poke through the arrows (z-index 200) */
+.carousel { --w: 500px; position: relative; height: calc(var(--w) / 2 + 80px); perspective: 1300px; touch-action: pan-y; user-select: none; cursor: grab; outline: none; }
 .carousel.dragging { cursor: grabbing; }
 .carousel-item {
   position: absolute; left: 50%; top: 50%;

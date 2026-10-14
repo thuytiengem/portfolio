@@ -23,7 +23,7 @@ const problemSolution = c => [
 function header(m) {
   const video = has(m.video?.youtube) ? createVideo(m.video) : null;
   const info = wrap("panel hud-info",
-    wrap("pd-app", logoImg(m), wrap("pd-app-text", txt("h1", m.title, "pd-title"), metaLine(m), txt("p", m.tagline, "pd-tagline"))),
+    wrap("pd-app", logoImg(m), wrap("pd-app-text", txt("h1", m.title, "pd-title"), metaLine(m))),
     tagList(m.tags),
     storeButtons(m.stores));
   const frame = video ? h("div", { class: "hud-frame" }, video, ["c1", "c2", "c3", "c4"].map(c => h("i", { class: c }))) : null;

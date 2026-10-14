@@ -33,10 +33,13 @@
 .pd-cover {
   position: absolute; inset: -60px; z-index: -2; background: #140a24 center / cover no-repeat;
   filter: blur(34px) brightness(.5) saturate(1.25); transform: scale(1.1);
+  /* fade out to transparent so the header melts into the real page background (the box reaches 60px past the header) */
+  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 300px), transparent calc(100% - 60px));
+          mask-image: linear-gradient(180deg, #000 calc(100% - 300px), transparent calc(100% - 60px));
 }
-.pd-head::after { /* purple tint + fade into the page background */
+.pd-head::after { /* purple tint, fading to transparent at the bottom */
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: linear-gradient(180deg, #4a2a8059 0%, #2a154899 55%, var(--bg) 100%), radial-gradient(ellipse at 20% 0%, #ff2bd622, transparent 60%);
+  background: linear-gradient(180deg, #4a2a8059 0%, #2a154899 55%, transparent 100%), radial-gradient(ellipse at 20% 0%, #ff2bd622, transparent 60%);
 }
 .pd-app { display: flex; align-items: center; gap: 20px; }
 .pd-logo {
@@ -45,9 +48,10 @@
 }
 .pd-app-text { min-width: 0; }
 .pd-title { font: clamp(28px, 3vw, 42px)/1.05 var(--font-title); letter-spacing: .02em; text-transform: uppercase; overflow-wrap: anywhere; }
-.pd-meta { margin-top: 8px; font-weight: 700; font-size: 16px; color: var(--lilac); display: flex; flex-wrap: wrap; gap: 0 10px; }
-.pd-meta .sep { opacity: .6; margin-right: 10px; }
-.pd-meta .meta-part { white-space: nowrap; }
+/* studio · period: plain body text that wraps inside the info panel */
+.pd-meta { margin-top: 10px; font-size: 17px; line-height: 1.45; color: var(--text-dim); overflow-wrap: anywhere; }
+.pd-meta .sep { opacity: .6; margin: 0 .55em 0 .45em; }
+.pd-meta .meta-part + .meta-part { white-space: nowrap; }
 .pd-tagline { margin-top: 10px; font-size: 17px; color: var(--text-dim); max-width: 60ch; }
 
 .hud-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 30px; align-items: center; }
@@ -70,9 +74,8 @@
   box-shadow: inset 0 0 0 1px #d38cff44; clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
 }
 .hud-stats .stat::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
-.hud-stats b { font: clamp(34px, 3.4vw, 50px)/1 var(--font-title); background: linear-gradient(180deg, #fff, #c9a2ff); -webkit-background-clip: text; background-clip: text; color: transparent; overflow-wrap: anywhere; }
-.hud-stats b .unit { font-size: .5em; letter-spacing: .04em; margin: 0 .25em; }
-.hud-stats .stat-genre b { font-size: clamp(24px, 2.3vw, 34px); line-height: 1.1; }
+/* one size for every value (70M+, 7 members, Casual) */
+.hud-stats b { font: clamp(26px, 2.4vw, 36px)/1.1 var(--font-title); background: linear-gradient(180deg, #fff, #c9a2ff); -webkit-background-clip: text; background-clip: text; color: transparent; overflow-wrap: anywhere; }
 .hud-stats small { order: -1; font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: #9ff6ff; }
 
 /* ---------- numbered sections: "01 MY ROLES ───" ---------- */
@@ -211,7 +214,7 @@ html.lb-open, html.lb-open body { overflow: hidden; }
   .hud-stats .stat:nth-child(3):last-child, .hud-stats .stat:only-child { grid-column: 1 / -1; }
   .hud-stats b { overflow-wrap: normal; }
   .hud-stats .stat { padding: 12px 10px 12px 14px; }
-  .hud-stats b, .hud-stats .stat-genre b { font-size: 26px; }
+  .hud-stats b { font-size: 22px; }
   .hud-stats small { font-size: 10px; letter-spacing: .1em; }
   .role-cards { grid-template-columns: 1fr; }
   .role-card { padding: 22px 20px 24px; }

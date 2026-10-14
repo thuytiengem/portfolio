@@ -45,12 +45,12 @@ export function metaLine(m) {
     h("span", { class: "meta-part" }, i ? h("span", { class: "sep" }, "·") : null, setRich(h("span"), tr(p))))));
 }
 
-/** members: a number → "{n} members" template (number big, words small); a string → as written */
+/** members: a number → "{n} members" template; a string → as written */
 function membersValue(el, members) {
   const v = tr(members);
   if (typeof v !== "number") return setRich(el, String(v));
   const [before, after = ""] = label("pd_members", { n: "\u0000" }).split("\u0000");
-  el.replaceChildren(...[before && h("span", { class: "unit" }, before), String(v), after && h("span", { class: "unit" }, after)].filter(Boolean));
+  el.textContent = `${before}${v}${after}`.trim();
 }
 
 /** HUD stats: downloads → team → genre; only the filled ones */
