@@ -5,7 +5,6 @@
     "vi": "8 thành viên | casual mobile game"
   },
   "tags": [
-    "Art Director",
     "Lead Artist",
     "Main Concept Artist",
     "Map Game Designer"
@@ -34,5 +33,41 @@
       "Tham gia các buổi <b><color=#ff6ad5>brainstorming</color></b> và <b><color=#ff6ad5>đóng góp ý tưởng sáng tạo cùng Game Designer và Developer</color></b> nhằm hỗ trợ quá trình phát triển gameplay và tính năng của game."
     ]
   },
-  "exploreUrl": ""
+  "exploreUrl": "",
+  "studio": "Champion Game Studio",
+  "period": {
+    "en": "since 2025",
+    "vi": "từ 2025"
+  },
+  "members": 8,
+  "genre": "CASUAL",
+  "roles": [
+    {
+      "title": "LEAD ARTIST"
+    },
+    {
+      "title": "CONCEPT ARTIST"
+    },
+    {
+      "title": "MAP GAME DESIGNER"
+    }
+  ],
+  "progression": [
+    {
+      "id": "research",
+      "name": "RESEARCH"
+    },
+    {
+      "id": "sketches",
+      "name": "SKETCHES"
+    },
+    {
+      "id": "art-assets",
+      "name": "ART ASSETS"
+    },
+    {
+      "id": "map-game-design",
+      "name": "MAP GAME DESIGN"
+    }
+  ]
 }

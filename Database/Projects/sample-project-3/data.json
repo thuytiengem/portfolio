@@ -41,5 +41,62 @@
   "exploreUrl": "",
   "stores": {
     "googlePlay": "https://play.google.com/store/apps/details?id=com.fc.p.cp.sticker.asmr.art.puzzle"
-  }
+  },
+  "progression": [
+    {
+      "id": "research",
+      "name": "RESEARCH"
+    },
+    {
+      "id": "sketches",
+      "name": "SKETCHES"
+    },
+    {
+      "id": "asset-planning",
+      "name": "ASSET PLANNING"
+    },
+    {
+      "id": "in-game-levels",
+      "name": "ART ASSETS",
+      "images": [
+        "city-demo.jpg",
+        "room-0.png",
+        "room-1.png",
+        "room-2.png",
+        "room-3.png",
+        "room-4.png",
+        "room-5.png",
+        "room-6.png",
+        "room-7.png",
+        "room-8.png",
+        "room-9.png",
+        "room-12.png"
+      ]
+    },
+    {
+      "id": "mentor-feedback-artists",
+      "name": "MENTOR ARTISTS"
+    }
+  ],
+  "studio": "Champion Game Studio x Falcon Game Studio",
+  "period": {
+    "en": "since 2026",
+    "vi": "từ 2026"
+  },
+  "members": 15,
+  "genre": "puzzle",
+  "roles": [
+    {
+      "title": "Art Director"
+    },
+    {
+      "title": "Lead Artist"
+    },
+    {
+      "title": "Concept Artist"
+    },
+    {
+      "title": "Asset planner"
+    }
+  ]
 }

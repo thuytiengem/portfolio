@@ -3,6 +3,7 @@
   "slice": { "left": 416, "top": 104, "right": 52, "bottom": 52 },
   "scale": 0.5,
   "edges": "round",
+  "backdrop": 1,
   "fill": true,
   "padding": { "left": 38, "top": 64, "right": 38, "bottom": 40 },
   "version": 1

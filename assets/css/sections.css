@@ -13,6 +13,18 @@
 .video-play:hover svg { transform: scale(1.08); }
 .video.loaded .video-play, .video.loaded > img { display: none; }
 
+/* HUD frame around every YouTube video (youtube.js framedVideo): dark glass + 4 glowing cyan corner brackets */
+.hud-frame { position: relative; padding: 12px; background: #0d061899; box-shadow: inset 0 0 0 1px #3ef2ff2a; }
+.hud-frame i { position: absolute; width: 26px; height: 26px; border: 0 solid #3ef2ff; filter: drop-shadow(0 0 6px #3ef2ff); pointer-events: none; }
+.hud-frame .c1 { top: 0; left: 0; border-width: 3px 0 0 3px; }
+.hud-frame .c2 { top: 0; right: 0; border-width: 3px 3px 0 0; }
+.hud-frame .c3 { bottom: 0; left: 0; border-width: 0 0 3px 3px; }
+.hud-frame .c4 { bottom: 0; right: 0; border-width: 0 3px 3px 0; }
+/* portrait (Shorts): the video gets a real phone-sized width (so it can't collapse) and the frame hugs it */
+.hud-frame:has(> .video.portrait) { width: fit-content; max-width: 100%; margin-inline: auto; justify-self: center; }
+.hud-frame > .video.portrait { width: min(360px, calc(78vh * 9 / 16), calc(100vw - 64px)); max-height: none; }
+@media (max-width: 600px) { .hud-frame { padding: 8px; } .hud-frame i { width: 18px; height: 18px; } }
+
 /* ============ Featured projects ============ */
 .featured-list { padding: 30px 0 10px; }
 .project {
@@ -55,7 +67,6 @@
 @media (max-width: 900px) {
   .project, .project.reverse, .project.portrait, .project.portrait.reverse { grid-template-columns: 1fr; padding: 40px 0; }
   .project.reverse .project-media { order: 0; }
-  .project.portrait .video { width: min(100%, 360px); }
 }
 
 /* ============ 3D Blender ============ */
@@ -69,12 +80,12 @@
 @media (max-width: 600px) { .blender-desc { text-align: left; font-size: 16px; } }
 .blender-item .cta { text-align: center; margin-top: 18px; }
 .blender-item.portrait { grid-template-columns: minmax(240px, 380px) minmax(0, 1fr); align-items: center; column-gap: 56px; }
-.blender-item.portrait > .video { grid-row: span 3; width: 100%; }
+.blender-item.portrait > .hud-frame { grid-row: span 3; }
 .blender-item.portrait .tags { justify-content: flex-start; }
 .blender-item.portrait .cta { text-align: left; }
 @media (max-width: 900px) {
   .blender-item.portrait { grid-template-columns: 1fr; }
-  .blender-item.portrait > .video { grid-row: auto; width: min(100%, 360px); }
+  .blender-item.portrait > .hud-frame { grid-row: auto; }
   .blender-item.portrait .cta { text-align: center; }
 }
 
@@ -148,7 +159,7 @@
 .about .cta { text-align: center; margin-top: 50px; }
 @media (max-width: 900px) {
   .about-top { grid-template-columns: 1fr; }
-  .about-photo { width: min(100%, 420px); margin-inline: auto; }
+  .about-photo-frame { width: min(100%, 444px); margin-inline: auto; }
   .timeline { padding: 40px 20px; --cut: 30px; }
   .timeline-item { grid-template-columns: 24px minmax(0, 1fr); gap: 6px 16px; }
   .timeline-item .dot { grid-row: span 2; order: -1; }

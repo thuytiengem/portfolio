@@ -1,7 +1,7 @@
 // FEATURED PROJECTS and 3D BLENDER sections.
 import { h, $, reveal } from "../utils.js";
 import { bind, bindText, bindList, label } from "../i18n.js";
-import { createVideo } from "../youtube.js";
+import { framedVideo } from "../youtube.js";
 import { storeButtons } from "../stores.js";
 
 const tagList = tags => h("div", { class: "tags" }, (tags || []).map(t => bindText(h("span", { class: "tag" }), t)));
@@ -25,7 +25,7 @@ export function renderFeatured(projects) {
         h("div", { class: "project-head" },
           bindText(h("h3"), p.title),
           bindText(h("p"), p.tagline)),
-        createVideo(p.video),
+        framedVideo(p.video),
         storeButtons(p.stores)),
       h("div", { class: "project-info" },
         tagList(p.tags),
@@ -40,7 +40,7 @@ export function renderBlender(items) {
     const portrait = b.video?.orientation === "portrait";
     list.append(reveal(h("article", { class: `blender-item${portrait ? " portrait" : ""}` },
       b.title ? bindText(h("h3"), b.title) : null,
-      createVideo(b.video),
+      framedVideo(b.video),
       tagList(b.tags),
       bindText(h("p", { class: "blender-desc" }), b.description),
       h("div", { class: "cta" }, explore(b.exploreUrl)),

@@ -9,6 +9,8 @@
 //   edges   : "stretch" | "repeat" | "round" | "space"   how edges + center fill the gaps (Unity: Sliced / Tiled)
 //   fill    : draw the center slice (false = hollow frame)
 //   padding : { left, top, right, bottom }   CSS px between the frame edge and the content
+//   backdrop (optional, 0–1, default 0.75) : opacity of a dark layer behind the frame, cut to the frame's own shape
+//             (the same 9-slice image used as a mask) — dims the letter rain showing through; 0 = off
 //   version : changes on every save (cache-busting for the image)
 
 export const UI_DIR = "assets/ui/";
@@ -32,6 +34,13 @@ export function frameCSS(selector, cfg, imageUrl) {
   const width = widths(k);
   const edges = ["stretch", "repeat", "round", "space"].includes(cfg.edges) ? cfg.edges : "stretch";
   const pad = SIDES.map(side => `${num(p[side])}px`).join(" ");
+  const backdrop = Math.min(1, num(cfg.backdrop ?? 0.75));
+  // dark layer under the image, masked by the image itself so cut corners / notches stay see-through
+  const under = (w, op) => `${selector}::after {
+  content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none; background: rgba(13, 6, 26, ${op});
+  -webkit-mask-box-image: url("${imageUrl}") ${slice} fill / ${w};
+  mask-border: url("${imageUrl}") ${slice} fill / ${w};
+}`;
   // :where() = zero specificity, so an element that is already absolute/fixed keeps its positioning
   return `:where(${selector}) { position: relative; }
 ${selector} { isolation: isolate; padding: ${pad}; }
@@ -39,8 +48,11 @@ ${selector}::before {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   border: solid transparent; border-width: ${width};
   border-image: url("${imageUrl}") ${slice}${cfg.fill === false ? "" : " fill"} / ${width} / 0 ${edges};
-}${cfg.mobileScale > 0 ? `
-@media (max-width: 760px) { ${selector}::before { border-width: ${widths(+cfg.mobileScale)}; border-image-width: ${widths(+cfg.mobileScale)}; } }` : ""}`;
+}${backdrop > 0 ? `
+@supports (-webkit-mask-box-image: none) or (mask-border: none) {
+${under(width, backdrop)}
+}` : ""}${cfg.mobileScale > 0 ? `
+@media (max-width: 760px) { ${selector}::before { border-width: ${widths(+cfg.mobileScale)}; border-image-width: ${widths(+cfg.mobileScale)}; }${backdrop > 0 ? ` ${selector}::after { -webkit-mask-box-image-width: ${widths(+cfg.mobileScale)}; mask-border-width: ${widths(+cfg.mobileScale)}; }` : ""} }` : ""}`;
 }
 
 export const frameImageUrl = (name, cfg) => `${UI_DIR}${name}/${cfg.image || "frame.png"}${cfg.version ? `?v=${cfg.version}` : ""}`;

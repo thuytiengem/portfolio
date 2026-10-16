@@ -29,6 +29,10 @@ const observer = "IntersectionObserver" in window
     }), { threshold: [0, 0.55] })
   : null;
 
+/** createVideo() inside the cyan HUD frame (4 glowing corner brackets) used on every page */
+export const framedVideo = video => h("div", { class: "hud-frame" }, createVideo(video),
+  ["c1", "c2", "c3", "c4"].map(c => h("i", { class: c, "aria-hidden": "true" })));
+
 /** video = { youtube: "id", orientation: "landscape" | "portrait" } */
 export function createVideo(video = {}) {
   const id = video.youtube;

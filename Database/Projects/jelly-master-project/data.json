@@ -77,25 +77,38 @@
       "name": "Sketches",
       "text": {
         "en": [
-          "Demo — replace with your own notes."
+          "A collection of early sketches and design explorations, from character concepts and color variations to in-game assets, showcasing the process of refining the game's visual style."
         ],
         "vi": [
-          "Demo — thay bằng nội dung của bạn."
+          "Tập hợp các bản phác thảo và thử nghiệm thiết kế ban đầu, từ concept nhân vật, các phương án phối màu đến asset trong game, thể hiện quá trình hoàn thiện phong cách hình ảnh của dự án."
         ]
       },
       "images": [
-        "01.jpg",
-        "02.jpg",
-        "03.jpg",
-        "04.jpg",
-        "05.jpg",
-        "06.jpg",
-        "07.jpg",
-        "08.jpg",
-        "09.jpg",
-        "10.jpg",
-        "11.jpg",
-        "12.jpg"
+        {
+          "src": "character-sketch-option.jpg",
+          "caption": {
+            "en": "Character concept sketch options",
+            "vi": "Các phương án phác thảo concept nhân vật"
+          }
+        },
+        {
+          "src": "coloring.jpg",
+          "caption": {
+            "en": "Color rendering options",
+            "vi": "Các phương án color rendering"
+          }
+        },
+        {
+          "src": "untitled-1.jpg",
+          "caption": {
+            "en": "Main character Jiji and emotion demo",
+            "vi": "Nhân vật chính Jiji và biểu cảm demo"
+          }
+        },
+        {
+          "src": "jelly-demo.jpg",
+          "caption": "Jelly demo"
+        }
       ]
     },
     {
@@ -103,34 +116,42 @@
       "name": "Art Assets",
       "text": {
         "en": [
-          "Demo — replace with your own notes."
+          "To streamline the animator's workload, the game adopted a frame-by-frame animation approach, which required a large volume of individual art assets to support the gameplay. Below is a selection of representative assets I created for the project."
         ],
         "vi": [
-          "Demo — thay bằng nội dung của bạn."
+          "Để giảm tải công việc cho animator, dự án sử dụng phương pháp hoạt họa frame-by-frame, đòi hỏi số lượng lớn asset riêng lẻ để đáp ứng yêu cầu của gameplay. Dưới đây là một số asset tiêu biểu do mình vẽ cho dự án."
         ]
       },
       "images": [
-        "01.jpg",
-        "02.jpg",
-        "03.jpg",
-        "04.jpg",
-        "05.jpg",
-        "06.jpg"
+        "jelly-fbf-demo.jpg",
+        "fbf-demo.jpg",
+        "food-asset.jpg",
+        "jiji-room.jpg",
+        "123.jpg"
       ]
     },
     {
       "id": "gdd",
-      "name": "GDD",
-      "text": {
-        "en": [
-          "Demo — replace with your own notes."
-        ],
-        "vi": [
-          "Demo — thay bằng nội dung của bạn."
-        ]
-      },
+      "name": "GDD Event",
       "images": [
-        "01.jpg"
+        {
+          "src": "ux-valentine.jpg",
+          "caption": "Valentine event mode wireframe"
+        },
+        {
+          "src": "sketch-seafood-ux.jpg",
+          "caption": {
+            "en": "Seafood mode UX wireframe version 1",
+            "vi": "Seafood mode UX wireframe phiên bản 1"
+          }
+        },
+        {
+          "src": "sketch-seafood-ux2.jpg",
+          "caption": {
+            "en": "Seafood mode UX wireframe version 2 (after UI done)",
+            "vi": "Seafood mode UX wireframe phiên bản 2 (sau khi xong thiết kế UI)"
+          }
+        }
       ]
     },
     {
@@ -185,19 +206,28 @@
       ]
     },
     {
-      "id": "polish",
-      "name": {
-        "en": "Polish & Launch",
-        "vi": "Hoàn thiện & Ra mắt"
-      },
+      "id": "store-listing",
+      "name": "STORE LISTING",
       "text": {
         "en": [
-          "Demo — replace with your own notes."
+          "Marketing Assets for the Initial Release, including logo, game icon, banner, in-game screenshots."
         ],
         "vi": [
-          "Demo — thay bằng nội dung của bạn."
+          "Các sản phẩm hình ảnh quảng bá cho phiên bản phát hành đầu tiên, bao gồm logo, icon game, banner và ảnh chụp màn hình gameplay."
         ]
-      }
+      },
+      "images": [
+        "feature.jpg",
+        "screenshot7.png",
+        "screenshot8.png",
+        "icon1.png",
+        "icon2.png",
+        "icon3.png",
+        "screenshot1.jpg",
+        "screenshot4.jpg",
+        "screenshot5.png",
+        "screenshot6.jpg"
+      ]
     }
   ],
   "roles": [
@@ -267,7 +297,7 @@
       }
     }
   ],
-  "logo": "images/logo.png",
+  "logo": "images/logo.jpg",
   "downloads": "70M+",
   "members": 7,
   "genre": "Casual",
@@ -279,7 +309,50 @@
   "cover": "images/cover.jpg",
   "challenges": [
     {
-      "problem": "Lack of Game Designers"
+      "problem": {
+        "en": "Early-stage assets did not align correctly in-game because individual steps were created separately before being assembled.",
+        "vi": "Một số asset trong giai đoạn đầu không khớp khi đưa vào game do từng bước được vẽ riêng lẻ trước khi ghép lại."
+      },
+      "solution": {
+        "en": "Organized discussions with key team members to identify the causes and coordinate corrective actions.",
+        "vi": "Tổ chức trao đổi với các key members để xác định nguyên nhân và phối hợp triển khai phương án sửa lỗi."
+      }
+    },
+    {
+      "problem": {
+        "en": "A large volume of post-launch updates and tasks, combined with limited team resources and gaps in game design support, challenged the production workflow.",
+        "vi": "Khối lượng công việc cập nhật sau khi game phát hành lớn, trong khi nhân sự hạn chế và có giai đoạn thiếu nhân sự phụ trách Game Design, gây áp lực lên quy trình sản xuất."
+      },
+      "solution": {
+        "en": "Collaborated with the Product team to brainstorm solutions, prioritize fixes, and contribute to game design tasks to support ongoing updates.",
+        "vi": "Phối hợp với team Product để brainstorm, ưu tiên xử lý lỗi và chủ động đảm nhiệm thêm các đầu việc Game Design nhằm hỗ trợ quá trình cập nhật game."
+      }
+    },
+    {
+      "problem": {
+        "en": "Players accumulated excessive in-game currency, reducing its value and usefulness.",
+        "vi": "Người chơi tích lũy quá nhiều tiền trong game, khiến giá trị tiền tệ giảm đi."
+      },
+      "solution": {
+        "en": "Implemented a new game mode (Decor Room) that provided additional opportunities for players to spend their currency.",
+        "vi": "Triển khai một game mode mới (Decor Room) tạo thêm cơ hội để người chơi tiêu tiền."
+      }
+    }
+  ],
+  "learned": [
+    {
+      "title": "Game Design & GDD Development",
+      "text": {
+        "en": "This project was my first experience designing a complete gameplay experience and developing a Game Design Document (GDD). Through self-directed learning and research, I applied the MDA framework to gameplay design, documented art and animation assets and related data, and created UX wireframes for event modes. This experience sparked my interest in game design and motivated me to explore the field further.",
+        "vi": "Đây là lần đầu tiên tôi thiết kế một trải nghiệm gameplay hoàn chỉnh và xây dựng tài liệu thiết kế game (GDD). Thông qua quá trình tự học và nghiên cứu, tôi áp dụng mô hình MDA vào thiết kế gameplay, lập danh sách tài nguyên art, animation cùng các dữ liệu liên quan, và xây dựng UX wireframe cho các chế độ sự kiện. Trải nghiệm này khơi gợi niềm hứng thú với Game Design và thúc đẩy tôi tiếp tục tìm hiểu sâu hơn về lĩnh vực này."
+      }
+    },
+    {
+      "title": "Managing Multiple Roles & Cross-functional Collaboration",
+      "text": {
+        "en": "Taking on multiple roles and responsibilities taught me to manage my time and priorities more effectively. It also deepened my understanding of how artists, developers, game designers, and testers collaborate throughout game production to create a cohesive player experience.",
+        "vi": "Đảm nhiệm nhiều vai trò và đầu việc cùng lúc giúp tôi học cách quản lý thời gian và sắp xếp thứ tự ưu tiên hiệu quả hơn. Đồng thời, trải nghiệm này giúp tôi hiểu sâu hơn về cách artist, developer, game designer và tester phối hợp xuyên suốt quá trình sản xuất game để tạo nên trải nghiệm nhất quán cho người chơi."
+      }
     }
   ]
 }

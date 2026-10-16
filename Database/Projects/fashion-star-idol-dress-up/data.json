@@ -28,5 +28,38 @@
       "<b><color=#ff6ad5>Kiểm thử game</color></b> và đưa ra <b><color=#ff6ad5>phản hồi</color></b> nhằm phát hiện vấn đề, góp phần cải thiện trải nghiệm người chơi."
     ]
   },
-  "exploreUrl": ""
+  "exploreUrl": "",
+  "studio": "Champion Game Studio x Bravestars Games",
+  "period": {
+    "en": "since 2024",
+    "vi": "từ 2024"
+  },
+  "members": 5,
+  "genre": "CASUAL",
+  "roles": [
+    {
+      "title": "UI/UX DESIGNER"
+    },
+    {
+      "title": "CONCEPT ARTIST"
+    }
+  ],
+  "progression": [
+    {
+      "id": "sketches",
+      "name": "SKETCHES"
+    },
+    {
+      "id": "art-assets",
+      "name": "ART ASSETS"
+    },
+    {
+      "id": "ui-design",
+      "name": "UI DESIGN"
+    },
+    {
+      "id": "store-listing",
+      "name": "STORE LISTING"
+    }
+  ]
 }

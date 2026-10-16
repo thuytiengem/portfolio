@@ -40,5 +40,34 @@
   "exploreUrl": "",
   "stores": {
     "googlePlay": "https://play.google.com/store/apps/details?id=com.left.right.girl.dressup.game&hl=en"
-  }
+  },
+  "studio": "Champion Game Studio x Bravestars Games",
+  "downloads": "10M+",
+  "members": 4,
+  "genre": "Casual",
+  "roles": [
+    {
+      "title": "LEAD ARTIST"
+    },
+    {
+      "title": "CONCEPT ARTIST"
+    },
+    {
+      "title": "UI/UX MENTOR"
+    }
+  ],
+  "progression": [
+    {
+      "id": "sketches",
+      "name": "SKETCHES"
+    },
+    {
+      "id": "art-assets",
+      "name": "ART ASSETS"
+    },
+    {
+      "id": "store-listing",
+      "name": "STORE LISTING"
+    }
+  ]
 }

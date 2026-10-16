@@ -4,7 +4,7 @@
 // Sections with no data are skipped and the numbering (01, 02 …) only counts the rendered ones.
 import { h } from "../utils.js";
 import { bind } from "../i18n.js";
-import { createVideo } from "../youtube.js";
+import { framedVideo } from "../youtube.js";
 import { storeButtons } from "../stores.js";
 import { has } from "./model.js";
 import { filmstrip } from "./gallery.js";
@@ -21,16 +21,15 @@ const problemSolution = c => [
 ];
 
 function header(m) {
-  const video = has(m.video?.youtube) ? createVideo(m.video) : null;
+  const frame = has(m.video?.youtube) ? framedVideo(m.video) : null;
   const info = wrap("panel hud-info",
     wrap("pd-app", logoImg(m), wrap("pd-app-text", txt("h1", m.title, "pd-title"), metaLine(m))),
     tagList(m.tags),
     storeButtons(m.stores));
-  const frame = video ? h("div", { class: "hud-frame" }, video, ["c1", "c2", "c3", "c4"].map(c => h("i", { class: c }))) : null;
   return h("header", { class: "pd-head hud-head" }, coverLayer(m),
     h("div", { class: "container" },
       backLink(),
-      wrap(`hud-top${video ? "" : " no-video"}${info ? "" : " no-info"}`, info, frame),
+      wrap(`hud-top${frame ? "" : " no-video"}${info ? "" : " no-info"}`, info, frame),
       hudStats(m)));
 }
 
