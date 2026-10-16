@@ -1,0 +1,99 @@
+/* ============ Portfolio dropdown (assets/js/portfolio-menu.js) — linked by index.html, project.html, games.html ============
+   Desktop: a lilac accent block under the nav (2 × 2 sub-links, chamfered corners, cyan highlight line).
+   Phone (burger menu, ≤ 900px): an accordion inside the menu. */
+.pm { position: relative; }
+.nav .pm-trigger { display: inline-flex; align-items: center; gap: 6px; }
+.pm-chev { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 3; transition: transform .25s; }
+.pm.open .pm-chev { transform: rotate(180deg); }
+
+.pm-panel {
+  position: absolute; left: 50%; top: 100%; z-index: 5; width: 600px;
+  padding-top: 17px;                       /* transparent bridge from the link down to the topbar edge (keeps hover) */
+  transform: translateX(-50%);
+  filter: drop-shadow(0 16px 30px #000a) drop-shadow(0 0 18px #d38cff55);
+  visibility: hidden; pointer-events: none;
+  transition: visibility 0s .25s;
+}
+.pm.open .pm-panel { visibility: visible; pointer-events: auto; transition: none; }
+.pm-inner {
+  --cut: 16px;
+  position: relative; padding: 16px;
+  background:
+    linear-gradient(#ffffff0d 1px, transparent 1px) 0 0 / 18px 18px,
+    linear-gradient(90deg, #ffffff0d 1px, transparent 1px) 0 0 / 18px 18px,
+    linear-gradient(160deg, #a46ff0 0%, #7a48c6 45%, #5a3299 100%);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%);
+  opacity: 0; transform: translateY(-8px);
+  transition: opacity .2s ease, transform .25s cubic-bezier(.2,.8,.2,1);
+}
+.pm.open .pm-inner { opacity: 1; transform: none; }
+.pm-inner::before { /* thin cyan highlight line along the top edge */
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, #9ff6ff 20%, #3ef2ff 50%, #9ff6ff 80%, transparent);
+  box-shadow: 0 0 10px #3ef2ff;
+}
+.pm-inner::after { /* little notch pointing at "Portfolio" */
+  content: ""; position: absolute; left: 50%; top: 0; width: 14px; height: 7px; margin-left: -7px;
+  background: #000; clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.pm-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+
+.nav .pm-item {
+  position: relative; display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 10px 12px;
+  font-size: 15px; font-weight: 700; color: #fff; white-space: normal;
+  background: #1c0f3047; box-shadow: inset 0 0 0 1px #ffffff1f;
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  transition: background .18s, box-shadow .18s;
+}
+.nav .pm-item::after { display: none; }
+.nav .pm-item:hover, .nav .pm-item:focus-visible {
+  background: #1c0f30b3; box-shadow: inset 3px 0 0 #3ef2ff, inset 0 0 0 1px #3ef2ff66; outline: none;
+}
+.nav .pm-item.is-current { box-shadow: inset 3px 0 0 #3ef2ff, inset 0 0 0 1px #ffffff40; }
+.pm-ico {
+  flex: none; display: grid; place-items: center; width: 38px; height: 38px;
+  background: #0d0618b3; box-shadow: inset 0 0 0 1px #d38cff88; color: #e9d2ff;
+}
+.pm-ico svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.nav .pm-item:hover .pm-ico, .nav .pm-item:focus-visible .pm-ico { color: #9ff6ff; box-shadow: inset 0 0 0 1px #3ef2ff; }
+.pm-txt { display: grid; min-width: 0; line-height: 1.2; }
+.pm-txt b { font-size: 15px; letter-spacing: .01em; }
+.pm-txt small { font-size: 12px; font-weight: 600; color: #f0e2ffcc; }
+.nav .pm-item.is-soon { color: #ffffffb3; }
+.pm-item.is-soon .pm-txt { padding-right: 34px; }
+.nav .pm-item.is-soon .pm-ico { color: #e9d2ff99; }
+.pm-soon {
+  position: absolute; top: 6px; right: 8px; padding: 1px 6px;
+  font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+  color: #9ff6ff; background: #0d0618b3; box-shadow: inset 0 0 0 1px #3ef2ff66;
+}
+
+@media (max-width: 900px) {
+  /* inside the burger menu: "Portfolio" row with the chevron on the right, panel = accordion below it */
+  .pm { display: block; }
+  .nav .pm-trigger { display: flex; justify-content: space-between; width: 100%; }
+  .pm-panel {
+    position: static; width: auto; padding: 0; transform: none; filter: none; visibility: visible; pointer-events: auto;
+    display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease;
+  }
+  .pm.open .pm-panel { grid-template-rows: 1fr; }
+  .pm-inner {
+    min-height: 0; overflow: hidden; padding: 0 12px; clip-path: none; opacity: 1; transform: none;
+    background: linear-gradient(160deg, #7a48c6, #4a2a80); transition: padding .3s ease;
+  }
+  .pm.open .pm-inner { padding: 12px; }
+  .pm:not(.open) .pm-item { visibility: hidden; } /* closed accordion: items are not focusable */
+  .pm-inner::after { display: none; }
+  .nav .pm-item { min-height: 56px; padding: 8px 10px; gap: 10px; border-top: 0; font-size: 14px; }
+  .pm-ico { width: 32px; height: 32px; }
+  .pm-ico svg { width: 19px; height: 19px; }
+  .pm-txt b { font-size: 14px; }
+  .pm-txt small { font-size: 11px; }
+  .pm-soon { position: absolute; top: 4px; right: 6px; font-size: 9px; padding: 0 5px; }
+}
+@media (max-width: 420px) {
+  .pm-txt small { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pm-inner, .pm-panel, .pm-chev { transition: none; }
+}

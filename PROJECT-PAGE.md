@@ -34,6 +34,11 @@ dạng các giai đoạn xếp dọc, mỗi giai đoạn một dải ảnh cuộ
 | `progression` | `[{ "id", "name", "text", "images" }]` | **Product Progression** — xem bên dưới. |
 | `challenges` | `[{ "problem", "solution" }]` | **Challenges & Solutions** — thẻ chia đôi Vấn đề │ Giải pháp. |
 | `learned` | danh sách | **What I learned** — mỗi mục là một câu, hoặc `{ "title", "text" }`. Cũng có thể `{ "en": [...], "vi": [...] }`. |
+| `thumbnail` | đường dẫn ảnh | Ảnh của thẻ ở trang **Video Games** (`games.html`). Không có → `cover` → ảnh YouTube → `logo` → ô "no signal" có chữ cái đầu tên game. |
+| `featured` | `false` | `false` = **không** hiện dự án ở Featured Projects trang chủ. Không ghi = hiện. Trang Video Games luôn hiện tất cả. |
+
+Hai trường `thumbnail` và `featured` không dùng ở trang chi tiết. Trong Studio: mục "Trang chủ & trang Video Games" khi sửa
+một dự án (ô "Hiện ở trang chủ" + "Ảnh thẻ", lưu thành `images/thumbnail.jpg`).
 
 - Chưa có `roles` (hoặc trống) mà có `responsibilities` → trang lấy `responsibilities` làm **một thẻ vai trò không tên**,
   để dự án cũ vẫn có nội dung.
@@ -108,7 +113,7 @@ thay ảnh trong các thư mục trên và sửa chữ trong Studio hoặc `data
 Tiêu đề mục và nhãn nhỏ nằm trong `web-config.json → i18n.en / i18n.vi` (sửa trong Studio → "Văn bản giao diện"):
 `pd_back`, `pd_roles`, `pd_progression`, `pd_challenges`, `pd_learned`, `pd_downloads`, `pd_team`, `pd_members` (`{n}` = số người),
 `pd_genre`, `pd_problem`, `pd_solution`, `pd_images` / `pd_image` (`{n}` = số ảnh, nhiều / 1 ảnh), `pd_prev`, `pd_next`, `pd_close`,
-`pd_not_found`, `pd_not_found_text`.
+`pd_not_found`, `pd_not_found_text`. Trang Video Games: `games_*`; menu Portfolio: `pm_*`.
 
 ## Code
 

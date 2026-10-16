@@ -145,7 +145,7 @@ textarea { resize: vertical; min-height: 60px; }
 .badges { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
 .bdg { font-family: var(--mono); font-size: .64rem; padding: 2px 8px; border-radius: 20px; border: 1px solid var(--line2); color: var(--dim); }
 .bdg.c { color: var(--cyan); border-color: #3ef2ff55; } .bdg.r { color: var(--red); border-color: #ff6a7a66; }
-.bdg.g { color: var(--green); border-color: #6dffb055; }
+.bdg.g { color: var(--green); border-color: #6dffb055; } .bdg.y { color: var(--gold); border-color: #ffd54f66; }
 .row-acts { display: flex; gap: 4px; align-items: center; }
 .empty { padding: 40px; text-align: center; border: 1px dashed var(--line2); border-radius: 12px; color: var(--dim); }
 .yt { display: grid; grid-template-columns: 1fr 200px; gap: 14px; align-items: start; }

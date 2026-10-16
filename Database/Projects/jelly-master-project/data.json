@@ -133,7 +133,42 @@
     {
       "id": "gdd",
       "name": "GDD Event",
+      "text": {
+        "en": [
+          "I created the GDD for the Valentine's Day event update, which included a minigame called Wasabi Challenge, an in-app purchase (IAP) pack, and new Valentine-themed food items for the supermarket mode.",
+          "The Valentine event features a turn-based minigame where Jiji and a bot take turns eating from 12 plates of food, with wasabi randomly hidden in two plates. Players choose a plate for Jiji while the bot selects its own. The first character to eat both wasabi plates loses the game. Winning and losing trigger different character animations and reward flows, including in-game currency and decorative items.",
+          "My Contribution: Developed the Game Design Document (GDD), defining gameplay rules, turn-based interactions, win/loss conditions, and reward mechanics. Designed UX wireframes and documented art assets and animation requirements to guide production. Collaborated with developers to communicate design intent and ensure the event was implemented as planned.",
+          "I also designed UX wireframes for the Seafood mode based on ideas and the GDD finalized during brainstorming sessions."
+        ],
+        "vi": [
+          "Mình đã làm GDD cho bản cập nhật sự kiện Valentine, bao gồm minigame Wasabi Challenge, một gói mua hàng trong ứng dụng (IAP) và các món ăn theo chủ đề Valentine mới cho chế độ siêu thị.",
+          "Sự kiện Valentine có một minigame theo lượt, trong đó Jiji và bot lần lượt ăn từ 12 đĩa thức ăn, với hai đĩa được đặt wasabi ngẫu nhiên. Người chơi chọn đĩa cho Jiji, sau đó bot tự động chọn đĩa của mình. Nhân vật ăn trúng cả hai đĩa wasabi trước sẽ thua. Kết quả thắng hoặc thua sẽ kích hoạt các animation tương ứng và luồng nhận thưởng, bao gồm tiền trong game hoặc vật phẩm trang trí.",
+          "Đóng góp của tôi: Xây dựng tài liệu thiết kế game (GDD), xác định luật chơi, cơ chế theo lượt, điều kiện thắng/thua và hệ thống phần thưởng. Thiết kế UX wireframe, lập danh sách asset art và yêu cầu animation để định hướng quá trình sản xuất. Phối hợp với Developer để truyền đạt ý đồ thiết kế và đảm bảo sự kiện được triển khai đúng kế hoạch.",
+          "Mình cũng thiết kế UX wireframe cho chế độ Seafood dựa trên các ý tưởng và tài liệu GDD đã được thống nhất sau các buổi brainstorming."
+        ]
+      },
       "images": [
+        {
+          "src": "gameplay.jpg",
+          "caption": {
+            "en": "Original GDD in Vietnamese - Selected pages showing gameplay rules, win/lose conditions, and reward mechanics.",
+            "vi": "GDD gốc về gameplay mechanic."
+          }
+        },
+        {
+          "src": "art-asset-event.jpg",
+          "caption": {
+            "en": "Original GDD in Vietnamese - Art list for minigame",
+            "vi": "List art cho phần minigame."
+          }
+        },
+        {
+          "src": "spmk-update.jpg",
+          "caption": {
+            "en": "Original GDD in Vietnamese - Art list for supermarket assets update.",
+            "vi": "List art cho phần update assets trong supermarket."
+          }
+        },
         {
           "src": "ux-valentine.jpg",
           "caption": "Valentine event mode wireframe"

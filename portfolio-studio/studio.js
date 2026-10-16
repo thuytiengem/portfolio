@@ -17,7 +17,7 @@ const STORES = [
 ];
 const badUrl = v => !!String(v ?? "").trim() && !/^https?:\/\//i.test(String(v).trim());
 const KINDS = {
-  projects: { title: "Featured Projects", noun: "dự án", dir: "Projects", section: "#featured" },
+  projects: { title: "Dự án game", noun: "dự án", dir: "Projects", section: "#featured" },
   blender: { title: "3D Blender", noun: "video", dir: "Blender", section: "#blender" },
 };
 // short explanations for the UI text keys in web-config.json → i18n
@@ -30,6 +30,14 @@ const KEY_HINTS = {
   talk_title: "Tiêu đề footer", talk_text: "Đoạn giới thiệu footer (<br> = xuống dòng)", my_email: "Nhãn email", my_phone: "Nhãn số điện thoại",
   form_name: "Nhãn ô tên", form_email: "Nhãn ô email", form_message: "Nhãn ô lời nhắn", form_send: "Chữ nút gửi form",
   mail_subject: "Tiêu đề mail ({name}, {email})", mail_body: "Nội dung mail ({message}, {name}, {email})", copyright: "Dòng bản quyền",
+  pm_label: "Menu Portfolio: tên nhóm (trình đọc màn hình)", pm_soon: "Menu Portfolio: nhãn “Sắp có”",
+  pm_games: "Menu Portfolio: mục Video Games", pm_games_hint: "Menu Portfolio: dòng nhỏ dưới Video Games",
+  pm_3d: "Menu Portfolio: mục 3D Artwork", pm_3d_hint: "Menu Portfolio: dòng nhỏ dưới 3D Artwork",
+  pm_2d: "Menu Portfolio: mục 2D Artwork", pm_2d_hint: "Menu Portfolio: dòng nhỏ dưới 2D Artwork",
+  pm_graphic: "Menu Portfolio: mục Graphic Design", pm_graphic_hint: "Menu Portfolio: dòng nhỏ dưới Graphic Design",
+  games_page_title: "Trang Video Games: tên trang (tab trình duyệt)", games_back: "Trang Video Games: link về trang chủ",
+  games_count: "Trang Video Games: số dự án ({n})", games_count_one: "Trang Video Games: số dự án khi chỉ có 1 ({n})",
+  games_view: "Trang Video Games: chữ “Xem dự án” trên thẻ", games_empty: "Trang Video Games: khi chưa có dự án nào",
 };
 
 // ══════════════ helpers ══════════════
@@ -184,6 +192,7 @@ function itemToDraft(kind, o = {}) {
     exploreUrl: o.exploreUrl || "",
     ...(kind === "projects" ? {
       stores: Object.fromEntries(STORES.map(([k]) => [k, typeof o.stores?.[k] === "string" ? o.stores[k] : ""])),
+      featured: o.featured !== false, thumbnail: typeof o.thumbnail === "string" ? o.thumbnail : "",
       logo: typeof o.logo === "string" ? o.logo : "", cover: typeof o.cover === "string" ? o.cover : "",
       studio: L(o.studio), period: L(o.period), genre: L(o.genre),
       downloads: String(o.downloads ?? ""), members: String(o.members ?? ""),
@@ -206,6 +215,7 @@ function draftToItem(kind, d, orig = {}) {
     video: s(d.video.youtube) ? { youtube: d.video.youtube.trim(), orientation: d.video.orientation } : undefined,
     description: list(d.description), responsibilities: list(d.responsibilities), exploreUrl: d.exploreUrl.trim(),
     stores: (st => (Object.keys(st).length ? st : undefined))(Object.fromEntries(STORES.map(([k]) => [k, s(d.stores[k])]).filter(([, v]) => v))),
+    featured: d.featured ? undefined : false, thumbnail: s(d.thumbnail),   // featured: only "false" is written
     logo: s(d.logo), cover: s(d.cover), studio: lt(d.studio), period: lt(d.period), downloads: s(d.downloads),
     members: (m => (m && /^\d+$/.test(m) ? Number(m) : m || undefined))(d.members.trim()), genre: lt(d.genre),
     roles: many(d.roles.map(r => obj({ title: lt(r.title), text: lines(r.text) }, r._x)).filter(r => Object.keys(r).length)),
@@ -352,7 +362,7 @@ function viewSettings() {
         <span class="ico"><img src="../assets/icons/${k}.svg" alt=""></span><b>${name}</b>
         <input type="url" data-path="social.${k}" value="${esc(CFG.d.social[k])}" placeholder="${ph}"></div>`).join(""), "để trống = không hiện trên trang") +
     sec("Liên kết nút Explore", `<div class="grid3">
-      ${inp("links.otherProjects", "Khối “Other game projects”", { ph: "#" })}${inp("links.artworks", "Section Artworks", { ph: "#" })}${inp("links.about", "Section About", { ph: "#" })}</div>
+      ${inp("links.otherProjects", "Khối “Other game projects”", { ph: "games.html", hint: "Để trống hoặc # = trang Video Games." })}${inp("links.artworks", "Section Artworks", { ph: "#" })}${inp("links.about", "Section About", { ph: "#" })}</div>
       <span class="hint">Nút Explore của từng dự án / video Blender chỉnh trong trang của mục đó.</span>`) +
     sec("Khác", `<div class="grid2">
       ${inp("background.rainWord", "Chữ của hiệu ứng mưa chữ", { key: "background.rainWord" })}
@@ -391,11 +401,14 @@ function viewCollection(kind) {
   const row = (id, i, listed) => {
     const p = C.items[id], broken = C.broken[id];
     const yt = p?.video?.youtube;
+    const thumb = kind === "projects" && typeof p?.thumbnail === "string" && p.thumbnail.trim()
+      ? (/^https?:\/\//.test(p.thumbnail) ? p.thumbnail : `/Database/${K.dir}/${id}/${p.thumbnail.trim()}`) : ytThumb(yt);
     return `<li class="prow${broken ? " broken" : ""}" data-id="${id}"${listed ? ' draggable="true"' : ""}>
       ${listed ? `<span class="handle" title="Kéo để sắp xếp">⠿</span><span class="num">${String(i + 1).padStart(2, "0")}</span>` : "<span></span><span></span>"}
-      <div class="thumb">${yt ? `<img src="${ytThumb(yt)}" alt="">` : "—"}</div>
+      <div class="thumb">${thumb ? `<img src="${esc(thumb)}" alt="">` : "—"}</div>
       <div class="t"><b>${esc(broken ? id : p.title || "(không tiêu đề)")}</b><span>${esc(broken || `Database/${K.dir}/${id}`)}</span></div>
-      <div class="badges">${yt ? `<span class="bdg c">▶ YouTube${p.video.orientation === "portrait" ? " · dọc" : ""}</span>` : `<span class="bdg r">chưa có video</span>`}
+      <div class="badges">${kind === "projects" && p?.featured === false ? `<span class="bdg y" title="featured: false — chỉ hiện ở trang Video Games">Ẩn ở trang chủ</span>` : ""}
+        ${yt ? `<span class="bdg c">▶ YouTube${p.video.orientation === "portrait" ? " · dọc" : ""}</span>` : `<span class="bdg r">chưa có video</span>`}
         ${(p?.tags || []).length ? `<span class="bdg">${p.tags.length} tag</span>` : ""}
         ${(st => st.length ? `<span class="bdg g" title="Link tải game">⤓ ${st.join(" · ")}</span>` : "")(kind === "projects" ? STORES.filter(([k]) => String(p?.stores?.[k] ?? "").trim()).map(([, , short]) => short) : [])}
         ${kind === "projects" && p?.progression?.length ? `<span class="bdg" title="Trang chi tiết: quá trình sản xuất">◇ ${p.progression.length} bước</span>` : ""}</div>
@@ -405,7 +418,8 @@ function viewCollection(kind) {
         <button class="icon-btn del" type="button" data-act="delItem" data-id="${id}" title="Xoá">🗑</button></div></li>`;
   };
   return `<div class="ph"><div><h1>${K.title} <span style="color:var(--dim);font-size:.6em">(${ids.length})</span></h1>
-      <p>Kéo <b>⠿</b> để đổi thứ tự hiển thị — thứ tự được lưu ngay vào <code>Database/${K.dir}/index.json</code>.</p></div>
+      <p>Kéo <b>⠿</b> để đổi thứ tự hiển thị — thứ tự được lưu ngay vào <code>Database/${K.dir}/index.json</code>.${kind === "projects"
+        ? `<br>Tất cả dự án hiện ở trang <b>Video Games</b> (<code>games.html</code>); dự án “Ẩn ở trang chủ” không hiện trong Featured Projects.` : ""}</p></div>
       <div class="acts"><a class="btn pri" href="#/${kind}/new">+ Thêm ${K.noun}</a></div></div>
     ${ids.length ? `<ul class="plist" id="plist">${ids.map((id, i) => row(id, i, true)).join("")}</ul>` : `<div class="empty">Chưa có ${K.noun} nào.</div>`}
     ${orphans.length ? `<h3 style="margin:24px 0 10px;color:var(--gold);font-size:.9rem">Thư mục chưa có trong index.json (không hiện trên trang)</h3><ul class="plist">${orphans.map(id => row(id, -1, false)).join("")}</ul>` : ""}`;
@@ -437,6 +451,11 @@ function viewItemEditor() {
     <div class="savebar"><div></div><div style="display:flex;gap:10px;align-items:center"><span class="dirty" id="dirtyFlag" hidden>● Chưa lưu</span>
       <a class="btn ghost" href="#/${kind}">Huỷ</a><button class="btn pri" id="saveBtn" type="button" data-act="save" ${ED.id ? "disabled" : ""}>Lưu</button></div></div>
     ${sec("Nội dung", fields)}
+    ${kind === "projects" ? sec("Trang chủ &amp; trang Video Games", `<div class="grid2" style="align-items:start">
+      <div class="f"><span class="lbl">Trang chủ</span>
+        <label class="sl-chk"><input type="checkbox" data-path="featured"${d.featured ? " checked" : ""}> Hiện ở trang chủ (Featured)</label>
+        <span class="hint">Bỏ chọn thì dự án không hiện ở mục Featured Projects trang chủ (ghi <code>"featured": false</code>) — vẫn hiện ở trang Video Games.</span></div>
+      ${projImg("thumbnail", "Ảnh thẻ (thumbnail)", { hint: "Lưu thành <code>images/thumbnail.jpg</code>. Dùng cho thẻ ở trang Video Games; để trống thì dùng ảnh nền header / ảnh YouTube." })}</div>`) : ""}
     ${kind === "projects" ? sec("Link tải game", `<div class="grid3" style="align-items:start">${STORES.map(([k, label, , ph, hint]) => `<div class="f"><label>${label}</label>
         <input type="url" data-path="stores.${k}" data-store value="${esc(d.stores[k])}" placeholder="${esc(ph)}"${badUrl(d.stores[k]) ? ' class="bad"' : ""}>
         ${hint ? `<span class="hint">${hint}</span>` : ""}</div>`).join("")}</div>
@@ -886,7 +905,7 @@ $("app").addEventListener("input", e => {
   if (el.dataset.uik) return uiInput(el);
   if (!p) return;
   if (p === "@folder") { ED.folder = el.value.trim(); $("folderErr").textContent = ED.folder && !/^[a-z0-9][a-z0-9-]{0,79}$/.test(ED.folder) ? "Tên không hợp lệ" : ""; }
-  else setPath(draftOf(), p, el.value);
+  else setPath(draftOf(), p, el.type === "checkbox" ? el.checked : el.value);
   if (el.dataset.yt !== undefined) {
     const id = parseYT(el.value), box = $("ytp");
     box.style.backgroundImage = id ? `url('${ytThumb(id)}')` : ""; box.textContent = id ? "" : (el.value ? "link không hợp lệ" : "chưa có video");
@@ -960,7 +979,7 @@ const ACTS = {
   async pdImg(el) {
     const key = el.dataset.key, [file] = await pickFiles(); if (!file || !ED?.id) return;
     try {
-      const { blob, ext } = await prepImg(file, key === "logo" ? 1024 : 2400);
+      const { blob, ext } = await prepImg(file, key === "logo" ? 1024 : key === "thumbnail" ? 1600 : 2400);
       const r = await postFile(`/api/projects/${ED.id}/images?dir=images&name=${key}.${ext}&overwrite=1`, blob);
       ED.d[key] = `images/${r.name}`; ED.bust = Date.now(); render(); gitRefresh();
       toast("Đã tải ảnh lên — bấm Lưu để ghi vào data.json");

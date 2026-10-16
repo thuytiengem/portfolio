@@ -9,6 +9,7 @@ import { loadFrames } from "../ui-frames.js";
 import { initCursor } from "../cursor.js";
 import { skipNextIntro } from "../intro/skip.js";
 import { initMenu } from "../topbar.js";
+import { initPortfolioMenu } from "../portfolio-menu.js";
 import { renderContact } from "../sections/about.js";
 import { normalize } from "./model.js";
 import { renderProject, renderNotFound } from "./render.js";
@@ -32,6 +33,8 @@ async function main() {
   const id = new URLSearchParams(location.search).get("id")?.trim();
   const [config, project] = await Promise.all([loadJSON("web-config.json"), loadProject(id), loadFrames()]);
   initI18n(config);
+  // Portfolio dropdown: after initI18n (labels), before initMenu (phone menu)
+  initPortfolioMenu($('#nav a[data-i18n="nav_portfolio"]'));
 
   const site = () => stripRich(tr(config.site?.pageTitle));
   const setTitle = () => {

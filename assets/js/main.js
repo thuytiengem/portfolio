@@ -6,8 +6,9 @@ import { stripRich } from "./richtext.js";
 import { loadFrames } from "./ui-frames.js";
 import { initCursor } from "./cursor.js";
 import { initMenu } from "./topbar.js";
+import { initPortfolioMenu } from "./portfolio-menu.js";
 import { runIntro } from "./intro/index.js";
-import { renderFeatured, renderBlender } from "./sections/projects.js";
+import { renderFeatured, renderBlender, isFeatured } from "./sections/projects.js";
 import { renderArtworks } from "./sections/artworks.js";
 import { renderAbout, renderContact } from "./sections/about.js";
 
@@ -16,6 +17,8 @@ async function main() {
   // image frames (assets/ui/) load alongside the config so panels/buttons are styled before they show
   const [config] = await Promise.all([loadJSON("web-config.json"), loadFrames()]);
   initI18n(config);
+  // Portfolio dropdown: after initI18n (labels), before initMenu (phone menu)
+  initPortfolioMenu($('#nav a[data-i18n="nav_portfolio"]'));
 
   const setTitle = () => { document.title = stripRich(tr(config.site?.pageTitle)) || document.title; };
   setTitle();
@@ -23,7 +26,8 @@ async function main() {
 
   $("#brand").textContent = config.profile?.name || "";
   const links = config.links || {};
-  $("#otherExplore").href = links.otherProjects || "#";
+  // "Other game projects": the Video Games page unless a link is set
+  $("#otherExplore").href = links.otherProjects && links.otherProjects !== "#" ? links.otherProjects : "games.html";
   $("#artworksExplore").href = links.artworks || "#";
   $("#aboutExplore").href = links.about || "#";
 
@@ -38,7 +42,7 @@ async function main() {
     loadCollection("Blender"),
     loadJSON("Database/Artworks/index.json").catch(() => []),
   ]);
-  renderFeatured(projects);
+  renderFeatured(projects.filter(isFeatured));   // "featured": false → only on the Video Games page
   renderBlender(blender);
   if (!blender.length) $("#blender").hidden = true;
   renderArtworks(artworks);

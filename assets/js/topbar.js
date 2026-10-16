@@ -1,4 +1,4 @@
-// Topbar shared by index.html and project.html: phone menu (hamburger) open / close.
+// Topbar shared by index.html, project.html and games.html: phone menu (hamburger) open / close.
 import { $, $$ } from "./utils.js";
 
 export function initMenu() {

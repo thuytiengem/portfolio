@@ -35,7 +35,10 @@ export const num = i => String(i).padStart(2, "0");
 export const logoImg = m => m.logo ? h("img", { class: "pd-logo", src: m.logo, alt: "", width: 512, height: 512 }) : null;
 export const coverLayer = m => m.cover ? h("div", { class: "pd-cover", "aria-hidden": "true", style: { backgroundImage: `url("${m.cover}")` } }) : null;
 export const tagList = tags => tags.length ? h("div", { class: "tags" }, tags.map(t => bindText(h("span", { class: "tag" }), t))) : null;
-export const backLink = () => Object.assign(lbl("a", "pd_back", "pd-back"), { href: "index.html#featured" });
+/** back link follows where the visitor came from: the Video Games page (?from=games) or the home page Featured section */
+export const backLink = () => new URLSearchParams(location.search).get("from") === "games"
+  ? Object.assign(lbl("a", "pd_back_games", "pd-back"), { href: "games.html" })
+  : Object.assign(lbl("a", "pd_back", "pd-back"), { href: "index.html#featured" });
 
 /** "Studio · 2023 – 2024" — the separator travels with the part after it, so a wrapped line never ends with a lone "·" */
 export function metaLine(m) {

@@ -10,6 +10,9 @@ const explore = url => bind(h("a", { class: "btn-explore", href: url || "#" }), 
 const detailUrl = p => p.exploreUrl || `project.html?id=${encodeURIComponent((p._base || "").split("/").filter(Boolean).pop() || "")}`;
 const heading = key => bind(h("h4", { class: key === "responsibilities" ? "accent" : "" }), el => { el.textContent = label(key); });
 
+/** home page Featured Projects: every project unless its data.json says "featured": false (games.html lists all) */
+export const isFeatured = p => p.featured !== false;
+
 export function renderFeatured(projects) {
   const list = $("#featuredList");
   projects.forEach((p, i) => {

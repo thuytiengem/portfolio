@@ -16,7 +16,10 @@ The owner writes in Vietnamese — reply in Vietnamese.
 - `assets/js/intro/` — intro "Power Surge": `timeline.js` (order/timing), `steps.js` (step registry), `effects/*`
   (`glass.js` scene + shard glitch, `particles.js`, `title.js` idle glitch, `shake.js`). Textures in `assets/images/intro-texture/`. Styles in `assets/css/intro.css`.
 - `project.html?id=<folder>` — project detail page (`assets/js/project/`: main.js entry, model.js normalize, render.js layout, parts.js, gallery.js filmstrip, lightbox.js; `assets/css/project.css`). Owner guide: `PROJECT-PAGE.md` (VI).
-- Shared helpers: `stores.js` (store buttons, home + detail), `topbar.js` (phone menu, home + detail).
+- `games.html` — "Video Games" page: every folder of `Database/Projects/index.json` as a poster card → project page
+  (`assets/js/games/`: main.js entry, model.js card data + image fallback, cards.js; `assets/css/games.css`).
+- Shared helpers: `stores.js` (store buttons, home + detail), `topbar.js` (phone menu, all pages), `portfolio-menu.js` +
+  `assets/css/portfolio-menu.css` (topbar "Portfolio" dropdown on all 3 pages; init after `initI18n`, before `initMenu`).
 - `portfolio-studio/` — local editor (server.mjs = no-dependency Node server + API; studio.js UI). Writes need the `X-Studio: 1` header; localhost only.
 
 ## Decisions already made (don't re-ask)
@@ -44,12 +47,24 @@ The owner writes in Vietnamese — reply in Vietnamese.
 - Custom cursor = "Laser comet" (owner picked design 8 of 10, built from their star-cursor reference): `assets/js/cursor.js`
   (engine + design, `initCursor()` in main.js) + "Custom cursor" rules in base.css. Mouse only; add new clickable classes to CLICKABLE.
 - Coming back from a project page (Back to projects, Portfolio/About links, browser Back) opens the home page WITHOUT the intro
-  (sessionStorage flag, `assets/js/intro/skip.js`); Home / logo on the project page still play it.
+  (sessionStorage flag, `assets/js/intro/skip.js`); Home / logo on the project page still play it. Same on games.html.
 - Clicking Home or the logo scrolls to the top and replays the intro; the topbar stays visible (`runIntro` returns `replay()`).
 - Description panel, Explore button and hero quote bar (`assets/ui/text-frame/text-frame.png`, owner's art) = image frames with 9-slice via CSS `border-image` (owner picked this over canvas / 9 files);
   slices edited visually in Studio → "Giao diện" (Unity Sprite Editor style). Default PNGs are generated at 2x (`scale: 0.5`).
   Each frame gets a dark layer behind it cut to the frame's own shape (`::after` + `mask-border` of the same image; `backdrop`
   in frame.json, default 0.75) so the letter rain shows through dimmed, not cut (owner rejected clipping the rain at frames).
+- Topbar "Portfolio" = dropdown (hover + click pin, Esc / outside click close, arrow keys; accordion in the phone menu):
+  Video Games → games.html; 3D Artwork, 2D Artwork, Graphic Design = "Soon" (disabled). Labels `pm_*` in web-config i18n.
+  Home page nav highlight still marks it at #featured.
+- Video Games page = variant 1 "Poster grid" (owner's pick of 3 demos, demos deleted) WITHOUT the top banner: a small row
+  "← Home" + project count, then 3 / 2 / 1 columns of cards (image, logo over its edge, title, genre · team · downloads,
+  role tags, 3-line description, hover lift + HUD corners). No filters. Card image: `thumbnail` → `cover` → YouTube thumbnail
+  → `logo` → generated "no signal" initials. Labels `games_*`.
+- Project data.json: `"featured": false` hides it from the home Featured Projects (missing = shown; games.html lists all);
+  `"thumbnail"` = card image. Studio ("Dự án game") has a "Hiện ở trang chủ" toggle, a thumbnail picker
+  (`images/thumbnail.<ext>`) and an "Ẩn ở trang chủ" badge in the list.
+- Home "Other game projects" Explore → games.html when `links.otherProjects` is empty or "#".
+- Project page "← Back to projects" still → index.html#featured (owner hasn't decided whether it should go to games.html).
 
 ## Current status / next step
 - Power Surge intro is live on the site. The old hero image (`intro.heroImage`, `hero.jpg`) was removed — the glass comes from the textures.

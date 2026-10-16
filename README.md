@@ -36,7 +36,8 @@ node portfolio-studio/server.mjs
 
 - **Intro & Hồ sơ**: intro texts, profile, photo, social links, Explore links, rain word, default language.
 - **Kinh nghiệm**: work-experience timeline.
-- **Featured Projects / 3D Blender**: add, edit, delete, drag to reorder; paste any YouTube / Shorts link.
+- **Dự án game / 3D Blender**: add, edit, delete, drag to reorder; paste any YouTube / Shorts link.
+  Game projects also have "Hiện ở trang chủ" (Featured on/off) and the Video Games card image (thumbnail).
 - **Personal Artworks**: drag & drop images (resized to JPG ≤ 2400px), titles / descriptions, reorder.
 - **Văn bản giao diện**: every UI label in EN / VI.
 - "Xem trước" shows the live site (without the intro) next to the form and reloads after each save.
@@ -82,6 +83,8 @@ Text values accept Unity-style rich text tags (`<b>`, `<i>`, `<color=#hex>`, `<l
 - Videos start muted when scrolled into view and pause when scrolled away.
 - To add a project: create the folder + `data.json`, then add the folder name to `index.json` (order = display order).
 - `exploreUrl`: where the project's **Explore** button goes; empty → the project detail page `project.html?id=<folder>`.
+- `featured`: `false` → the project is NOT shown in the home page Featured Projects (missing = shown). It is still listed on `games.html`.
+- `thumbnail`: card image on the Video Games page (relative to the project folder, or URL). Missing → `cover` → YouTube thumbnail → `logo` → a generated placeholder.
 
 Blender `data.json` uses the same `tags`, `video`, `exploreUrl`; `description` is a single paragraph; `title` is optional.
 
@@ -114,6 +117,16 @@ Database/Projects/<folder>/images/product-progression/<step id>/01.jpg …
 
 Labels: `i18n.<lang>.pd_*` in `web-config.json`. Code: `project.html`, `assets/css/project.css`, `assets/js/project/`
 (`main.js` entry · `model.js` data normalisation · `render.js` layout · `parts.js` · `gallery.js` · `lightbox.js`).
+
+## Video Games page + Portfolio menu
+
+`games.html` lists **every** project of `Database/Projects/index.json` (same order, featured or not) as a card linking to
+`project.html?id=<folder>`: image (`thumbnail`, see above), `logo`, `title`, `genre` · `members` · `downloads`, `tags`, first line of
+`description` (else `tagline`). Missing fields are hidden. Code: `assets/js/games/` (`main.js` · `model.js` · `cards.js`), `assets/css/games.css`.
+Labels: `i18n.<lang>.games_*`. The home page "Other game projects" Explore button goes there when `links.otherProjects` is empty or `#`.
+
+The topbar **Portfolio** link is a dropdown on every page (`assets/js/portfolio-menu.js`, `assets/css/portfolio-menu.css`):
+Video Games → `games.html`; 3D Artwork / 2D Artwork / Graphic Design show "Soon". Items: `ITEMS` in portfolio-menu.js; labels `i18n.<lang>.pm_*`.
 
 ## Intro
 
@@ -154,10 +167,10 @@ or edit `frame.json` by hand: `slice` (px on the image), `scale` (0.5 for 2x art
 ## Structure
 
 ```
-index.html · project.html · web-config.json · .nojekyll
+index.html · project.html · games.html · web-config.json · .nojekyll
 assets/fonts   Qualy (titles), Montserrat (body)
-assets/css     base.css · intro.css · sections.css · project.css
-assets/js      main.js · i18n.js · richtext.js · ui-frames.js · cursor.js · utils.js · rain-bg.js · youtube.js · carousel.js · stores.js · topbar.js · sections/ · intro/ · project/
+assets/css     base.css · intro.css · sections.css · project.css · games.css · portfolio-menu.css
+assets/js      main.js · i18n.js · richtext.js · ui-frames.js · cursor.js · utils.js · rain-bg.js · youtube.js · carousel.js · stores.js · topbar.js · portfolio-menu.js · sections/ · intro/ · project/ · games/
 assets/ui      image frames (9-slice) for the panel and the Explore button
 assets/icons   social icons (Simple Icons, CC0)
 Database/      Projects · Blender · Artworks

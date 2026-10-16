@@ -1,0 +1,150 @@
+/* Video Games page (games.html) — small header row (← Home + project count) and the poster card grid
+   (owner's pick: variant 1 "Poster grid", without the top banner). Reuses base.css / sections.css tokens (.tag, HUD corners). */
+
+/* ============ Page header ============ */
+.gp { padding: calc(var(--topbar-h) + 34px) 0 90px; min-height: 70vh; }
+.gp-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 26px; }
+.gp-back { /* same look as the project page's "← Back to projects" */
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 2px;
+  font-weight: 700; font-size: 15px; letter-spacing: .02em; text-decoration: none; color: var(--lilac-soft);
+  transition: color .2s, transform .2s;
+}
+.gp-back:hover { color: #fff; transform: translateX(-3px); }
+.gp-count {
+  padding: 4px 10px; font: 700 13px/1 ui-monospace, Consolas, monospace; letter-spacing: .08em; text-transform: uppercase;
+  color: #9ff6ff; background: #3ef2ff12; box-shadow: inset 0 0 0 1px #3ef2ff77;
+}
+.gp-title { /* page name for screen readers only (no banner on this page) */
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+.gp-empty { padding: 40px 0; text-align: center; color: var(--text-dim); }
+.gp-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; align-items: stretch; }
+
+/* ============ Card ============ */
+.gcard {
+  --cut: 18px;
+  position: relative; display: flex; flex-direction: column; min-width: 0; color: var(--text); text-decoration: none; outline: none;
+  background: linear-gradient(170deg, #34205cf2, #1a0d2ef5 60%);
+  clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+  transition: transform .35s cubic-bezier(.2,.8,.2,1);
+  backface-visibility: hidden; /* own compositing layer: the lift moves the card as one piece */
+}
+.gcard::after { /* thin lilac edge + chamfer ticks; inner glow on hover (drawn on top, clip-path would cut an outer shadow) */
+  content: ""; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  box-shadow: inset 0 0 0 1px #d38cff4d; transition: box-shadow .3s;
+  background: linear-gradient(135deg, #d38cff 0 calc(var(--cut) * .72), transparent 0) top left / 40px 40px no-repeat,
+              linear-gradient(-45deg, #d38cff 0 calc(var(--cut) * .72), transparent 0) bottom right / 40px 40px no-repeat;
+}
+.gcard:hover, .gcard:focus-visible { transform: translateY(-6px); }
+.gcard:hover::after, .gcard:focus-visible::after { box-shadow: inset 0 0 0 1px #e6c4ffcc, inset 0 0 34px #d38cff59; }
+.gcard:focus-visible::after { box-shadow: inset 0 0 0 2px var(--cyan), inset 0 0 34px #3ef2ff40; } /* clip-path hides an outline */
+/* entering: a staggered animation instead of the .reveal transition (the transition stays for the hover lift) */
+.gcard.reveal { transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+.gcard.reveal:not(.in) { opacity: 0; transform: none; }
+.gcard.reveal.in { animation: gc-in .7s cubic-bezier(.2,.8,.2,1) var(--d, 0ms) backwards; }
+@keyframes gc-in { from { opacity: 0; transform: translateY(30px); } }
+
+/* illustration */
+.gc-top { position: relative; }
+.gc-media { position: relative; overflow: hidden; aspect-ratio: 16 / 11; background: #140a24; }
+.gc-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, #1d0f33 100%); }
+.gc-img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.8,.2,1), filter .4s;
+  /* the image fades out at its own bottom edge, so the hover lift (sub-pixel) + zoom can never show a bright seam
+     under the dark overlay */
+  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 99%);
+          mask-image: linear-gradient(180deg, #000 78%, transparent 99%); }
+.gcard:hover .gc-img, .gcard:focus-visible .gc-img { transform: scale(1.07); filter: brightness(1.1) saturate(1.1); }
+/* YouTube hqdefault.jpg = 4:3 with black bars → crop to the 16:9 picture */
+@supports (object-view-box: inset(0)) { .gc-img.kind-youtube { object-view-box: inset(12.5% 0); } }
+@supports not (object-view-box: inset(0)) { .gc-img.kind-youtube { transform: scale(1.36) !important; } }
+/* no picture at all: HUD "no signal" placeholder with the game's initials */
+.gc-ph {
+  position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden;
+  background:
+    repeating-linear-gradient(0deg, #ffffff06 0 2px, transparent 2px 4px),
+    linear-gradient(#d38cff14 1px, transparent 1px) 0 0 / 26px 26px,
+    linear-gradient(90deg, #d38cff14 1px, transparent 1px) 0 0 / 26px 26px,
+    radial-gradient(ellipse at 50% 40%, #6b3fae 0%, #2a1748 55%, #140a24 100%);
+}
+.gc-ph span {
+  font: clamp(54px, 7vw, 92px)/1 var(--font-title); letter-spacing: .04em; color: transparent;
+  -webkit-text-stroke: 1.5px #e6c4ff; filter: drop-shadow(0 0 14px #d38cffaa);
+}
+.gc-ph::after { /* HUD ring */
+  content: ""; position: absolute; width: 62%; aspect-ratio: 1; border-radius: 50%;
+  border: 1px dashed #3ef2ff55; box-shadow: 0 0 0 10px #3ef2ff0a, inset 0 0 30px #3ef2ff1a;
+}
+
+/* HUD corner brackets (same look as .hud-frame), shown on hover */
+.gc-corner {
+  position: absolute; z-index: 2; width: 22px; height: 22px; border: 0 solid #3ef2ff; pointer-events: none;
+  filter: drop-shadow(0 0 6px #3ef2ff); opacity: 0; transform: scale(1.4); transition: transform .3s, opacity .3s;
+}
+.gc-corner.c1 { top: 10px; left: 10px; border-width: 3px 0 0 3px; }
+.gc-corner.c2 { top: 10px; right: 10px; border-width: 3px 3px 0 0; }
+.gc-corner.c3 { bottom: 10px; left: 10px; border-width: 0 0 3px 3px; }
+.gc-corner.c4 { bottom: 10px; right: 10px; border-width: 0 3px 3px 0; }
+.gcard:hover .gc-corner, .gcard:focus-visible .gc-corner { opacity: 1; transform: none; }
+.gc-top:has(.gc-logo) .gc-corner.c3 { display: none; }
+
+.gc-idx {
+  position: absolute; z-index: 3; top: 14px; right: 14px; padding: 3px 7px; opacity: .9; transition: opacity .3s;
+  font: 700 12px/1 ui-monospace, Consolas, monospace; letter-spacing: .06em;
+  color: #9ff6ff; background: #0d0618cc; box-shadow: inset 0 0 0 1px #3ef2ff66;
+}
+.gcard:hover .gc-idx { opacity: 0; }
+.gc-logo {
+  position: absolute; z-index: 3; left: 22px; bottom: -36px; width: 76px; height: 76px; border-radius: 24%; object-fit: cover;
+  background: #2a1748; box-shadow: 0 0 0 2px #ffffff30, 0 10px 24px #000a, 0 0 22px #d38cff66;
+}
+
+/* text */
+.gc-body { flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 20px 22px 22px; }
+.gc-body.has-logo { padding-top: 48px; }
+.gc-title {
+  min-height: 2.2em; display: flex; align-items: flex-end;
+  font: 24px/1.1 var(--font-title); letter-spacing: .02em; text-transform: uppercase; overflow-wrap: anywhere;
+}
+/* GENRE Casual │ TEAM 7 members │ DOWNLOADS 70M+ */
+.gc-stats { display: flex; flex-wrap: wrap; gap: 6px 0; }
+.gc-stat { display: grid; padding: 0 14px; border-left: 1px solid #d38cff44; }
+.gc-stat:first-child { padding-left: 0; border-left: 0; }
+.gc-stat small { font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: #9ff6ff; }
+.gc-stat b { font-size: 15px; font-weight: 700; }
+.gc-stat.stat-genre b { text-transform: capitalize; }
+.gc-tags { gap: 6px; }
+.gc-tags .tag { --c: 6px; min-width: 0; padding: 2px 9px; font-size: 12px; }
+.gc-more { color: #fff; }
+.gc-desc {
+  font-size: 15px; line-height: 1.5; color: var(--text-dim);
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden;
+}
+
+/* "View project →" */
+.gc-view {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 14px; align-self: flex-start;
+  font-size: 13px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--lilac);
+}
+.gc-view i { position: relative; width: 22px; height: 2px; background: currentColor; transition: width .3s; }
+.gc-view i::after { content: ""; position: absolute; right: 0; top: -4px; width: 8px; height: 8px; border: solid currentColor; border-width: 2px 2px 0 0; transform: rotate(45deg); }
+.gcard:hover .gc-view, .gcard:focus-visible .gc-view { color: #fff; }
+.gcard:hover .gc-view i, .gcard:focus-visible .gc-view i { width: 38px; }
+
+/* ============ Responsive ============ */
+@media (max-width: 980px) {
+  .gp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+}
+@media (max-width: 640px) {
+  .gp { padding-top: calc(var(--topbar-h) + 22px); }
+  .gp-bar { margin-bottom: 20px; }
+  .gp-grid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .gc-title { font-size: 21px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gcard.reveal.in { animation: none; }
+  .gcard.reveal:not(.in) { opacity: 1; }
+  .gcard, .gcard.reveal, .gc-img, .gc-corner, .gc-view i, .gp-back { transition: none !important; }
+  .gcard:hover, .gcard:focus-visible { transform: none; }
+  .gcard:hover .gc-img:not(.kind-youtube) { transform: none !important; }
+}
