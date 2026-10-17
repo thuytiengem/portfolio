@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/sections.css">
 <link rel="stylesheet" href="assets/css/portfolio-menu.css">
+<link rel="stylesheet" href="assets/css/page-banner.css">
 <link rel="stylesheet" href="assets/css/games.css">
 </head>
 <body>
@@ -38,12 +39,9 @@
 
 <!-- ============ Video Games (assets/js/games/ → one poster card per folder in Database/Projects/index.json) ============ -->
 <main class="gp" id="games">
+  <!-- page banner (← Home, title, intro, "5 projects"): assets/js/page-banner.js -->
+  <header class="pb" id="gamesBanner"></header>
   <div class="container">
-    <h1 class="gp-title" data-i18n="games_page_title"></h1>
-    <div class="gp-bar">
-      <a class="gp-back" href="index.html" data-i18n="games_back"></a>
-      <span class="gp-count" id="gamesCount"></span>
-    </div>
     <div class="gp-grid" id="gamesGrid"></div>
     <p class="gp-empty" id="gamesEmpty" data-i18n="games_empty" hidden></p>
   </div>

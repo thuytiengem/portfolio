@@ -52,6 +52,8 @@ ul { list-style: none; }
 
 .container { width: min(var(--container), 100% - var(--gutter) * 2); margin-inline: auto; }
 .title-font { font-family: var(--font-title); letter-spacing: .02em; }
+/* a title with Vietnamese letters Qualy cannot draw (ă ơ ư ế ậ …) → Montserrat bold (titleFont() in page-banner.js) */
+.alt-font { font-family: var(--font-body) !important; font-weight: 800 !important; letter-spacing: .01em !important; }
 section[id], footer[id] { scroll-margin-top: var(--topbar-h); }
 
 /* ============ Background letter rain ============ */
@@ -73,7 +75,11 @@ main, footer { position: relative; z-index: 1; }
   clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
   pointer-events: none;
 }
-.brand { font: 26px/1 var(--font-title); letter-spacing: .02em; white-space: nowrap; text-decoration: none; margin-right: auto; }
+/* topbar text (brand, nav, language) is pure white; the Portfolio dropdown panel keeps its own colours */
+.brand, .nav > a, .nav .pm-trigger, .lang-btn, .lang-menu li { color: #fff; }
+.brand { display: flex; align-items: center; gap: 12px; font: 26px/1 var(--font-title); letter-spacing: .02em; white-space: nowrap; text-decoration: none; margin-right: auto; }
+.brand-logo { width: 34px; height: 34px; flex: none; object-fit: contain; filter: drop-shadow(0 0 6px #d38cff88); translate: 0 -3px; }
+@media (max-width: 600px) { .brand { gap: 8px; } .brand-logo { width: 26px; height: 26px; translate: 0 -2px; } }
 .nav { display: flex; align-items: center; gap: 36px; }
 .nav a { text-decoration: none; font-weight: 700; font-size: 18px; position: relative; white-space: nowrap; }
 .nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -6px; height: 2px; background: var(--lilac); transition: right .25s; }

@@ -39,6 +39,11 @@ node portfolio-studio/server.mjs
 - **Dự án game / 3D Blender**: add, edit, delete, drag to reorder; paste any YouTube / Shorts link.
   Game projects also have "Hiện ở trang chủ" (Featured on/off) and the Video Games card image (thumbnail).
 - **Personal Artworks**: drag & drop images (resized to JPG ≤ 2400px), titles / descriptions, reorder.
+- **2D Artwork**: the `art2d.html` page — intro, sections (add / remove / reorder, id = image folder, renamed on save),
+  section & step texts, images per section / step (upload, "Quét thư mục" for files copied by hand, captions, reorder, cover).
+- **3D Artwork**: the `art3d.html` page — intro, projects (same list / id / folder rules as 2D), tools, text, final result
+  (YouTube videos: paste a link or id → live thumbnail, invalid links flagged, Ngang / Dọc, captions; final images), steps
+  (text, images, one optional video). Same image manager as 2D.
 - **Văn bản giao diện**: every UI label in EN / VI.
 - "Xem trước" shows the live site (without the intro) next to the form and reloads after each save.
 
@@ -53,6 +58,8 @@ The server only listens on 127.0.0.1. On GitHub Pages the Studio page is static 
 | Featured projects | `Database/Projects/index.json` + `Database/Projects/<folder>/data.json` |
 | 3D Blender video | `Database/Blender/index.json` + `Database/Blender/<folder>/data.json` |
 | Personal artworks | `Database/Artworks/index.json` + images in `Database/Artworks/images/` |
+| 2D Artwork page | `Database/Art2D/data.json` + images in `Database/Art2D/images/<section id>/` (guide: [ART2D.md](ART2D.md)) |
+| 3D Artwork page | `Database/Art3D/data.json` + images in `Database/Art3D/images/<project id>/` (guide: [ART3D.md](ART3D.md)) |
 | Store / APK buttons under a project video | `Database/Projects/<folder>/data.json → "stores": { "googlePlay", "appStore", "apk" }` (empty = hidden) |
 | Profile photo | put the file in `assets/images/` and set `web-config.json → profile.photo` |
 
@@ -86,7 +93,7 @@ Text values accept Unity-style rich text tags (`<b>`, `<i>`, `<color=#hex>`, `<l
 - `featured`: `false` → the project is NOT shown in the home page Featured Projects (missing = shown). It is still listed on `games.html`.
 - `thumbnail`: card image on the Video Games page (relative to the project folder, or URL). Missing → `cover` → YouTube thumbnail → `logo` → a generated placeholder.
 
-Blender `data.json` uses the same `tags`, `video`, `exploreUrl`; `description` is a single paragraph; `title` is optional.
+Blender `data.json` uses the same `tags`, `video`, `exploreUrl` (empty or `#` → the 3D Artwork page `art3d.html`); `description` is a single paragraph; `title` is optional.
 
 ### Artworks `index.json`
 
@@ -120,13 +127,64 @@ Labels: `i18n.<lang>.pd_*` in `web-config.json`. Code: `project.html`, `assets/c
 
 ## Video Games page + Portfolio menu
 
-`games.html` lists **every** project of `Database/Projects/index.json` (same order, featured or not) as a card linking to
+`games.html` starts with the shared page banner (`assets/js/page-banner.js`, `assets/css/page-banner.css`: ← Home, title
+`games_page_title`, intro `games_intro` — empty = hidden, project count) and lists **every** project of `Database/Projects/index.json` (same order, featured or not) as a card linking to
 `project.html?id=<folder>`: image (`thumbnail`, see above), `logo`, `title`, `genre` · `members` · `downloads`, `tags`, first line of
 `description` (else `tagline`). Missing fields are hidden. Code: `assets/js/games/` (`main.js` · `model.js` · `cards.js`), `assets/css/games.css`.
 Labels: `i18n.<lang>.games_*`. The home page "Other game projects" Explore button goes there when `links.otherProjects` is empty or `#`.
 
 The topbar **Portfolio** link is a dropdown on every page (`assets/js/portfolio-menu.js`, `assets/css/portfolio-menu.css`):
-Video Games → `games.html`; 3D Artwork / 2D Artwork / Graphic Design show "Soon". Items: `ITEMS` in portfolio-menu.js; labels `i18n.<lang>.pm_*`.
+Video Games → `games.html`; 3D Artwork → `art3d.html`; 2D Artwork → `art2d.html`; Graphic Design shows "Soon". Items: `ITEMS` in portfolio-menu.js; labels `i18n.<lang>.pm_*`.
+
+## 2D Artwork page
+
+`art2d.html` (Portfolio menu → 2D Artwork; also the home "Personal Artworks" **Explore** button when `links.artworks` is empty or `#`)
+shows `Database/Art2D/data.json`: the page banner (title `a2_page_title`, `intro`, section / artwork counts), a sticky bar of
+section chips, then one numbered section per entry — text + a filmstrip (click → lightbox) and optional **steps** (numbered rows,
+each with its own text + filmstrip).
+
+```json
+{
+  "intro": { "en": "…", "vi": "…" },
+  "sections": [
+    { "id": "character-design", "name": { "en": "Character Design", "vi": "Thiết kế nhân vật" }, "text": "…",
+      "images": ["01.jpg", { "src": "02.jpg", "caption": { "en": "…", "vi": "…" } }],
+      "steps": [{ "title": "Sketches", "text": ["…", "…"], "images": ["sketch-1.jpg"] }] }
+  ]
+}
+```
+
+Every field is optional (empty = hidden). `id` = slug `a-z 0-9 -` = image folder `Database/Art2D/images/<id>/` (steps use the
+same folder) = anchor `art2d.html#<id>`. `text`: string = paragraph, list = bullets. `cover` is stored for later layouts.
+Titles containing Vietnamese letters the Qualy font lacks are drawn in Montserrat. Labels `i18n.<lang>.a2_*`.
+Code: `assets/js/art2d/` (`main.js` · `model.js` · `render.js`), `assets/css/art2d.css`. Owner guide (Vietnamese): [ART2D.md](ART2D.md).
+
+## 3D Artwork page
+
+`art3d.html` (Portfolio menu → 3D Artwork; also the home **3D Blender** Explore button when that video's `exploreUrl` is empty or `#`)
+shows `Database/Art3D/data.json` (owner's pick: variant 1 "Progression"): the page banner (title `a3_page_title`, `intro`, project /
+video / image counts), a sticky bar of project chips (▶ = has a final video), then one numbered section per project — counts line,
+**TOOLS** chips + text, **FINAL RESULT** (YouTube videos in the cyan HUD frame, autoplay muted in view; a portrait / Shorts video sits
+beside the text; final images as a filmstrip, bigger when there is no video) and **PROCESS** steps on the cyan rail (text, optional
+video, filmstrip). `art3d.html#<project id>` jumps to a project.
+
+```json
+{
+  "intro": { "en": "…", "vi": "…" },
+  "projects": [
+    { "id": "blossom-fairy", "name": { "en": "Blossom Fairy", "vi": "Tiên hoa" }, "tools": ["Blender", "Substance Painter"], "text": "…",
+      "final": { "videos": [{ "youtube": "LhaYfT7kzbg", "orientation": "landscape", "caption": { "en": "…", "vi": "…" } }],
+                 "images": ["render-01.jpg", { "src": "render-02.jpg", "caption": "…" }] },
+      "steps": [{ "title": "Modeling", "text": ["…", "…"], "images": ["modeling-01.jpg"], "video": { "youtube": "FMr91afriiI" } }] }
+  ]
+}
+```
+
+Every field is optional (empty = hidden). `id` = image folder `Database/Art3D/images/<id>/` (steps share it) = anchor. `youtube` = an id or
+a watch / youtu.be / shorts / embed / live link (`/shorts/` → portrait unless `orientation` says otherwise; invalid → dropped).
+`cover` is stored for later layouts. Labels `i18n.<lang>.a3_*` (+ `pd_image(s)`). Code: `assets/js/art3d/` (`main.js` · `model.js` ·
+`render.js`, reusing art2d's jump bar / `jumpTo`, project gallery + lightbox, `framedVideo`), `assets/css/art3d.css` (on top of art2d.css).
+Owner guide (Vietnamese): [ART3D.md](ART3D.md).
 
 ## Intro
 
@@ -167,13 +225,13 @@ or edit `frame.json` by hand: `slice` (px on the image), `scale` (0.5 for 2x art
 ## Structure
 
 ```
-index.html · project.html · games.html · web-config.json · .nojekyll
+index.html · project.html · games.html · art2d.html · art3d.html · web-config.json · .nojekyll
 assets/fonts   Qualy (titles), Montserrat (body)
-assets/css     base.css · intro.css · sections.css · project.css · games.css · portfolio-menu.css
-assets/js      main.js · i18n.js · richtext.js · ui-frames.js · cursor.js · utils.js · rain-bg.js · youtube.js · carousel.js · stores.js · topbar.js · portfolio-menu.js · sections/ · intro/ · project/ · games/
+assets/css     base.css · intro.css · sections.css · project.css · games.css · art2d.css · art3d.css · page-banner.css · portfolio-menu.css
+assets/js      main.js · i18n.js · richtext.js · ui-frames.js · cursor.js · utils.js · rain-bg.js · youtube.js · carousel.js · stores.js · topbar.js · portfolio-menu.js · page-banner.js · sections/ · intro/ · project/ · games/ · art2d/ · art3d/
 assets/ui      image frames (9-slice) for the panel and the Explore button
 assets/icons   social icons (Simple Icons, CC0)
-Database/      Projects · Blender · Artworks
+Database/      Projects · Blender · Artworks · Art2D · Art3D
 ```
 
 Font licenses: Qualy is free for personal use only (replace before any commercial use); Montserrat is SIL OFL (free, see `assets/fonts/OFL-Montserrat.txt`).

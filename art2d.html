@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2D Artwork · Thuytiengem · Portfolio</title>
+<meta name="description" content="2D artwork — Tran Thi Thuy Tien (Thuytiengem) portfolio.">
+<meta name="theme-color" content="#1c0f30">
+<link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/Qualy-Bold.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="assets/fonts/Montserrat-latin-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/sections.css">
+<link rel="stylesheet" href="assets/css/portfolio-menu.css">
+<link rel="stylesheet" href="assets/css/page-banner.css">
+<link rel="stylesheet" href="assets/css/project.css">
+<link rel="stylesheet" href="assets/css/art2d.css">
+</head>
+<body>
+<canvas class="rain" id="rain" aria-hidden="true"></canvas>
+
+<!-- ============ Topbar (same as games.html; "Portfolio" = dropdown, assets/js/portfolio-menu.js) ============ -->
+<header class="topbar show" id="topbar">
+  <a class="brand" href="index.html" id="brand"></a>
+  <nav class="nav" id="nav">
+    <a href="index.html" data-i18n="nav_home"></a>
+    <a href="index.html#featured" class="active" data-i18n="nav_portfolio"></a>
+    <a href="index.html#about" data-i18n="nav_about"></a>
+    <a href="#contact" data-i18n="nav_contact"></a>
+  </nav>
+  <div class="lang" id="lang">
+    <button class="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+      <span class="lang-label"></span>
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l7 7 7-7" stroke="#fff" stroke-width="3" fill="none"/></svg>
+    </button>
+    <ul class="lang-menu" role="listbox"></ul>
+  </div>
+  <button class="menu-btn" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false"><span></span></button>
+</header>
+
+<!-- ============ 2D Artwork (assets/js/art2d/ ← Database/Art2D/data.json): banner, jump chips, sections ============ -->
+<main class="a2" id="art2d"></main>
+
+<!-- ============ Contact (same as index.html) ============ -->
+<footer class="contact" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <h2 data-i18n="talk_title"></h2>
+        <p class="contact-text" data-i18n="talk_text"></p>
+        <div class="contact-info">
+          <div id="contactEmail"><span data-i18n="my_email"></span> <a></a></div>
+          <div id="contactPhone"><span data-i18n="my_phone"></span> <a></a></div>
+        </div>
+        <div class="socials" id="socials"></div>
+      </div>
+      <form class="contact-form" id="contactForm" novalidate>
+        <label for="cfName" data-i18n="form_name"></label>
+        <input id="cfName" name="name" type="text" required autocomplete="name">
+        <label for="cfEmail" data-i18n="form_email"></label>
+        <input id="cfEmail" name="email" type="email" required autocomplete="email">
+        <label for="cfMessage" data-i18n="form_message"></label>
+        <textarea id="cfMessage" name="message"></textarea>
+        <div class="cta"><button class="btn-explore" type="submit" data-i18n="form_send"></button></div>
+      </form>
+    </div>
+    <p class="copyright" data-i18n="copyright"></p>
+  </div>
+</footer>
+
+<script type="module" src="assets/js/art2d/main.js"></script>
+</body>
+</html>

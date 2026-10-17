@@ -8,7 +8,7 @@ import { stripRich } from "../richtext.js";
 import { loadFrames } from "../ui-frames.js";
 import { initCursor } from "../cursor.js";
 import { skipNextIntro } from "../intro/skip.js";
-import { initMenu } from "../topbar.js";
+import { initMenu, setBrand } from "../topbar.js";
 import { initPortfolioMenu } from "../portfolio-menu.js";
 import { renderContact } from "../sections/about.js";
 import { normalize } from "./model.js";
@@ -44,7 +44,7 @@ async function main() {
   setTitle();
   onLangChange(setTitle);
 
-  $("#brand").textContent = config.profile?.name || "";
+  setBrand(config);
   createRain($("#rain"), { word: config.background?.rainWord || "thuytiengem" });
 
   const main = $("#project");

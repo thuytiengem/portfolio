@@ -8,6 +8,8 @@ const tagList = tags => h("div", { class: "tags" }, (tags || []).map(t => bindTe
 const explore = url => bind(h("a", { class: "btn-explore", href: url || "#" }), el => { el.textContent = label("explore"); });
 // Featured "Explore": exploreUrl when set, otherwise the project detail page (folder name from _base = "Database/Projects/<folder>/")
 const detailUrl = p => p.exploreUrl || `project.html?id=${encodeURIComponent((p._base || "").split("/").filter(Boolean).pop() || "")}`;
+// Blender "Explore": exploreUrl when set (and not "#"), otherwise the 3D Artwork page
+const blenderUrl = b => (u => (u && u !== "#" ? u : "art3d.html"))(String(b.exploreUrl ?? "").trim());
 const heading = key => bind(h("h4", { class: key === "responsibilities" ? "accent" : "" }), el => { el.textContent = label(key); });
 
 /** home page Featured Projects: every project unless its data.json says "featured": false (games.html lists all) */
@@ -46,7 +48,7 @@ export function renderBlender(items) {
       framedVideo(b.video),
       tagList(b.tags),
       bindText(h("p", { class: "blender-desc" }), b.description),
-      h("div", { class: "cta" }, explore(b.exploreUrl)),
+      h("div", { class: "cta" }, explore(blenderUrl(b))),
     )));
   });
 }

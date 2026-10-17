@@ -168,7 +168,7 @@
 /* ============ Contact / footer ============ */
 .contact { background: #000; padding: 70px 0 30px; }
 .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 50px 80px; }
-.contact h2 { font: clamp(30px, 3vw, 42px)/1.1 var(--font-title); margin-bottom: 18px; }
+.contact h2 { font: clamp(30px, 3vw, 42px)/1.1 var(--font-title); margin-bottom: 18px; color: #fff; }
 .contact-text { font-size: 18px; max-width: 420px; }
 .contact-info { margin-top: 56px; font-size: 18px; line-height: 1.3; }
 .contact-info a { text-decoration: none; }

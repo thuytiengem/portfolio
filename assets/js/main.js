@@ -5,7 +5,7 @@ import { createRain } from "./rain-bg.js";
 import { stripRich } from "./richtext.js";
 import { loadFrames } from "./ui-frames.js";
 import { initCursor } from "./cursor.js";
-import { initMenu } from "./topbar.js";
+import { initMenu, setBrand } from "./topbar.js";
 import { initPortfolioMenu } from "./portfolio-menu.js";
 import { runIntro } from "./intro/index.js";
 import { renderFeatured, renderBlender, isFeatured } from "./sections/projects.js";
@@ -24,11 +24,12 @@ async function main() {
   setTitle();
   onLangChange(setTitle);
 
-  $("#brand").textContent = config.profile?.name || "";
+  setBrand(config);
   const links = config.links || {};
-  // "Other game projects": the Video Games page unless a link is set
-  $("#otherExplore").href = links.otherProjects && links.otherProjects !== "#" ? links.otherProjects : "games.html";
-  $("#artworksExplore").href = links.artworks || "#";
+  // "Other game projects" / "Personal Artworks": the Video Games / 2D Artwork page unless a link is set
+  const linkOr = (v, page) => (v && v.trim() && v.trim() !== "#" ? v.trim() : page);
+  $("#otherExplore").href = linkOr(links.otherProjects, "games.html");
+  $("#artworksExplore").href = linkOr(links.artworks, "art2d.html");
   $("#aboutExplore").href = links.about || "#";
 
   // background letter rain — only runs while the hero is not covering the screen

@@ -1,0 +1,119 @@
+{
+  "intro": {
+    "en": "<i>Demo text — replace with your own.</i> 3D scenes and characters made in Blender: the final result first, then how each one was built.",
+    "vi": "<i>Chữ demo — thay bằng nội dung của bạn.</i> Các cảnh và nhân vật 3D làm bằng Blender: xem thành phẩm trước, rồi tới quá trình thực hiện."
+  },
+  "projects": [
+    {
+      "id": "blossom-fairy",
+      "name": { "en": "Blossom Fairy", "vi": "Tiên hoa" },
+      "tools": ["Blender", "Substance Painter", "After Effects"],
+      "text": {
+        "en": "Demo — final project of the Basic Blender course at <b>Indiecat</b>: concept, story, modeling, animation, music and VFX done by me.",
+        "vi": "Demo — dự án cuối khoá Blender cơ bản tại <b>Indiecat</b>: tự làm từ ý tưởng, kịch bản, dựng hình, diễn hoạt tới âm nhạc và hiệu ứng."
+      },
+      "final": {
+        "videos": [
+          { "youtube": "https://www.youtube.com/watch?v=LhaYfT7kzbg", "orientation": "landscape",
+            "caption": { "en": "Demo — final animation", "vi": "Demo — bản animation hoàn chỉnh" } }
+        ],
+        "images": [
+          { "src": "render-01.jpg", "caption": { "en": "Demo — final render, garden shot", "vi": "Demo — ảnh render cuối, cảnh vườn hoa" } },
+          { "src": "render-02.jpg", "caption": { "en": "Demo — final render, close-up", "vi": "Demo — ảnh render cuối, cận cảnh" } }
+        ]
+      },
+      "steps": [
+        {
+          "title": { "en": "Concept", "vi": "Ý tưởng" },
+          "text": { "en": "Demo — mood board and silhouettes for the fairy.", "vi": "Demo — mood board và phác thảo dáng nàng tiên." },
+          "images": ["concept-01.jpg", "concept-02.jpg"]
+        },
+        {
+          "title": { "en": "Modeling", "vi": "Dựng hình" },
+          "text": {
+            "en": ["Demo — base mesh from a cube, then subdivision.", "Hair cards and flower petals as separate objects."],
+            "vi": ["Demo — lưới gốc từ khối hộp, rồi chia nhỏ bề mặt.", "Tóc và cánh hoa là các vật thể riêng."]
+          },
+          "images": ["modeling-01.jpg", "modeling-02.jpg", "modeling-03.jpg"]
+        },
+        {
+          "title": { "en": "Texturing", "vi": "Vẽ chất liệu" },
+          "text": { "en": "Demo — UV unwrap, hand-painted colour and a soft roughness map.", "vi": "Demo — trải UV, vẽ màu tay và bản đồ độ nhám mềm." },
+          "images": [
+            { "src": "texturing-01.jpg", "caption": { "en": "Demo — UV checker", "vi": "Demo — kiểm tra UV" } },
+            "texturing-02.jpg"
+          ]
+        },
+        {
+          "title": { "en": "Lighting & Animation", "vi": "Ánh sáng & diễn hoạt" },
+          "text": { "en": "Demo — three-point light, then a short flying loop.", "vi": "Demo — ánh sáng ba điểm, rồi một đoạn bay lặp ngắn." },
+          "images": ["lighting-01.jpg", "lighting-02.jpg"],
+          "video": { "youtube": "FMr91afriiI", "orientation": "landscape" }
+        }
+      ]
+    },
+    {
+      "id": "crystal-shrine",
+      "name": { "en": "Crystal Shrine", "vi": "Đền pha lê" },
+      "tools": ["Blender", "Photoshop"],
+      "text": {
+        "en": "Demo — a vertical (Shorts) turntable of a glass shrine. <i>The video id is reused from another project and only marked portrait to test the layout.</i>",
+        "vi": "Demo — video dọc (Shorts) xoay quanh một ngôi đền kính. <i>Id video mượn từ dự án khác, chỉ đánh dấu dọc để thử bố cục.</i>"
+      },
+      "final": {
+        "videos": [
+          { "youtube": "https://youtube.com/shorts/Z8-sOhvWW0s",
+            "caption": { "en": "Demo — turntable (Shorts)", "vi": "Demo — xoay 360° (Shorts)" } }
+        ],
+        "images": ["poster-01.jpg", "poster-02.jpg"]
+      },
+      "steps": [
+        {
+          "title": { "en": "Blockout", "vi": "Dựng khối" },
+          "text": { "en": "Demo — big shapes and camera first.", "vi": "Demo — dựng khối lớn và đặt camera trước." },
+          "images": ["blockout-01.jpg", "blockout-02.jpg"]
+        },
+        {
+          "title": { "en": "Sculpting", "vi": "Điêu khắc" },
+          "images": ["sculpt-01.jpg", "sculpt-02.jpg"]
+        },
+        {
+          "title": { "en": "Shading", "vi": "Đổ bóng & chất liệu" },
+          "text": { "en": "Demo — glass shader with a thin-film tint.", "vi": "Demo — shader kính có ánh màu cầu vồng mỏng." },
+          "images": ["shading-01.jpg", "shading-02.jpg", "shading-03.jpg"]
+        },
+        {
+          "title": { "en": "Compositing", "vi": "Hậu kỳ" },
+          "text": { "en": "Demo — glow, lens dirt and colour grading.", "vi": "Demo — phát sáng, bụi ống kính và chỉnh màu." },
+          "images": ["compositing-01.jpg"]
+        }
+      ]
+    },
+    {
+      "id": "moon-garden",
+      "name": { "en": "Moon Garden", "vi": "Khu vườn ánh trăng" },
+      "tools": ["Blender"],
+      "text": {
+        "en": "Demo — a still-image project: no video, only final renders.",
+        "vi": "Demo — dự án chỉ có ảnh tĩnh: không có video, chỉ có ảnh render cuối."
+      },
+      "final": {
+        "images": [
+          { "src": "final-01.jpg", "caption": { "en": "Demo — night view", "vi": "Demo — cảnh đêm" } },
+          "final-02.jpg", "final-03.jpg", "final-04.jpg"
+        ]
+      },
+      "steps": [
+        {
+          "title": { "en": "Modeling", "vi": "Dựng hình" },
+          "images": ["modeling-01.jpg", "modeling-02.jpg"]
+        },
+        {
+          "title": { "en": "Render tests", "vi": "Thử render" },
+          "text": { "en": "Demo — Eevee vs Cycles, moonlight colour tests.", "vi": "Demo — so Eevee với Cycles, thử màu ánh trăng." },
+          "images": ["render-test-01.jpg", "render-test-02.jpg", "render-test-03.jpg"]
+        }
+      ]
+    }
+  ]
+}

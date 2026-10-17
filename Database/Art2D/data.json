@@ -1,0 +1,212 @@
+{
+  "intro": {
+    "en": "<i>Demo text — replace with your own.</i> Character designs, illustrations, fanart and pages from my sketchbook, grouped by topic.",
+    "vi": "<i>Chữ demo — thay bằng nội dung của bạn.</i> Thiết kế nhân vật, minh hoạ, fanart và các trang sổ phác thảo, xếp theo chủ đề."
+  },
+  "sections": [
+    {
+      "id": "character-design",
+      "name": {
+        "en": "Character Design",
+        "vi": "Thiết kế nhân vật"
+      },
+      "text": {
+        "en": "Demo — a character set for the board game <b>Werewolf</b>, from rough silhouettes to the final line-up.",
+        "vi": "Demo — bộ nhân vật cho board game <b>Ma Sói</b>, từ phác thảo dáng đến bản hoàn chỉnh."
+      },
+      "steps": [
+        {
+          "title": {
+            "en": "Silhouettes & sketches",
+            "vi": "Dáng & phác thảo"
+          },
+          "text": {
+            "en": [
+              "Read each role from its shape alone.",
+              "Three directions per character, the clearest one kept."
+            ],
+            "vi": [
+              "Nhận ra vai trò chỉ qua hình dáng.",
+              "Ba hướng cho mỗi nhân vật, giữ lại hướng rõ nhất."
+            ]
+          },
+          "images": [
+            {
+              "src": "sketch-seer.jpg",
+              "caption": {
+                "en": "Seer — first sketch",
+                "vi": "Tiên tri — phác thảo đầu"
+              }
+            },
+            {
+              "src": "sketch-wolf.jpg",
+              "caption": {
+                "en": "Werewolf — first sketch",
+                "vi": "Ma sói — phác thảo đầu"
+              }
+            },
+            {
+              "src": "sketch-hunter.jpg",
+              "caption": {
+                "en": "Hunter — first sketch",
+                "vi": "Thợ săn — phác thảo đầu"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "en": "Colour & costume",
+            "vi": "Màu & trang phục"
+          },
+          "text": {
+            "en": "One accent colour per role so the cards stay readable on the table.",
+            "vi": "Mỗi vai một màu nhấn để lá bài dễ đọc trên bàn chơi."
+          },
+          "images": [
+            "colour-seer.jpg",
+            "colour-wolf.jpg",
+            "colour-hunter.jpg"
+          ]
+        },
+        {
+          "title": {
+            "en": "Final line-up",
+            "vi": "Bản hoàn chỉnh"
+          },
+          "images": [
+            {
+              "src": "final-lineup.jpg",
+              "caption": {
+                "en": "Seer · Werewolf · Hunter",
+                "vi": "Tiên tri · Ma sói · Thợ săn"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "illustration",
+      "name": {
+        "en": "Illustration",
+        "vi": "Minh hoạ"
+      },
+      "text": {
+        "en": "Demo — splash arts of my original characters.",
+        "vi": "Demo — các bức splash art về nhân vật gốc của mình."
+      },
+      "images": [
+        {
+          "src": "cast-spell.jpg",
+          "caption": {
+            "en": "<b>Cast Spell</b> — a girl born as a dragon's guardian",
+            "vi": "<b>Cast Spell</b> — cô gái sinh ra để bảo vệ rồng"
+          }
+        },
+        {
+          "src": "dragon-temple.jpg",
+          "caption": {
+            "en": "<b>Dragon Temple</b> — Japanese architecture",
+            "vi": "<b>Dragon Temple</b> — kiến trúc Nhật Bản"
+          }
+        },
+        {
+          "src": "ghost-bride.jpg",
+          "caption": {
+            "en": "<b>Ghost Bride</b>",
+            "vi": "<b>Ghost Bride</b> — cô dâu ma"
+          }
+        },
+        {
+          "src": "string-demon.jpg",
+          "caption": {
+            "en": "<b>String Demon</b>",
+            "vi": "<b>String Demon</b> — quỷ dây tơ"
+          }
+        },
+        {
+          "src": "narcis-lilies.jpg",
+          "caption": "<b>Narcis × Lilies</b>"
+        },
+        "mina.jpg"
+      ]
+    },
+    {
+      "id": "fanart",
+      "name": "Fanart",
+      "text": {
+        "en": "Demo — characters from <i>Wuthering Waves</i>.",
+        "vi": "Demo — các nhân vật trong <i>Wuthering Waves</i>."
+      },
+      "images": [
+        "ww-01.jpg",
+        "ww-02.jpg",
+        "ww-03.jpg"
+      ]
+    },
+    {
+      "id": "concept-art",
+      "name": {
+        "en": "Concept Art",
+        "vi": "Concept art"
+      },
+      "text": {
+        "en": "Demo — environment key art.",
+        "vi": "Demo — key art bối cảnh."
+      },
+      "images": [
+        {
+          "src": "temple-keyart.jpg",
+          "caption": {
+            "en": "Temple courtyard — key art",
+            "vi": "Sân đền — key art"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sketchbook",
+      "name": {
+        "en": "Sketchbook",
+        "vi": "Sổ phác thảo"
+      },
+      "text": {
+        "en": "Demo — Inktober pages and quick studies.",
+        "vi": "Demo — các trang Inktober và bài tập nhanh."
+      },
+      "images": [
+        {
+          "src": "inktober-1.jpg",
+          "caption": "Inktober · Day 1"
+        },
+        {
+          "src": "inktober-2.jpg",
+          "caption": "Inktober · Day 2"
+        },
+        {
+          "src": "inktober-3.jpg",
+          "caption": "Inktober · Day 3"
+        },
+        "study-face.jpg",
+        {
+          "src": "inktober-4.jpg",
+          "caption": "Inktober · Day 4"
+        },
+        "study-bride.jpg",
+        {
+          "src": "inktober-5.jpg",
+          "caption": "Inktober · Day 5"
+        },
+        "study-narcis.jpg",
+        {
+          "src": "inktober-6.jpg",
+          "caption": "Inktober · Day 6"
+        },
+        "study-mina.jpg",
+        "study-ww.jpg",
+        "study-demon.jpg"
+      ]
+    }
+  ]
+}

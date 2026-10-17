@@ -2,15 +2,16 @@
 // → project.html?id=<folder>. Topbar (+ Portfolio dropdown), letter rain, cursor, image frames, EN/VI and the
 // contact footer work like project.html.
 import { $, $$, loadJSON, reveal } from "../utils.js";
-import { initI18n, tr, label, bind, onLangChange } from "../i18n.js";
+import { initI18n, tr, label, onLangChange } from "../i18n.js";
 import { createRain } from "../rain-bg.js";
 import { stripRich } from "../richtext.js";
 import { loadFrames } from "../ui-frames.js";
 import { initCursor } from "../cursor.js";
 import { skipNextIntro } from "../intro/skip.js";
-import { initMenu } from "../topbar.js";
+import { initMenu, setBrand } from "../topbar.js";
 import { initPortfolioMenu } from "../portfolio-menu.js";
 import { renderContact } from "../sections/about.js";
+import { pageBanner } from "../page-banner.js";
 import { loadGames } from "./model.js";
 import { gameCard } from "./cards.js";
 
@@ -29,8 +30,14 @@ async function main() {
   setTitle();
   onLangChange(setTitle);
 
-  $("#brand").textContent = config.profile?.name || "";
+  setBrand(config);
   createRain($("#rain"), { word: config.background?.rainWord || "thuytiengem" });
+
+  // banner: "← Home", VIDEO GAMES, intro (label games_intro, hidden when empty), "5 projects"
+  $("#gamesBanner").replaceWith(pageBanner({
+    back: { key: "games_back", href: "index.html" }, title: "games_page_title", intro: { key: "games_intro" },
+    chips: [{ key: games.length === 1 ? "games_count_one" : "games_count", n: games.length }],
+  }));
 
   $("#gamesGrid").append(...games.map((c, i) => {
     const el = gameCard(c, i);
@@ -38,7 +45,6 @@ async function main() {
     return reveal(el);
   }));
   $("#gamesEmpty").hidden = games.length > 0;
-  bind($("#gamesCount"), el => { el.textContent = label(games.length === 1 ? "games_count_one" : "games_count", { n: games.length }); });
 
   renderContact(config);
   initMenu();

@@ -113,7 +113,7 @@ thay ảnh trong các thư mục trên và sửa chữ trong Studio hoặc `data
 Tiêu đề mục và nhãn nhỏ nằm trong `web-config.json → i18n.en / i18n.vi` (sửa trong Studio → "Văn bản giao diện"):
 `pd_back`, `pd_roles`, `pd_progression`, `pd_challenges`, `pd_learned`, `pd_downloads`, `pd_team`, `pd_members` (`{n}` = số người),
 `pd_genre`, `pd_problem`, `pd_solution`, `pd_images` / `pd_image` (`{n}` = số ảnh, nhiều / 1 ảnh), `pd_prev`, `pd_next`, `pd_close`,
-`pd_not_found`, `pd_not_found_text`. Trang Video Games: `games_*`; menu Portfolio: `pm_*`.
+`pd_not_found`, `pd_not_found_text`. Trang Video Games: `games_*`; trang 2D Artwork: `a2_*` (xem [ART2D.md](ART2D.md)); menu Portfolio: `pm_*`.
 
 ## Code
 

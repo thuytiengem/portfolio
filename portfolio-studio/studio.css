@@ -287,3 +287,21 @@ span.bad { color: var(--red); }
 .pimg input { padding: 5px 8px; font-size: .78rem; }
 .pimg-drop { display: grid; place-items: center; text-align: center; min-height: 150px; border: 2px dashed var(--line2); border-radius: 9px; color: var(--dim); font-size: .8rem; cursor: pointer; padding: 10px; }
 .pimg-drop:hover { border-color: var(--lilac); color: var(--lilac); }
+
+/* ---- 2D / 3D Artwork: one collapsible card per section / project (summary = number · name · counts + ↑ ↓ ✕) ---- */
+.a2s > summary { list-style: none; cursor: pointer; user-select: none; }
+.a2s > summary::-webkit-details-marker { display: none; }
+.a2s > summary b::before { content: "▸ "; color: var(--lilac); display: inline-block; transition: transform .15s; }
+.a2s[open] > summary b::before { transform: rotate(90deg); }
+.a2s > summary:hover b { color: var(--lilac); }
+.a2s > summary small { margin-left: 8px; font: .7rem var(--mono); color: var(--dim); font-weight: 400; }
+.a2s-b { display: grid; gap: 12px; margin-top: 12px; }
+.a2s .item.step { background: var(--card); }
+.a2s select { max-width: 520px; }
+/* 3D Artwork: "Thành phẩm" / "Quá trình" blocks, video rows (link + live thumbnail; portrait = tall preview) */
+.sub3 { display: grid; gap: 12px; padding: 14px; border: 1px solid var(--line2); border-radius: 10px; }
+.sub3 > h4 { font-size: .92rem; color: var(--bright); }
+.sub3 > h4 small { margin-left: 8px; font: .7rem var(--mono); color: var(--dim); font-weight: 400; }
+.v3 { display: grid; gap: 10px; }
+.v3 .ytp.portrait { width: 110px; aspect-ratio: 9 / 16; justify-self: center; }
+.v3 .ytp.bad { border-color: #ff6a7a99; color: var(--red); }
