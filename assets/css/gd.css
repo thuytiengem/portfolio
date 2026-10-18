@@ -1,0 +1,93 @@
+/* Graphic Design page (graphic-design.html) — owner's pick: variant 1 "Poster grid + rail".
+   List = games.css poster cards under the shared page banner; detail = HUD banner with the framed cover, then the
+   art2d.css step rail (+ art3d.css "PROCESS ───" kicker / tool chips), then the previous / all / next pager.
+   Built on base.css, sections.css (.hud-frame), page-banner.css, project.css (filmstrip, lightbox, .stage-text). */
+
+.gd { padding: calc(var(--topbar-h) + 34px) 0 90px; min-height: 70vh; }
+.gd-missing { display: grid; justify-items: start; gap: 14px; padding: 60px 0; color: var(--text-dim); }
+
+/* "Personal project · 2025" */
+.gd-meta { display: flex; flex-wrap: wrap; gap: 2px 0; font-weight: 700; font-size: 14px; color: var(--tag-text); }
+.gd-meta > span { white-space: nowrap; }
+.gd-sep { margin: 0 8px; color: #d38cff88; }
+
+/* ---------- list: client · year line under the card title ---------- */
+.gc-meta { margin-top: -6px; font-size: 13px; }
+.gc-title.alt-font { font-size: 21px; }
+.gcard:target, .gcard:focus { scroll-margin-top: calc(var(--topbar-h) + 30px); }
+
+/* ---------- detail banner ---------- */
+.gd-pb { margin-bottom: 10px; }
+.gd-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .95fr); align-items: center; gap: 30px 44px; }
+.gd-hero.no-cover { grid-template-columns: minmax(0, 1fr); }
+.gd-text { display: grid; gap: 16px; align-content: center; }
+.gd-text .pb-intro { margin-top: 0; }
+.gd-text .pb-intro p { max-width: 62ch; }
+.gd-kicker { display: flex; align-items: center; gap: 12px; font: 800 12px/1 var(--font-body); letter-spacing: .22em; text-transform: uppercase; color: #9ff6ff; }
+.gd-of { padding: 3px 7px; font: 700 12px/1 ui-monospace, Consolas, monospace; letter-spacing: .06em; box-shadow: inset 0 0 0 1px #3ef2ff66; }
+.gd-title { font-size: clamp(34px, 4.4vw, 60px); line-height: 1.05; }
+.gd-title.alt-font { font-size: clamp(30px, 3.8vw, 52px); }
+.gd-meta-lg { font-size: 15px; }
+
+/* cover: a framed picture, click → lightbox */
+.gd-cover {
+  position: relative; display: block; padding: 0; border: 0; background: #140a24; cursor: zoom-in;
+  justify-self: center; width: fit-content; max-width: 100%; overflow: hidden; box-shadow: 0 18px 40px #0008, 0 0 0 1px #d38cff44;
+}
+/* the whole artwork, never cropped: a portrait poster stands up, a wide logo sheet lies down */
+.gd-cover img { display: block; width: auto; max-width: 100%; height: auto; max-height: min(64vh, 560px); transition: transform .6s cubic-bezier(.2,.8,.2,1), filter .4s; }
+.gd-cover:hover img, .gd-cover:focus-visible img { transform: scale(1.04); filter: brightness(1.08); }
+.gd-cover:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+.gd-cover i { position: absolute; z-index: 1; width: 22px; height: 22px; border: 0 solid #3ef2ff; filter: drop-shadow(0 0 6px #3ef2ff); }
+.gd-cover .c1 { top: 10px; left: 10px; border-width: 3px 0 0 3px; }
+.gd-cover .c2 { top: 10px; right: 10px; border-width: 3px 3px 0 0; }
+.gd-cover .c3 { bottom: 10px; left: 10px; border-width: 0 0 3px 3px; }
+.gd-cover .c4 { bottom: 10px; right: 10px; border-width: 0 3px 3px 0; }
+
+/* ---------- process (rail from art2d.css) ---------- */
+.gd-process > .container { display: grid; gap: 26px; }
+.gd-process .a2-step { scroll-margin-top: calc(var(--topbar-h) + 24px); }
+
+/* ---------- pager ---------- */
+.gd-pager { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 18px; padding-top: 10px; }
+.gd-pg {
+  --cut: 12px;
+  display: flex; align-items: center; gap: 14px; min-width: 0; padding: 10px; text-decoration: none; color: var(--text);
+  background: linear-gradient(135deg, #34205ccc, #1a0d2ee6); box-shadow: inset 0 0 0 1px #d38cff44;
+  clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+  transition: box-shadow .25s, transform .25s;
+}
+.gd-pg.next { flex-direction: row-reverse; text-align: right; }
+.gd-pg img, .gd-pg-ph { flex: none; width: 96px; aspect-ratio: 4 / 3; object-fit: cover; background: #2a1748; }
+.gd-pg-txt { display: grid; gap: 4px; min-width: 0; }
+.gd-pg small { font: 800 11px/1 var(--font-body); letter-spacing: .18em; text-transform: uppercase; color: #9ff6ff; }
+.gd-pg-name { font: 19px/1.15 var(--font-title); text-transform: uppercase; overflow-wrap: anywhere; }
+.gd-pg-name.alt-font { font-size: 16px; }
+.gd-pg:hover, .gd-pg:focus-visible { outline: none; box-shadow: inset 0 0 0 1px #e6c4ffcc, inset 0 0 26px #d38cff40; }
+.gd-pg:focus-visible { box-shadow: inset 0 0 0 2px var(--cyan); }
+.gd-pg.prev:hover { transform: translateX(-3px); }
+.gd-pg.next:hover { transform: translateX(3px); }
+.gd-pg-all {
+  padding: 10px 14px; font-weight: 800; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+  color: var(--lilac); text-decoration: none; box-shadow: inset 0 0 0 1px #d38cff55;
+}
+.gd-pg-all:hover, .gd-pg-all:focus-visible { color: #fff; outline: none; box-shadow: inset 0 0 0 1px var(--cyan); }
+
+/* ============ Responsive ============ */
+@media (max-width: 900px) {
+  .gd-hero { grid-template-columns: minmax(0, 1fr); }
+  .gd-cover { order: -1; }
+}
+@media (max-width: 700px) {
+  .gd { padding-top: calc(var(--topbar-h) + 22px); }
+  .gd-pager { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .gd-pg-all { grid-row: 2; grid-column: 1 / -1; justify-self: center; }
+  .gd-pg { flex-direction: column; align-items: flex-start; }
+  .gd-pg.next { flex-direction: column; align-items: flex-end; }
+  .gd-pg img, .gd-pg-ph { width: 100%; }
+  .gd-pg-name { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gd-cover img, .gd-pg { transition: none; }
+  .gd-pg:hover, .gd-cover:hover img { transform: none !important; }
+}

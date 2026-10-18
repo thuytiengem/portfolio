@@ -229,7 +229,23 @@
       "a3_final": "Final result",
       "a3_process": "Process",
       "a3_tools": "Tools",
-      "a3_empty": "No 3D projects yet."
+      "a3_empty": "No 3D projects yet.",
+      "gd_page_title": "Graphic Design",
+      "gd_back": "← Home",
+      "gd_back_list": "← All design projects",
+      "gd_count": "{n} projects",
+      "gd_count_one": "{n} project",
+      "gd_empty": "No projects yet.",
+      "gd_not_found": "This project does not exist (any more).",
+      "gd_step": "Step {n}",
+      "gd_steps": "{n} steps",
+      "gd_step_one": "{n} step",
+      "gd_process": "Process",
+      "gd_tools": "Tools",
+      "gd_prev_project": "Previous project",
+      "gd_next_project": "Next project",
+      "gd_all_projects": "All projects",
+      "gd_open_images": "Open {n} images"
     },
     "vi": {
       "nav_home": "Trang chủ",
@@ -322,7 +338,23 @@
       "a3_final": "Thành phẩm",
       "a3_process": "Quá trình thực hiện",
       "a3_tools": "Công cụ",
-      "a3_empty": "Chưa có dự án 3D nào."
+      "a3_empty": "Chưa có dự án 3D nào.",
+      "gd_page_title": "Thiết kế đồ hoạ",
+      "gd_back": "← Trang chủ",
+      "gd_back_list": "← Tất cả dự án đồ hoạ",
+      "gd_count": "{n} dự án",
+      "gd_count_one": "{n} dự án",
+      "gd_empty": "Chưa có dự án nào.",
+      "gd_not_found": "Dự án này không tồn tại (hoặc đã bị xoá).",
+      "gd_step": "Bước {n}",
+      "gd_steps": "{n} bước",
+      "gd_step_one": "{n} bước",
+      "gd_process": "Quá trình thực hiện",
+      "gd_tools": "Công cụ",
+      "gd_prev_project": "Dự án trước",
+      "gd_next_project": "Dự án tiếp",
+      "gd_all_projects": "Tất cả dự án",
+      "gd_open_images": "Mở {n} hình"
     }
   }
 }

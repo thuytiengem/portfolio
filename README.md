@@ -44,6 +44,8 @@ node portfolio-studio/server.mjs
 - **3D Artwork**: the `art3d.html` page — intro, projects (same list / id / folder rules as 2D), tools, text, final result
   (YouTube videos: paste a link or id → live thumbnail, invalid links flagged, Ngang / Dọc, captions; final images), steps
   (text, images, one optional video). Same image manager as 2D.
+- **Graphic Design**: the `graphic-design.html` page (list of cards + one detail page per project, same data) — intro, projects
+  (same list / id / folder rules as 2D / 3D), name, text, client, year, tools, cover, steps (title, text, images). Same image manager.
 - **Văn bản giao diện**: every UI label in EN / VI.
 - "Xem trước" shows the live site (without the intro) next to the form and reloads after each save.
 
@@ -60,6 +62,7 @@ The server only listens on 127.0.0.1. On GitHub Pages the Studio page is static 
 | Personal artworks | `Database/Artworks/index.json` + images in `Database/Artworks/images/` |
 | 2D Artwork page | `Database/Art2D/data.json` + images in `Database/Art2D/images/<section id>/` (guide: [ART2D.md](ART2D.md)) |
 | 3D Artwork page | `Database/Art3D/data.json` + images in `Database/Art3D/images/<project id>/` (guide: [ART3D.md](ART3D.md)) |
+| Graphic Design page | `Database/GraphicDesign/data.json` + images in `Database/GraphicDesign/images/<project id>/` (guide: [GD.md](GD.md)) |
 | Store / APK buttons under a project video | `Database/Projects/<folder>/data.json → "stores": { "googlePlay", "appStore", "apk" }` (empty = hidden) |
 | Profile photo | put the file in `assets/images/` and set `web-config.json → profile.photo` |
 
@@ -134,7 +137,7 @@ Labels: `i18n.<lang>.pd_*` in `web-config.json`. Code: `project.html`, `assets/c
 Labels: `i18n.<lang>.games_*`. The home page "Other game projects" Explore button goes there when `links.otherProjects` is empty or `#`.
 
 The topbar **Portfolio** link is a dropdown on every page (`assets/js/portfolio-menu.js`, `assets/css/portfolio-menu.css`):
-Video Games → `games.html`; 3D Artwork → `art3d.html`; 2D Artwork → `art2d.html`; Graphic Design shows "Soon". Items: `ITEMS` in portfolio-menu.js; labels `i18n.<lang>.pm_*`.
+Video Games → `games.html`; 3D Artwork → `art3d.html`; 2D Artwork → `art2d.html`; Graphic Design → `graphic-design.html`. Items: `ITEMS` in portfolio-menu.js; labels `i18n.<lang>.pm_*`.
 
 ## 2D Artwork page
 
@@ -186,6 +189,36 @@ a watch / youtu.be / shorts / embed / live link (`/shorts/` → portrait unless 
 `render.js`, reusing art2d's jump bar / `jumpTo`, project gallery + lightbox, `framedVideo`), `assets/css/art3d.css` (on top of art2d.css).
 Owner guide (Vietnamese): [ART3D.md](ART3D.md).
 
+## Graphic Design page
+
+`graphic-design.html` (Portfolio menu → Graphic Design; owner's pick: variant 1 "Poster grid + rail") is one page with two views,
+both built from **one** file, `Database/GraphicDesign/data.json`:
+
+- **List** `graphic-design.html`: the page banner (title `gd_page_title`, `intro`, project / image counts), then the Video Games
+  poster cards (`games/cards.js` `gameCard` + `games.css`): image (`cover` → first step image), `name`, client · year, `tools` as
+  tags, 3-line `text` (a list → its first line), "View project →".
+- **Detail** `graphic-design.html?id=<id>`: "← All design projects" (back to the list, scrolled / focused on that card
+  `#gd-<id>`), HUD banner ("GRAPHIC DESIGN 01 / 05", title, client · year, text, TOOLS chips, step / image chips, the cover framed
+  on the right — never cropped, click → lightbox), **PROCESS** steps on the cyan rail (number, title, text, filmstrip + lightbox),
+  then Previous / All / Next project. `#step-<n>` deep-links a step; an unknown id shows "This project does not exist" + a link back.
+
+```json
+{
+  "intro": { "en": "…", "vi": "…" },
+  "projects": [
+    { "id": "gem-brand-identity", "name": { "en": "Gem Brand Identity", "vi": "Nhận diện thương hiệu Gem" }, "text": "…",
+      "cover": "logo-final.jpg", "client": { "en": "Personal project", "vi": "Dự án cá nhân" }, "year": "2025",
+      "tools": ["Illustrator", "Photoshop", "Figma"],
+      "steps": [{ "title": "Sketches", "text": ["…", "…"], "images": ["sketch-1.jpg", { "src": "logo-final.jpg", "caption": "…" }] }] }
+  ]
+}
+```
+
+Every field is optional (empty = hidden). `id` = slug `a-z 0-9 -` = image folder `Database/GraphicDesign/images/<id>/` (every step
+uses it) = `?id=`. Order of `projects` = card order = previous / next order. Labels `i18n.<lang>.gd_*` (+ `pd_image(s)`, `games_view`).
+Code: `assets/js/gd/` (`main.js` entry + view switch · `model.js` · `parts.js` · `list.js` · `detail.js`), `assets/css/gd.css` (on top of
+games.css, art2d.css, art3d.css, project.css). Owner guide (Vietnamese): [GD.md](GD.md).
+
 ## Intro
 
 The intro is split so it can be changed piece by piece:
@@ -225,13 +258,13 @@ or edit `frame.json` by hand: `slice` (px on the image), `scale` (0.5 for 2x art
 ## Structure
 
 ```
-index.html · project.html · games.html · art2d.html · art3d.html · web-config.json · .nojekyll
+index.html · project.html · games.html · art2d.html · art3d.html · graphic-design.html · web-config.json · .nojekyll
 assets/fonts   Qualy (titles), Montserrat (body)
-assets/css     base.css · intro.css · sections.css · project.css · games.css · art2d.css · art3d.css · page-banner.css · portfolio-menu.css
-assets/js      main.js · i18n.js · richtext.js · ui-frames.js · cursor.js · utils.js · rain-bg.js · youtube.js · carousel.js · stores.js · topbar.js · portfolio-menu.js · page-banner.js · sections/ · intro/ · project/ · games/ · art2d/ · art3d/
+assets/css     base.css · intro.css · sections.css · project.css · games.css · art2d.css · art3d.css · gd.css · page-banner.css · portfolio-menu.css
+assets/js      main.js · i18n.js · richtext.js · ui-frames.js · cursor.js · utils.js · rain-bg.js · youtube.js · carousel.js · stores.js · topbar.js · portfolio-menu.js · page-banner.js · sections/ · intro/ · project/ · games/ · art2d/ · art3d/ · gd/
 assets/ui      image frames (9-slice) for the panel and the Explore button
 assets/icons   social icons (Simple Icons, CC0)
-Database/      Projects · Blender · Artworks · Art2D · Art3D
+Database/      Projects · Blender · Artworks · Art2D · Art3D · GraphicDesign
 ```
 
 Font licenses: Qualy is free for personal use only (replace before any commercial use); Montserrat is SIL OFL (free, see `assets/fonts/OFL-Montserrat.txt`).

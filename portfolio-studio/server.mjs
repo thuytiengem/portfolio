@@ -20,10 +20,12 @@ const KINDS = { projects: path.join(DB, "Projects"), blender: path.join(DB, "Ble
 const ARTWORKS = path.join(DB, "Artworks");
 const ART2D = path.join(DB, "Art2D");          // 2D Artwork page: data.json + images/<section id>/
 const ART3D = path.join(DB, "Art3D");          // 3D Artwork page: data.json + images/<project id>/
+const GRAPHIC = path.join(DB, "GraphicDesign"); // Graphic Design page: data.json + images/<project id>/
 // pages made of one data.json listing items whose id = image folder (images/<id>/); rename = API route of a folder rename
 const PAGES = {
   art2d: { dir: ART2D, list: "sections", rename: "rename-section" },
   art3d: { dir: ART3D, list: "projects", rename: "rename-project" },
+  graphic: { dir: GRAPHIC, list: "projects", rename: "rename-project" },
 };
 const UPLOAD_DIRS = { artworks: path.join(ARTWORKS, "images"), assets: path.join(ROOT, "assets", "images") };
 const UI = path.join(ROOT, "assets", "ui");     // 9-slice UI frames: assets/ui/<name>/frame.png + frame.json
@@ -151,7 +153,7 @@ async function imageApi(req, res, url, sub, { dirOf, rename, renameBase }) {
 // project detail page: images/ (logo, cover) and images/product-progression/<step id>/
 const projectImages = (req, res, url, itemDir, sub) => imageApi(req, res, url, sub, {
   dirOf: u => projImgDir(itemDir, u), rename: "rename-step", renameBase: path.join(itemDir, "images", "product-progression") });
-// 2D / 3D Artwork pages (PAGES): PUT data.json · images/<item id>/ (?dir=<item id>) list, upload, delete · rename an item folder
+// 2D / 3D Artwork + Graphic Design pages (PAGES): PUT data.json · images/<item id>/ (?dir=<item id>) list, upload, delete · rename an item folder
 async function pageApi(req, res, url, P, parts) {
   if (parts.length === 1 && req.method === "PUT") {
     const { data } = await readBodyJSON(req);
@@ -210,7 +212,8 @@ function checkFrameConfig(c) {
 // Only these paths ever reach git; the client sends a view key (or "all"), never a path.
 const GIT_SCOPES = {
   settings: ["web-config.json"], experience: ["web-config.json"], texts: ["web-config.json"],
-  projects: ["Database/Projects"], blender: ["Database/Blender"], artworks: ["Database/Artworks"], art2d: ["Database/Art2D"], art3d: ["Database/Art3D"], ui: ["assets/ui"],
+  projects: ["Database/Projects"], blender: ["Database/Blender"], artworks: ["Database/Artworks"], art2d: ["Database/Art2D"], art3d: ["Database/Art3D"],
+  graphic: ["Database/GraphicDesign"], ui: ["assets/ui"],
 };
 const GIT_PATHS = new Set(Object.values(GIT_SCOPES).flat());
 const GIT_ENV = { ...process.env, GIT_TERMINAL_PROMPT: "0", GCM_INTERACTIVE: "never", LC_ALL: "C" };
@@ -299,6 +302,7 @@ async function api(req, res, url) {
       artworks: await readJSONFile(path.join(ARTWORKS, "index.json"), []),
       art2d: await readJSONFile(path.join(ART2D, "data.json"), {}),
       art3d: await readJSONFile(path.join(ART3D, "data.json"), {}),
+      graphic: await readJSONFile(path.join(GRAPHIC, "data.json"), {}),
     });
   }
 
@@ -373,7 +377,7 @@ async function api(req, res, url) {
     return send(res, 200, { ok: true });
   }
 
-  // 2D / 3D Artwork pages: /api/art2d…, /api/art3d…
+  // 2D / 3D Artwork + Graphic Design pages: /api/art2d…, /api/art3d…, /api/graphic…
   if (Object.hasOwn(PAGES, parts[0])) return pageApi(req, res, url, PAGES[parts[0]], parts);
 
   if (parts[0] === "ui") {

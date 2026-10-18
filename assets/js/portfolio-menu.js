@@ -1,4 +1,4 @@
-// Portfolio dropdown in the topbar (index.html, project.html, games.html, art2d.html, art3d.html): turns the "Portfolio" nav link into a menu
+// Portfolio dropdown in the topbar (index.html, project.html, games.html, art2d.html, art3d.html, graphic-design.html): turns the "Portfolio" nav link into a menu
 // button with a panel of sub-links (2 × 2 grid). The nav markup stays as it is; call
 //   initPortfolioMenu($('#nav a[data-i18n="nav_portfolio"]'), { current })   AFTER initI18n() and BEFORE initMenu() (topbar.js).
 //
@@ -24,7 +24,7 @@ export const ITEMS = [
   { key: "pm_games", hint: "pm_games_hint", icon: "games", href: "games.html" },
   { key: "pm_3d", hint: "pm_3d_hint", icon: "cube", href: "art3d.html" },
   { key: "pm_2d", hint: "pm_2d_hint", icon: "brush", href: "art2d.html" },
-  { key: "pm_graphic", hint: "pm_graphic_hint", icon: "pen", soon: true },
+  { key: "pm_graphic", hint: "pm_graphic_hint", icon: "pen", href: "graphic-design.html" },
 ];
 
 const svg = (inner, cls) => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("class", cls); s.setAttribute("aria-hidden", "true"); s.innerHTML = inner; return s; };

@@ -50,6 +50,15 @@ const KEY_HINTS = {
   a3_steps: "Trang 3D Artwork: số bước của dự án ({n})", a3_step_one: "Trang 3D Artwork: số bước khi chỉ có 1 ({n})",
   a3_final: "Trang 3D Artwork: nhãn phần thành phẩm (video + ảnh cuối)", a3_process: "Trang 3D Artwork: nhãn phần quá trình thực hiện (các bước)",
   a3_tools: "Trang 3D Artwork: nhãn trước danh sách công cụ", a3_empty: "Trang 3D Artwork: khi chưa có dự án nào",
+  gd_page_title: "Trang Graphic Design: tiêu đề lớn trong banner + tên tab (+ nhãn nhỏ “GRAPHIC DESIGN 01 / 05” ở trang chi tiết)",
+  gd_back: "Trang Graphic Design: link về trang chủ (trang danh sách)", gd_back_list: "Trang Graphic Design: link từ trang chi tiết về danh sách",
+  gd_count: "Trang Graphic Design: số dự án trong banner ({n})", gd_count_one: "Trang Graphic Design: số dự án khi chỉ có 1 ({n})",
+  gd_empty: "Trang Graphic Design: khi chưa có dự án nào", gd_not_found: "Trang Graphic Design: link ?id= sai (dự án không tồn tại)",
+  gd_step: "Trang Graphic Design: nhãn nhỏ trên tên bước ({n} = số thứ tự)", gd_steps: "Trang Graphic Design: số bước trong banner chi tiết ({n})",
+  gd_step_one: "Trang Graphic Design: số bước khi chỉ có 1 ({n})", gd_process: "Trang Graphic Design: nhãn phần quá trình thực hiện (các bước)",
+  gd_tools: "Trang Graphic Design: nhãn trước danh sách công cụ", gd_open_images: "Trang Graphic Design: ảnh bìa — mô tả nút xem ảnh to (trình đọc màn hình, {n} = số hình)",
+  gd_prev_project: "Trang Graphic Design: nút dự án trước (cuối trang chi tiết)", gd_next_project: "Trang Graphic Design: nút dự án tiếp",
+  gd_all_projects: "Trang Graphic Design: nút về danh sách (giữa 2 nút trước / tiếp)",
 };
 
 // ══════════════ helpers ══════════════
@@ -146,7 +155,7 @@ function confirmDlg(title, html, yes = "Xoá", kind = "danger") {
 }
 
 // ══════════════ state ══════════════
-const S = { config: {}, projects: null, blender: null, artworks: [], art2d: {}, art3d: {} };
+const S = { config: {}, projects: null, blender: null, artworks: [], art2d: {}, art3d: {}, graphic: {} };
 let CFG = null;   // shared draft for the 3 config views: { d, saved }
 let ED = null;    // collection item editor: { kind, id, orig, d, folder, saved }
 let ART = null;   // artworks draft: { d, saved, removed }
@@ -641,7 +650,7 @@ function viewArtworks() {
       <div class="drop" id="drop" data-act="addArt">Kéo thả ảnh vào đây<br>hoặc bấm để chọn (chọn được nhiều ảnh)</div></div>`;
 }
 
-// ---- 2D / 3D Artwork pages (art2d.html / art3d.html ← Database/Art2D|Art3D/data.json) ----
+// ---- 2D / 3D Artwork + Graphic Design pages (art2d.html / art3d.html / graphic-design.html ← Database/Art2D|Art3D|GraphicDesign/data.json) ----
 // Both pages = one data.json listing items (2D sections / 3D projects) whose id = image folder images/<id>/ (steps use the
 // same folder). P = page descriptor (PAGES[VIEW]); its draft PS[view] = { orig, d: { intro, <list>: [...] }, saved, open,
 // bust, delFiles, checked }. Item drafts share: id, name, cover, steps, _x (unknown keys), _folder (image folder on disk,
@@ -658,6 +667,10 @@ const PAGES = {
     noun: "dự án", Noun: "Dự án", fallback: "project", toDraft: raw => ({ intro: introL(raw.intro), projects: arr(raw.projects).map(a3ProjDraft) }),
     toData: (d, orig) => a3ToData(d, orig), item: () => a3ProjDraft(), step: () => a3StepDraft(), used: p => a3Used(p), html: () => viewArt3D(),
     check: d => a3CheckVideos(d) },
+  graphic: { view: "graphic", title: "Graphic Design", dir: "Database/GraphicDesign", api: "/api/graphic", rename: "rename-project", list: "projects",
+    noun: "dự án", Noun: "Dự án", fallback: "project", anchor: "graphic-design.html?id=…",
+    toDraft: raw => ({ intro: introL(raw.intro), projects: arr(raw.projects).map(gdProjDraft) }),
+    toData: (d, orig) => gdToData(d, orig), item: () => gdProjDraft(), step: () => a2StepDraft(), used: p => gdUsed(p), html: () => viewGraphic() },
 };
 const PG = () => PAGES[VIEW];
 const arr = v => (Array.isArray(v) ? v : []);
@@ -743,7 +756,7 @@ const STEP_IMG_HINT = `<span class="hint">Ảnh của bước nằm chung thư m
 function pgNameId(P, i, nameLabel) {
   const s = pgItems(P)[i], err = pgIdErr(P, i);
   return `<div class="step-top">${bi(`${P.list}.${i}.name`, nameLabel)}
-    <div class="f"><label>Id ${P.noun} <code>= tên thư mục ảnh · ${P.view}.html#id</code></label>
+    <div class="f"><label>Id ${P.noun} <code>= tên thư mục ảnh · ${P.anchor || `${P.view}.html#id`}</code></label>
       <input type="text" data-path="${P.list}.${i}.id" data-pg-id="${i}" value="${esc(s.id)}" placeholder="tự tạo từ tên EN"${err ? ' class="bad"' : ""}>
       <span class="err" data-pg-err="${i}">${err}</span></div></div>`;
 }
@@ -956,6 +969,50 @@ function viewArt3D() {
       nhiều dòng = gạch đầu dòng. ${RT_HINT}`);
 }
 
+// ---- Graphic Design (graphic-design.html list + ?id=<id> detail): projects → client, year, tools, cover, steps (images) ----
+const gdProjDraft = (p = {}) => ({
+  ...pgItemBase(p), client: L(p.client), year: String(p.year ?? ""),
+  tools: arr(p.tools).map(t => String(isObj(t) ? t.en || t.vi || "" : t ?? "").trim()).filter(Boolean),
+  steps: arr(p.steps).map(a2StepDraft),
+  _x: rest(p, ["id", "name", "text", "cover", "client", "year", "tools", "steps"]),
+});
+const gdUsed = p => new Set(p.steps.flatMap(st => st.images).map(im => im.src));
+function gdToData(d, orig = {}) {
+  const projects = d.projects.map(p => outObj({
+    id: p.id.trim() || undefined, name: outL(p.name), text: para(p.text), cover: coverOut(p, gdUsed(p)),
+    client: outL(p.client), year: p.year.trim() || undefined, tools: outMany(p.tools),
+    steps: outMany(p.steps.map(st => outObj({ title: outL(st.title), text: para(st.text), images: imgsOut(st.images) }, st._x)).filter(o => Object.keys(o).length)),
+  }, p._x));
+  return mergeKeys(orig, { intro: outL(d.intro), projects: outMany(projects) });
+}
+function gdProject(p, i) {
+  const P = PAGES.graphic, id = pgFolder(p);
+  return pgCard(P, i, `${gdUsed(p).size} ảnh · ${p.steps.length} bước`, `
+      ${pgNameId(P, i, "Tên dự án (tên thẻ + tiêu đề trang chi tiết)")}
+      <div class="grid2" style="align-items:start">${bi(`projects.${i}.client`, "Khách hàng <code>client · tuỳ chọn</code>", { hint: "vd: Dự án cá nhân, tên công ty. Hiện thành dòng “khách hàng · năm”." })}
+        ${inp(`projects.${i}.year`, "Năm <code>year · tuỳ chọn</code>", { ph: "2025" })}</div>
+      ${chips(`projects.${i}.tools`, "Công cụ <code>tools · tuỳ chọn</code>", "Gõ tên (Illustrator, Photoshop, Figma…) rồi Enter. Kéo để đổi thứ tự. Hiện thành hàng tag trên thẻ và chip CÔNG CỤ ở trang chi tiết.")}
+      ${bullets(`projects.${i}.text`, "Mô tả", `${PARA} · thẻ hiện tối đa 3 dòng (danh sách → dòng đầu)`)}
+      ${pgCover(P, i, "Ảnh của thẻ ở trang danh sách + ảnh lớn (không bị cắt) ở trang chi tiết + nút dự án trước / tiếp. Để mặc định thì là ảnh đầu tiên của các bước.")}
+      <div class="sub3"><h4>Quá trình thực hiện <small>process — các bước trên đường dọc cyan ở trang chi tiết${id ? ` · <code>graphic-design.html?id=${esc(id)}#step-1</code>` : ""}</small></h4>
+      ${pgSteps(P, i, (st, k) => `${bi(`projects.${i}.steps.${k}.title`, "Tên bước")}
+        ${bullets(`projects.${i}.steps.${k}.text`, "Nội dung", PARA)}
+        ${imgGroup(pgGroup(P, i, { key: `s${i}.${k}`, path: `projects.${i}.steps.${k}.images`, list: st.images, label: "Ảnh của bước", hint: k ? STEP_IMG_HINT : undefined }))}`,
+        `Các bước <code>mỗi bước có tên, chữ và dải ảnh riêng (bấm để xem to)</code>`, "Chưa có bước nào — trang chi tiết chỉ có phần đầu.")}</div>`);
+}
+function viewGraphic() {
+  const P = PAGES.graphic, d = PS.graphic.d;
+  draftOf = () => PS.graphic.d;
+  return saveBar("Graphic Design", `Trang <code>graphic-design.html</code> (menu Portfolio → Graphic Design): danh sách thẻ, bấm thẻ → trang chi tiết
+      <code>graphic-design.html?id=&lt;id&gt;</code> — cả hai lấy từ cùng một dữ liệu. Lưu trong <code>${P.dir}/data.json</code>, ảnh của mỗi dự án
+      (mọi bước) trong <code>${P.dir}/images/&lt;id dự án&gt;/</code>.`,
+      `<a class="btn ghost sm" href="/graphic-design.html" target="_blank" rel="noopener">Xem trang ↗</a>`) +
+    pgIntro(P, "GRAPHIC DESIGN") +
+    pgList(P, d.projects.map(gdProject).join(""), `Mỗi dự án = một thẻ ở trang danh sách (theo thứ tự dưới đây, ↑ ↓ để đổi) và một trang chi tiết:
+      tên, khách hàng · năm, mô tả, công cụ, ảnh bìa → <b>Quá trình thực hiện</b> (các bước) → dự án trước / tiếp. Dự án trống hẳn thì không hiện.
+      Mô tả / nội dung: 1 dòng = đoạn văn, nhiều dòng = gạch đầu dòng. ${RT_HINT}`);
+}
+
 // ---- UI frames: Unity-style sprite editor (9-slice) ----
 const ZOOMS = [["fit", "Vừa khung"], ["1", "1x"], ["2", "2x"], ["4", "4x"]];
 function viewUI() {
@@ -1108,7 +1165,8 @@ const GIT_SCOPES = {
   settings: [["web-config.json"], "Update profile"], experience: [["web-config.json"], "Update work experience"],
   texts: [["web-config.json"], "Update UI texts"], projects: [["Database/Projects"], "Update projects"],
   blender: [["Database/Blender"], "Update Blender"], artworks: [["Database/Artworks"], "Update artworks"],
-  art2d: [["Database/Art2D"], "Update 2D artwork"], art3d: [["Database/Art3D"], "Update 3D artwork"], ui: [["assets/ui"], "Update UI frames"],
+  art2d: [["Database/Art2D"], "Update 2D artwork"], art3d: [["Database/Art3D"], "Update 3D artwork"],
+  graphic: [["Database/GraphicDesign"], "Update graphic design"], ui: [["assets/ui"], "Update UI frames"],
 };
 const GIT = { view: "", all: false, msg: {}, files: null, ahead: null, branch: "", error: "", busy: "", seq: 0 };
 const gitPaths = () => (GIT.all ? null : GIT_SCOPES[VIEW]?.[0]);
@@ -1214,7 +1272,7 @@ function render() {
     VIEW = m[1]; $("app").innerHTML = viewCollection(VIEW); bindListDnD(VIEW);
   } else if (h === "#/artworks") {
     VIEW = "artworks"; if (!ART) resetArt(); $("app").innerHTML = viewArtworks(); bindDrop();
-  } else if ((m = h.match(/^#\/(art2d|art3d)$/))) {
+  } else if ((m = h.match(/^#\/(\w+)$/)) && PAGES[m[1]]) {
     VIEW = m[1]; const P = PG();
     if (!PS[VIEW]) resetPg(P);
     $("app").innerHTML = P.html(); bindImgs();
@@ -1705,7 +1763,7 @@ function bindFilter() {
 
 // ══════════════ preview ══════════════
 // home page section (#id) or another page (*.html) shown in the preview
-const PV_SECTION = { settings: "", experience: "#about", texts: "", projects: "#featured", blender: "#blender", artworks: "#artworks", art2d: "art2d.html", art3d: "art3d.html", ui: "#featured" };
+const PV_SECTION = { settings: "", experience: "#about", texts: "", projects: "#featured", blender: "#blender", artworks: "#artworks", art2d: "art2d.html", art3d: "art3d.html", graphic: "graphic-design.html", ui: "#featured" };
 let pvOn = false, pvSection = null;
 function reloadPreview() {
   if (!pvOn) return;

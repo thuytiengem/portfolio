@@ -1,0 +1,162 @@
+{
+  "intro": {
+    "en": "<i>Demo text — replace with your own.</i> Logos, posters, social media kits, packaging and icon sets — each project with its process from moodboard to final mockup.",
+    "vi": "<i>Chữ demo — thay bằng nội dung của bạn.</i> Logo, poster, bộ ảnh mạng xã hội, bao bì và bộ icon — mỗi dự án kèm quá trình từ moodboard tới mockup hoàn chỉnh."
+  },
+  "projects": [
+    {
+      "id": "gem-brand-identity",
+      "name": { "en": "Gem Brand Identity", "vi": "Nhận diện thương hiệu Gem" },
+      "text": {
+        "en": "Demo — a personal brand for <b>Thuytiengem</b>: a gem-shaped G monogram, a purple / cyan palette and a small set of print pieces (business card, event badge).",
+        "vi": "Demo — thương hiệu cá nhân cho <b>Thuytiengem</b>: logo chữ G hình viên ngọc, bảng màu tím / cyan và vài ấn phẩm in (danh thiếp, thẻ sự kiện)."
+      },
+      "cover": "logo-final.jpg",
+      "client": { "en": "Personal project", "vi": "Dự án cá nhân" },
+      "year": "2025",
+      "tools": ["Illustrator", "Photoshop", "Figma"],
+      "steps": [
+        {
+          "title": { "en": "Research & moodboard", "vi": "Nghiên cứu & moodboard" },
+          "text": {
+            "en": ["Collected references from my own artworks.", "Picked a palette that works on dark screens and on paper."],
+            "vi": ["Gom tham khảo từ chính các tranh của mình.", "Chọn bảng màu dùng được cả trên màn hình tối lẫn giấy in."]
+          },
+          "images": [
+            { "src": "moodboard-1.jpg", "caption": { "en": "Moodboard", "vi": "Moodboard" } },
+            { "src": "moodboard-2.jpg", "caption": { "en": "Palette & type", "vi": "Bảng màu & font chữ" } }
+          ]
+        },
+        {
+          "title": { "en": "Sketches", "vi": "Phác thảo" },
+          "text": { "en": "Monogram built on a 50 px grid; three directions, option B kept.", "vi": "Monogram dựng trên lưới 50 px; ba hướng, giữ lại phương án B." },
+          "images": ["sketch-1.jpg", "sketch-2.jpg"]
+        },
+        {
+          "title": { "en": "Logo design", "vi": "Thiết kế logo" },
+          "text": { "en": "Final mark with a glow version for screens and flat mono versions for print.", "vi": "Logo hoàn chỉnh: bản phát sáng cho màn hình và bản đơn sắc cho in ấn." },
+          "images": ["logo-final.jpg", "logo-mono.jpg"]
+        },
+        {
+          "title": { "en": "Mockups", "vi": "Mockup ứng dụng" },
+          "text": { "en": "Business card and event badge.", "vi": "Danh thiếp và thẻ đeo sự kiện." },
+          "images": ["mockup-card.jpg", "mockup-badge.jpg"]
+        }
+      ]
+    },
+    {
+      "id": "neon-poster-series",
+      "name": { "en": "Neon Poster Series", "vi": "Bộ poster Neon" },
+      "text": {
+        "en": "Demo — four posters in an 80s sci-fi style: one neon colour per poster, a heavy title and a thin HUD frame.",
+        "vi": "Demo — bốn poster phong cách sci-fi thập niên 80: mỗi poster một màu neon, tiêu đề đậm và khung HUD mảnh."
+      },
+      "cover": "poster-01.jpg",
+      "year": "2025",
+      "tools": ["Photoshop", "Clip Studio Paint"],
+      "steps": [
+        {
+          "title": { "en": "References", "vi": "Tham khảo" },
+          "text": { "en": "Old movie posters and arcade cabinets.", "vi": "Poster phim cũ và máy game thùng." },
+          "images": ["research.jpg"]
+        },
+        {
+          "title": { "en": "Layout & type tests", "vi": "Bố cục & thử chữ" },
+          "text": { "en": ["Three layouts sketched, the centred one kept.", "Title weight and letter spacing tested in neon."], "vi": ["Ba bố cục phác thảo, giữ bố cục cân giữa.", "Thử độ đậm và giãn chữ của tiêu đề với màu neon."] },
+          "images": ["layouts.jpg", "type-test.jpg"]
+        },
+        {
+          "title": { "en": "Final posters", "vi": "Poster hoàn chỉnh" },
+          "text": { "en": "Printed A2, also used as phone wallpapers.", "vi": "In khổ A2, đồng thời dùng làm hình nền điện thoại." },
+          "images": ["poster-01.jpg", "poster-02.jpg", "poster-03.jpg", "poster-04.jpg"]
+        }
+      ]
+    },
+    {
+      "id": "social-media-kit",
+      "name": { "en": "Social Media Kit", "vi": "Bộ ảnh mạng xã hội" },
+      "text": {
+        "en": "Demo — reusable post, story and quote templates for an artist page, so a new post takes minutes instead of an hour.",
+        "vi": "Demo — mẫu bài đăng, story và trích dẫn dùng lại được cho trang của hoạ sĩ, đăng bài mới chỉ mất vài phút thay vì cả tiếng."
+      },
+      "tools": ["Figma", "Canva"],
+      "steps": [
+        {
+          "title": { "en": "Moodboard", "vi": "Moodboard" },
+          "text": { "en": "Soft candy colours to stand out in the feed.", "vi": "Màu kẹo ngọt nhẹ để nổi bật trên bảng tin." },
+          "images": ["moodboard.jpg"]
+        },
+        {
+          "title": { "en": "Templates", "vi": "Mẫu thiết kế" },
+          "text": { "en": ["Post 1:1, story 9:16 and quote card.", "Every text block is an editable layer."], "vi": ["Bài đăng 1:1, story 9:16 và thẻ trích dẫn.", "Mọi khối chữ đều là layer sửa được."] },
+          "images": ["template-post.jpg", "template-story.jpg", "template-quote.jpg"]
+        },
+        {
+          "title": { "en": "Posts in use", "vi": "Bài đăng thực tế" },
+          "images": ["final-1.jpg", "final-2.jpg", "final-3.jpg"]
+        }
+      ]
+    },
+    {
+      "id": "jelly-packaging",
+      "name": { "en": "Jelly Candy Packaging", "vi": "Bao bì kẹo Jelly" },
+      "text": {
+        "en": "Demo — a candy box for the Jelly Master game mascot: dieline, label art and 3D mockups.",
+        "vi": "Demo — hộp kẹo cho linh vật game Jelly Master: dieline, hình nhãn và mockup 3D."
+      },
+      "cover": "box-front.jpg",
+      "client": "Jelly Master",
+      "year": "2024",
+      "steps": [
+        {
+          "title": { "en": "Shelf research", "vi": "Khảo sát kệ hàng" },
+          "text": { "en": "What stands out in a candy aisle full of bright boxes?", "vi": "Điều gì nổi bật giữa kệ kẹo toàn hộp màu sặc sỡ?" },
+          "images": ["research.jpg"]
+        },
+        {
+          "title": { "en": "Dieline", "vi": "Dieline" },
+          "text": { "en": "80 × 110 × 60 mm box with a tuck-in lid.", "vi": "Hộp 80 × 110 × 60 mm, nắp gài." },
+          "images": ["dieline.jpg"]
+        },
+        {
+          "title": { "en": "Label art", "vi": "Hình nhãn" },
+          "images": ["label.jpg"]
+        },
+        {
+          "title": { "en": "Mockups", "vi": "Mockup" },
+          "text": { "en": "One flavour per colour.", "vi": "Mỗi vị một màu." },
+          "images": ["box-front.jpg", "box-set.jpg"]
+        }
+      ]
+    },
+    {
+      "id": "hud-icon-set",
+      "name": { "en": "HUD Icon Set", "vi": "Bộ icon HUD" },
+      "text": {
+        "en": "Demo — 12 line icons for a game HUD on a 24 px keyline grid, neon on dark.",
+        "vi": "Demo — 12 icon nét cho HUD trong game, dựng trên lưới 24 px, neon trên nền tối."
+      },
+      "cover": "icons-final.jpg",
+      "tools": ["Figma", "Illustrator"],
+      "steps": [
+        {
+          "title": { "en": "Sketches", "vi": "Phác thảo" },
+          "images": ["sketch.jpg"]
+        },
+        {
+          "title": { "en": "Keyline grid", "vi": "Lưới keyline" },
+          "text": { "en": "Same stroke and corner radius for every icon.", "vi": "Cùng độ dày nét và bo góc cho mọi icon." },
+          "images": ["keyline.jpg"]
+        },
+        {
+          "title": { "en": "Final set & in-game", "vi": "Bộ hoàn chỉnh & trong game" },
+          "images": ["icons-final.jpg", "icons-ui.jpg"]
+        },
+        {
+          "title": { "en": "Handoff", "vi": "Bàn giao" },
+          "text": { "en": "Exported as SVG + a Figma component library.", "vi": "Xuất SVG và thư viện component Figma." }
+        }
+      ]
+    }
+  ]
+}

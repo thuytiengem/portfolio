@@ -24,9 +24,13 @@ The owner writes in Vietnamese — reply in Vietnamese.
 - `art3d.html` — "3D Artwork" page from `Database/Art3D/data.json` (projects → images in `Database/Art3D/images/<project id>/`)
   (`assets/js/art3d/`: main.js entry, model.js normalize + YouTube parsing `youtubeId`/`videoOf`, render.js layout;
   `assets/css/art3d.css` on top of art2d.css; imports art2d's `jumpBar`/`jumpTo`, project gallery + lightbox, `framedVideo`). Owner guide: `ART3D.md` (VI).
+- `graphic-design.html` — "Graphic Design" page, ONE page with 2 views from `Database/GraphicDesign/data.json` (projects → images in
+  `Database/GraphicDesign/images/<project id>/`): list (no `?id`) and detail `?id=<project id>` (`assets/js/gd/`: main.js entry + view
+  switch, model.js normalize + URLs, parts.js, list.js, detail.js; `assets/css/gd.css` on top of games.css + art2d.css + art3d.css +
+  project.css; reuses games/cards.js `gameCard`, page banner, project gallery + lightbox). Owner guide: `GD.md` (VI).
 - Shared helpers: `stores.js` (store buttons, home + detail), `topbar.js` (phone menu, all pages), `portfolio-menu.js` +
   `assets/css/portfolio-menu.css` (topbar "Portfolio" dropdown on every page; init after `initI18n`, before `initMenu`),
-  `page-banner.js` + `assets/css/page-banner.css` (HUD page banner of games.html / art2d.html / art3d.html; `titleFont()` = Montserrat
+  `page-banner.js` + `assets/css/page-banner.css` (HUD page banner of games.html / art2d.html / art3d.html / graphic-design.html list; `titleFont()` = Montserrat
   fallback `.alt-font` (base.css) for titles with Vietnamese letters Qualy lacks — ă ơ ư ĩ ũ and stacked marks ả ạ ế ậ …).
 - `portfolio-studio/` — local editor (server.mjs = no-dependency Node server + API; studio.js UI). Writes need the `X-Studio: 1` header; localhost only.
 
@@ -62,7 +66,8 @@ The owner writes in Vietnamese — reply in Vietnamese.
   Each frame gets a dark layer behind it cut to the frame's own shape (`::after` + `mask-border` of the same image; `backdrop`
   in frame.json, default 0.75) so the letter rain shows through dimmed, not cut (owner rejected clipping the rain at frames).
 - Topbar "Portfolio" = dropdown (hover + click pin, Esc / outside click close, arrow keys; accordion in the phone menu):
-  Video Games → games.html; 3D Artwork → art3d.html; 2D Artwork → art2d.html; Graphic Design = "Soon" (disabled). Labels `pm_*` in web-config i18n.
+  Video Games → games.html; 3D Artwork → art3d.html; 2D Artwork → art2d.html; Graphic Design → graphic-design.html (all 4 are real pages;
+  the "Soon" support stays in portfolio-menu.js for future items). Labels `pm_*` in web-config i18n.
   Home page nav highlight still marks it at #featured.
 - Video Games page = variant 1 "Poster grid" (owner's pick of 3 demos, demos deleted); its header is now the shared page banner
   (owner asked for the 2D page's banner here too, for consistency): "← Home", VIDEO GAMES / GAME (`games_page_title`),
@@ -94,13 +99,23 @@ The owner writes in Vietnamese — reply in Vietnamese.
   Studio view "3D Artwork" shares the 2D code (generic `PAGES` / `pg*` helpers in studio.js; server `PAGES` + `pageApi()`):
   API `/api/art3d`, `/api/art3d/images?dir=<id>`, `/api/art3d/rename-project`; video inputs normalise to the id, live
   thumbnail, invalid links block saving, /shorts/ → Dọc.
+- Graphic Design page = demo variant 1 "Poster grid + rail" (owner's pick of 2 demos, demos deleted). ONE data source for card + detail:
+  `Database/GraphicDesign/data.json` (same single-file shape as Art2D / Art3D so the Studio reuses `PAGES` / `pg*`; not index.json + folders).
+  List = shared page banner (`gd_page_title`, data `intro`, projects / images chips, "← Home") + games.css poster cards (`gameCard`):
+  image `cover` → first step image, `name` (titleFont fallback), client · year line, `tools` as tags, 3-line `text`, "View project →" (`games_view`).
+  Detail `?id=<id>` = "← All design projects" (→ `graphic-design.html#gd-<id>`, scrolls to + focuses that card), HUD banner
+  ("GRAPHIC DESIGN 01 / 05", title, client · year, text, TOOLS chips, steps / images chips, cover framed on the right, never cropped,
+  click → lightbox), PROCESS steps on the art2d cyan rail (number, title, text, filmstrip + lightbox), Prev / All / Next pager.
+  `#step-<n>` deep-links a step; unknown id → not-found + link back. Tab title per view. Data `{ intro, projects: [{ id, name, text,
+  cover?, client?, year?, tools?, steps: [{ title, text, images }] }] }`. Labels `gd_*`. Studio view "Graphic Design" (`#/graphic`,
+  `PAGES.graphic`): API `/api/graphic`, `/api/graphic/images?dir=<id>`, `/api/graphic/rename-project`; commit scope `Database/GraphicDesign`.
 - Project page "← Back to projects" still → index.html#featured (owner hasn't decided whether it should go to games.html).
 
 ## Current status / next step
 - Power Surge intro is live on the site. The old hero image (`intro.heroImage`, `hero.jpg`) was removed — the glass comes from the textures.
 - Placeholder content everywhere (lorem ipsum, sample YouTube ids, generated artwork images). 2D Artwork has 5 demo sections
   (images cut from Personal Artworks, texts marked "Demo"); 3D Artwork has 3 demo projects (borrowed YouTube ids, placeholder
-  images marked "DEMO · PLACEHOLDER", texts marked "Demo").
+  images marked "DEMO · PLACEHOLDER", texts marked "Demo"). Graphic Design has 5 demo projects (same markers).
 
 ## Conventions
 - Match existing style: ES modules, small helpers, comment density like the current files; no frameworks, no build tools.
