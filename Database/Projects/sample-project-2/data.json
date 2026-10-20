@@ -47,27 +47,131 @@
   "genre": "Casual",
   "roles": [
     {
-      "title": "LEAD ARTIST"
+      "title": "LEAD ARTIST",
+      "text": {
+        "en": [
+          "Assigned tasks, estimated production timelines, and reviewed art and animation assets from sketch to final to ensure quality and consistency."
+        ],
+        "vi": [
+          "Phân chia công việc, ước tính thời gian sản xuất và duyệt art asset, animation từ sketch đến final nhằm đảm bảo chất lượng và tính nhất quán."
+        ]
+      }
     },
     {
-      "title": "CONCEPT ARTIST"
+      "title": "CONCEPT ARTIST",
+      "text": {
+        "en": [
+          "Designed and produced approximately 80% of the game's art assets, including characters, outfits, hairstyles, and accessories.",
+          "Maintained visual consistency across all assets."
+        ],
+        "vi": [
+          "Thiết kế và hoàn thiện khoảng 80% art asset của game, bao gồm nhân vật, trang phục, kiểu tóc và phụ kiện.",
+          "Đảm bảo tính nhất quán về mặt hình ảnh giữa các asset."
+        ]
+      }
     },
     {
-      "title": "UI/UX MENTOR"
+      "title": "UI/UX MENTOR",
+      "text": {
+        "en": [
+          "Mentored a concept artist transitioning to UI/UX design, guiding UI styling and providing feedback to refine wireframe-based designs into production-ready interfaces."
+        ],
+        "vi": [
+          "Hướng dẫn một concept artist chuyển hướng sang UI/UX, định hướng phong cách UI và phản hồi thiết kế dựa trên wireframe để hoàn thiện giao diện có thể triển khai trong game."
+        ]
+      }
     }
   ],
   "progression": [
     {
-      "id": "sketches",
-      "name": "SKETCHES"
-    },
-    {
       "id": "art-assets",
-      "name": "ART ASSETS"
+      "name": "ART ASSETS",
+      "text": {
+        "en": [
+          "The game targets an Asian audience, featuring a manga/anime-inspired art style. Character and outfit concepts follow current fashion trends to appeal to female players and complement the game's fashion-focused theme.",
+          "Below are character designs for the main characters and NPCs, along with selected in-game assets."
+        ],
+        "vi": [
+          "Trò chơi hướng đến đối tượng người chơi châu Á, sử dụng phong cách mỹ thuật lấy cảm hứng từ manga/anime Nhật Bản. Thiết kế nhân vật và trang phục cập nhật xu hướng thời trang nhằm thu hút người chơi nữ và phù hợp với chủ đề game thời trang.",
+          "Dưới đây là thiết kế nhân vật chính, các NPC và một số asset trong game."
+        ]
+      },
+      "images": [
+        "character-design.jpg",
+        "asset.jpg",
+        "asset-2.jpg"
+      ]
     },
     {
       "id": "store-listing",
-      "name": "STORE LISTING"
+      "name": "STORE LISTING",
+      "text": {
+        "en": [
+          "Marketing Assets for the Initial Release, including logo, game icon, banner, in-game screenshots."
+        ],
+        "vi": [
+          "Các sản phẩm hình ảnh quảng bá cho phiên bản phát hành đầu tiên, bao gồm logo, icon game, banner và ảnh chụp màn hình gameplay."
+        ]
+      },
+      "images": [
+        "feature.jpg",
+        "screenshot-2.jpg",
+        "icon-op2.jpg",
+        "icon.jpg",
+        "screenshot-9.jpg",
+        "1242x2688-screenshot-9.jpg",
+        "screenshot-1.jpg",
+        "screenshot-3-1.jpg",
+        "screenshot-4.jpg",
+        "screenshot-6.jpg",
+        "screenshot-7.png",
+        "screenshot-10.jpg",
+        "screenshot-1.png",
+        "screenshot-3.jpg",
+        "icon-mid-autumn.jpg",
+        "screenshot-2-2.jpg"
+      ]
+    }
+  ],
+  "thumbnail": "images/thumbnail.jpg",
+  "cover": "images/cover.jpg",
+  "period": {
+    "en": "since 2024",
+    "vi": "từ 2024"
+  },
+  "challenges": [
+    {
+      "problem": {
+        "en": "Insufficient art resources to meet the original asset production scope within the project timeline.",
+        "vi": "Nhân sự art hạn chế, không đủ nguồn lực để hoàn thành khối lượng asset ban đầu trong thời gian dự kiến."
+      },
+      "solution": {
+        "en": "Proposed reducing the original art asset scope by 50% in collaboration with the Game Designer, while retaining the essential assets required for a release-ready build.",
+        "vi": "Đề xuất phối hợp với Game Designer cắt giảm 50% khối lượng art asset ban đầu, đồng thời giữ lại các asset thiết yếu để đảm bảo game vẫn đạt mức tối thiểu cần thiết cho bản phát hành."
+      }
+    }
+  ],
+  "learned": [
+    {
+      "title": "Team Management & Mentoring",
+      "text": {
+        "en": "Learned to mentor team members through clear, actionable feedback that enables them to improve and refine their own work.",
+        "vi": "Học cách hướng dẫn thành viên thông qua phản hồi rõ ràng, có tính định hướng, giúp họ chủ động cải thiện và hoàn thiện sản phẩm của mình."
+      }
+    },
+    {
+      "title": "Art Production Planning",
+      "text": {
+        "en": "Improved my ability to estimate asset workload and production timelines, allocate tasks based on team members' strengths, and maintain art and animation quality within project constraints.",
+        "vi": "Nâng cao khả năng ước tính khối lượng asset và thời gian sản xuất, phân công công việc dựa trên năng lực của từng thành viên, đồng thời đảm bảo chất lượng art và animation trong giới hạn nguồn lực của dự án."
+      }
+    },
+    {
+      "title": "Balancing Leadership & Hands-on Production",
+      "text": {
+        "en": "Learned to balance leadership responsibilities with hands-on concept art production while managing multiple responsibilities in parallel.",
+        "vi": "Học cách cân bằng giữa trách nhiệm quản lý và trực tiếp thực hiện concept art, đồng thời xử lý nhiều đầu việc song song."
+      }
     }
   ]
 }

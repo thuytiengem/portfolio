@@ -44,38 +44,115 @@
   },
   "progression": [
     {
-      "id": "research",
-      "name": "RESEARCH"
-    },
-    {
       "id": "sketches",
-      "name": "SKETCHES"
+      "name": "SKETCHES",
+      "text": {
+        "en": [
+          "After researching sticker ASMR games, art puzzle games, and videos showcasing the tactile experience of peeling and placing stickers, I developed a visual direction inspired by real paper stickers. Bold black outlines and paper textures were incorporated to recreate the look and feel of physical stickers, while rounded edges and soft shapes created a gentle, approachable aesthetic. A muted yet appealing color palette was chosen to suit the game's target audience of young players.",
+          "The level concepts were built around the idea of a bunny-themed city, beginning at the character's home and expanding into surrounding locations such as a supermarket, bakery, café, school, and other city destinations. This concept provided a cohesive setting for the game's levels and connected individual scenes within a shared world."
+        ],
+        "vi": [
+          "Sau khi nghiên cứu các tựa game sticker ASMR, art puzzle và những video thể hiện trải nghiệm tương tác bóc, dán sticker, tôi xây dựng định hướng thị giác lấy cảm hứng từ sticker giấy ngoài đời thực. Đường viền đen rõ nét và chất liệu texture giấy được sử dụng để tái hiện diện mạo và cảm giác của sticker thật, trong khi các đường nét mềm mại cùng những góc bo tròn tạo nên phong cách thân thiện, gần gũi. Bảng màu nhã nhặn nhưng vẫn thu hút được lựa chọn để phù hợp với nhóm người chơi nhỏ tuổi.",
+          "Ý tưởng level được phát triển xoay quanh một thành phố mang chủ đề thỏ, bắt đầu từ ngôi nhà của nhân vật rồi mở rộng đến các địa điểm xung quanh như siêu thị, tiệm bánh, quán cà phê, trường học và những địa điểm khác trong thành phố. Ý tưởng này tạo nên bối cảnh thống nhất cho các level, kết nối từng khung cảnh trong cùng một thế giới."
+        ]
+      },
+      "images": [
+        {
+          "src": "step-by-step.jpg",
+          "caption": {
+            "en": "Step by step from sketch to final.",
+            "vi": "Từng bước từ phác thảo tới hoàn thiện."
+          }
+        },
+        {
+          "src": "test-render.jpg",
+          "caption": {
+            "en": "Render and brushes testing options.",
+            "vi": "Các phương án test render và brush."
+          }
+        },
+        {
+          "src": "city-sketch.jpg",
+          "caption": {
+            "en": "City overview sketch.",
+            "vi": "Bản phác thảo toàn cảnh thành phố."
+          }
+        },
+        {
+          "src": "city-asset-sketch.jpg",
+          "caption": {
+            "en": "Sketches of my house ver 1, 2, 3 and vehicle in city mode.",
+            "vi": "Bản phác thảo của my house bản 1, 2, 3 và xe cộ trong mode city."
+          }
+        }
+      ]
     },
     {
       "id": "asset-planning",
-      "name": "ASSET PLANNING"
+      "name": "ASSET PLANNING",
+      "text": {
+        "en": [
+          "I created a centralized art asset tracker covering the main gameplay (70 in-game levels) and two major game modes — City and My House — including their levels, assets, art guidelines, task assignments, status updates, and notes.",
+          "I used the tracker to monitor the art team's overall workload and progress, allocate resources, and estimate production timelines. It also served as a shared reference for cross-functional teams to check asset details and resolve asset-related issues, improving communication and streamlining the production workflow."
+        ],
+        "vi": [
+          "Mình đã tạo file quản lý tập trung các art asset cho gameplay chính (70 level trong game) và hai chế độ chơi lớn — City và My House — bao gồm danh sách level, asset, quy chuẩn art, phân công công việc, trạng thái và ghi chú.",
+          "Mình sử dụng file để theo dõi tổng quan khối lượng và tiến độ của team art, phân bổ nhân sự và ước tính thời gian sản xuất. Đây cũng là tài liệu tham chiếu chung giúp các team liên quan tra cứu thông tin asset và xử lý vấn đề phát sinh, cải thiện giao tiếp và tối ưu quy trình làm việc."
+        ]
+      },
+      "images": [
+        "list-art-1.jpg",
+        "room-city-rules.jpg",
+        "list-city-1.jpg",
+        "list-my-house.jpg"
+      ]
     },
     {
       "id": "in-game-levels",
       "name": "ART ASSETS",
+      "text": {
+        "en": [
+          "A selection of city overview and in-game level designs created for the project."
+        ],
+        "vi": [
+          "Một số bản thiết kế tổng quan thành phố và các level trong game do mình thực hiện cho dự án."
+        ]
+      },
       "images": [
         "city-demo.jpg",
-        "room-0.png",
-        "room-1.png",
-        "room-2.png",
-        "room-3.png",
-        "room-4.png",
-        "room-5.png",
-        "room-6.png",
-        "room-7.png",
-        "room-8.png",
-        "room-9.png",
-        "room-12.png"
+        "room-0-2.png",
+        "room-1-2.png",
+        "room-2-2.png",
+        "room-3-2.png",
+        "room-4-2.png",
+        "room-5-2.png",
+        "room-6-2.png",
+        "room-7-2.png",
+        "room-8-2.png",
+        "room-9-2.png",
+        "room-12-2.png"
       ]
     },
     {
       "id": "mentor-feedback-artists",
-      "name": "MENTOR ARTISTS"
+      "name": "MENTOR ARTISTS",
+      "text": {
+        "en": [
+          "Throughout the project, I mentored new art team members, many of whom had little or no prior game development experience, by explaining project guidelines, clarifying gameplay requirements, and providing constructive feedback to refine their work and ensure smooth in-game integration.",
+          "I encouraged artists to explore creative ideas beyond the initial briefs and contribute their own perspectives to the project.",
+          "I also encouraged artists to actively test game builds, provide gameplay feedback, and identify in-game visual issues to improve the overall player experience."
+        ],
+        "vi": [
+          "Trong suốt quá trình triển khai dự án, mình đã hướng dẫn các thành viên mới của team art, phần lớn chưa có hoặc có ít kinh nghiệm làm game, thông qua việc phổ biến quy chuẩn dự án, giải thích yêu cầu gameplay và đưa ra phản hồi để hoàn thiện sản phẩm, đảm bảo asset được tích hợp thuận lợi vào game.",
+          "Mình khuyến khích artist phát triển ý tưởng ngoài brief ban đầu và chủ động đóng góp góc nhìn sáng tạo cho dự án.",
+          "Mình cũng khuyến khích artist trực tiếp trải nghiệm các bản build, đóng góp ý kiến về gameplay và phát hiện các vấn đề hiển thị trong game nhằm cải thiện trải nghiệm người chơi."
+        ]
+      },
+      "images": [
+        "feedback-art1.png",
+        "check.jpg",
+        "feedback-art2.jpg"
+      ]
     }
   ],
   "studio": "Champion Game Studio x Falcon Game Studio",
@@ -87,17 +164,102 @@
   "genre": "puzzle",
   "roles": [
     {
-      "title": "Art Director"
+      "title": "Art Director",
+      "text": {
+        "en": [
+          "Researched related game genres, including sticker puzzles, ASMR, and art puzzles, and analyzed the target audience to establish the game's art direction, visual style, and file-format standards.",
+          "Worked closely with game designers and developers throughout production to maintain consistency between visual design and gameplay."
+        ],
+        "vi": [
+          "Nghiên cứu các dòng game liên quan như sticker puzzle, ASMR và art puzzle, đồng thời phân tích nhóm người chơi mục tiêu để xây dựng định hướng nghệ thuật, phong cách hình ảnh và quy chuẩn định dạng file của dự án.",
+          "Phối hợp trực tiếp với Game Designer và Game Developer trong quá trình sản xuất nhằm đảm bảo tính nhất quán giữa thiết kế hình ảnh và gameplay."
+        ]
+      }
     },
     {
-      "title": "Lead Artist"
+      "title": "Lead Artist",
+      "text": {
+        "en": [
+          "Mentored team artists and oversaw the production pipeline, from concept reviews and sketch feedback to final asset approval.",
+          "Coordinated the art team's workflow, maintained production quality, and addressed urgent issues to keep development running smoothly."
+        ],
+        "vi": [
+          "Hướng dẫn các artist trong team và giám sát quy trình sản xuất, từ duyệt ý tưởng, góp ý bản phác thảo đến phê duyệt asset hoàn thiện.",
+          "Điều phối quy trình làm việc của team art, duy trì chất lượng sản phẩm và xử lý các vấn đề phát sinh khẩn cấp để đảm bảo tiến độ phát triển."
+        ]
+      }
     },
     {
-      "title": "Concept Artist"
+      "title": "Concept Artist",
+      "text": {
+        "en": [
+          "Developed concepts for the main gameplay, including the first 10 levels, from initial concepts through finalization.",
+          "Created concepts for the My House mode and developed and finalized the city overview for the City mode."
+        ],
+        "vi": [
+          "Phát triển concept cho gameplay chính, bao gồm 10 level đầu tiên, từ giai đoạn lên ý tưởng đến hoàn thiện.",
+          "Xây dựng concept cho mode My House, đồng thời phát triển và hoàn thiện bản thiết kế tổng quan thành phố cho mode City."
+        ]
+      }
     },
     {
-      "title": "Asset planner"
+      "title": "Asset planner",
+      "text": {
+        "en": [
+          "Created and maintained structured asset documentation to coordinate production between artists, game designers, developers, and animators.",
+          "Organized asset data, including some gameplay mechanics, level lists, task assignments, production status, and item IDs."
+        ],
+        "vi": [
+          "Xây dựng và duy trì hệ thống tài liệu asset có cấu trúc nhằm hỗ trợ phối hợp sản xuất giữa artist, Game Designer, Game Developer và animator.",
+          "Tổ chức dữ liệu asset, bao gồm một vài cơ chế gameplay, danh sách level, phân công công việc, trạng thái sản xuất và mã định danh item."
+        ]
+      }
     }
   ],
-  "logo": "images/logo.jpg"
+  "logo": "images/logo.jpg",
+  "cover": "images/cover.jpg",
+  "challenges": [
+    {
+      "problem": {
+        "en": "Frequent changes in game design personnel led to inconsistencies in ideas and gameplay, increasing the risk of production errors and repeated asset revisions.",
+        "vi": "Việc thay đổi nhân sự Game Designer nhiều lần dẫn đến sự thiếu nhất quán trong ý tưởng và gameplay, làm tăng nguy cơ phát sinh lỗi và phải chỉnh sửa asset nhiều lần."
+      },
+      "solution": {
+        "en": "Established asset planning and documentation early in production, while maintaining close coordination with game designers and developers to minimize inconsistencies and reduce rework.",
+        "vi": "Xây dựng kế hoạch và tài liệu quản lý asset ngay từ đầu dự án, đồng thời duy trì trao đổi chặt chẽ với Game Designer và Developer để hạn chế sai lệch và giảm thiểu công việc sửa đổi."
+      }
+    },
+    {
+      "problem": {
+        "en": "The project initially had only one or two artists responsible for producing at least 50 levels, creating significant production pressure.",
+        "vi": "Ban đầu, dự án chỉ có một đến hai artist phụ trách sản xuất tối thiểu 50 level, tạo áp lực đáng kể lên tiến độ sản xuất."
+      },
+      "solution": {
+        "en": "Proposed expanding the art team and mentored new artists to help them adapt to the production workflow and project art style.",
+        "vi": "Đề xuất bổ sung nhân sự cho team art và hướng dẫn các artist mới để họ nhanh chóng thích nghi với quy trình sản xuất cũng như phong cách hình ảnh của dự án."
+      }
+    }
+  ],
+  "learned": [
+    {
+      "title": {
+        "en": "Systematic Asset Planning & Gameplay Integration",
+        "vi": "Lập kế hoạch asset có hệ thống và gắn kết với gameplay"
+      },
+      "text": {
+        "en": "Working on a game with a large and interconnected asset system taught me to approach asset planning more systematically, considering gameplay logic, asset dependencies, and developers' data requirements to support a more efficient production workflow.",
+        "vi": "Làm việc với một game có hệ thống asset quy mô lớn và liên kết chặt chẽ giúp mình học cách lập kế hoạch asset một cách có hệ thống hơn, đồng thời cân nhắc logic gameplay, mối liên hệ giữa các asset và yêu cầu dữ liệu từ phía developer để hỗ trợ quy trình sản xuất hiệu quả hơn."
+      }
+    },
+    {
+      "title": {
+        "en": "Team Leadership & Artist Development",
+        "vi": "Lãnh đạo đội ngũ và phát triển năng lực artist"
+      },
+      "text": {
+        "en": "As the art team grew from 5 to 11 members across 3–4 concurrent projects, I learned to balance art direction, concept development, production reviews, and individual mentoring. I also developed a career path framework to help team members better understand their growth opportunities and professional development goals.",
+        "vi": "Khi team art mở rộng từ 5 lên 11 thành viên, cùng tham gia 3–4 dự án song song, tôi học được cách cân bằng giữa định hướng nghệ thuật, phát triển concept, duyệt sản phẩm và mentoring từng thành viên. Tôi cũng xây dựng khung lộ trình nghề nghiệp nhằm giúp các thành viên hiểu rõ hơn về cơ hội phát triển và mục tiêu nghề nghiệp của bản thân."
+      }
+    }
+  ]
 }

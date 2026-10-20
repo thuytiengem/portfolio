@@ -50,37 +50,16 @@
   },
   "progression": [
     {
-      "id": "research",
-      "name": "Research",
-      "text": {
-        "en": [
-          "Demo — replace with your own notes."
-        ],
-        "vi": [
-          "Demo — thay bằng nội dung của bạn."
-        ]
-      },
-      "images": [
-        {
-          "src": "01.jpg",
-          "caption": {
-            "en": "Demo caption — shown in the lightbox",
-            "vi": "Chú thích demo — hiện khi phóng to ảnh"
-          }
-        },
-        "02.jpg",
-        "03.jpg"
-      ]
-    },
-    {
       "id": "sketches",
       "name": "Sketches",
       "text": {
         "en": [
-          "A collection of early sketches and design explorations, from character concepts and color variations to in-game assets, showcasing the process of refining the game's visual style."
+          "After researching games in the mukbang and jelly-making genres, I established a visual direction blending Asian and European influences. The character designs feature soft, rounded shapes and a bright yet gentle color palette to create a friendly, approachable feel for players aged 3 and above.",
+          "The following explorations document the design process, from early character sketches and color studies to character expressions and in-game asset variations."
         ],
         "vi": [
-          "Tập hợp các bản phác thảo và thử nghiệm thiết kế ban đầu, từ concept nhân vật, các phương án phối màu đến asset trong game, thể hiện quá trình hoàn thiện phong cách hình ảnh của dự án."
+          "Sau khi nghiên cứu các tựa game thuộc thể loại mukbang và làm thạch, mình xây dựng định hướng thị giác kết hợp các yếu tố thẩm mỹ Á Đông và châu Âu. Thiết kế nhân vật sử dụng các đường cong và hình khối bo tròn mềm mại, cùng bảng màu tươi sáng nhưng dịu nhẹ, nhằm tạo cảm giác thân thiện và gần gũi với người chơi từ 3 tuổi trở lên.",
+          "Các hình ảnh dưới đây ghi lại quá trình phát triển thiết kế, từ những bản phác thảo nhân vật ban đầu và thử nghiệm màu sắc đến biểu cảm nhân vật và các biến thể asset trong game."
         ]
       },
       "images": [
@@ -270,11 +249,11 @@
       "title": "Art Director",
       "text": {
         "en": [
-          "Conducted market and target audience research to establish the project's art direction, mood boards, visual style, and art production guidelines.",
+          "Conducted market and target audience research to establish the project's art direction, visual style, and art production guidelines.",
           "Collaborated with game designers and developers to align visual design with gameplay requirements."
         ],
         "vi": [
-          "Nghiên cứu thị trường và tệp người chơi để xây dựng định hướng nghệ thuật, moodboard, phong cách hình ảnh và quy chuẩn sản xuất art.",
+          "Nghiên cứu thị trường và tệp người chơi để xây dựng định hướng nghệ thuật, phong cách hình ảnh và quy chuẩn sản xuất art.",
           "Phối hợp với Game Designer và Developer để đảm bảo thiết kế hình ảnh phù hợp với yêu cầu gameplay."
         ]
       }
