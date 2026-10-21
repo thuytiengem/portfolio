@@ -6,7 +6,7 @@
   },
   "tags": [
     "Lead Artist",
-    "Main Concept Artist",
+    "Concept Artist",
     "Map Game Designer"
   ],
   "description": {
@@ -43,31 +43,128 @@
   "genre": "CASUAL",
   "roles": [
     {
-      "title": "LEAD ARTIST"
+      "title": "LEAD ARTIST",
+      "text": {
+        "en": [
+          "Coordinated task assignments and estimated the overall art production timeline.",
+          "Reviewed art and animation deliverables to maintain production quality."
+        ],
+        "vi": [
+          "Phân chia công việc và ước tính tổng thời gian sản xuất art.",
+          "Kiểm tra, duyệt đầu ra art và animation nhằm đảm bảo chất lượng sản phẩm."
+        ]
+      }
     },
     {
-      "title": "CONCEPT ARTIST"
+      "title": "CONCEPT ARTIST",
+      "text": {
+        "en": [
+          "Designed the main characters, selected NPCs, and most of the game's crop assets."
+        ],
+        "vi": [
+          "Thiết kế concept nhân vật chính, một số NPC và phần lớn asset cây trồng trong game."
+        ]
+      }
     },
     {
-      "title": "MAP GAME DESIGNER"
+      "title": "MAP GAME DESIGNER",
+      "text": {
+        "en": [
+          "Created tileset assets in Photoshop and assembled them into playable maps in Unity, aligning map progression with level unlocks and land expansion mechanics."
+        ],
+        "vi": [
+          "Thiết kế tileset bằng Photoshop và sử dụng chúng để xây dựng map trong Unity, đảm bảo bố cục map phù hợp với cơ chế mở khóa level và mở rộng đất của nhân vật."
+        ]
+      }
     }
   ],
   "progression": [
     {
-      "id": "research",
-      "name": "RESEARCH"
-    },
-    {
       "id": "sketches",
-      "name": "SKETCHES"
+      "name": "SKETCHES",
+      "text": {
+        "en": [
+          "After researching farming and tycoon games, I developed initial sketches and concepts for the characters, maps, and in-game assets to fit the game's genre and visual direction. Below are selected sketches from the earliest design stage."
+        ],
+        "vi": [
+          "Sau khi nghiên cứu các dòng game nông trại kết hợp tycoon, mình lên các bản phác thảo và concept ban đầu cho nhân vật, map và asset trong game, phù hợp với thể loại và định hướng hình ảnh của dự án. Dưới đây là một số bản phác thảo được chọn từ giai đoạn thiết kế đầu tiên."
+        ]
+      },
+      "images": [
+        "sketch-1.jpg",
+        "final-option.jpg",
+        "npc-sketch.jpg",
+        "map.jpg"
+      ]
     },
     {
       "id": "art-assets",
-      "name": "ART ASSETS"
+      "name": "ART ASSETS",
+      "text": {
+        "en": [
+          "Compared to my other projects, this game required fewer art assets, as tilesets were used to optimize map production and animations were prioritized over frame-by-frame artwork to create smoother, more responsive gameplay. Below are selected in-game assets I created."
+        ],
+        "vi": [
+          "So với các dự án khác mà mình từng thực hiện, game này yêu cầu số lượng art asset ít hơn do sử dụng tileset để tối ưu hóa quá trình xây dựng map và ưu tiên animation thay cho hình ảnh vẽ theo từng frame nhằm mang lại trải nghiệm gameplay mượt mà, phản hồi tốt hơn. Dưới đây là một số asset trong game do mình thiết kế."
+        ]
+      },
+      "images": [
+        "character-action.jpg",
+        "npc1.jpg",
+        "asset.jpg"
+      ]
     },
     {
       "id": "map-game-design",
-      "name": "MAP GAME DESIGN"
+      "name": "MAP GAME DESIGN",
+      "text": {
+        "en": [
+          "After brainstorming with the team, we decided to use a tileset-based map instead of a fully illustrated map. I designed the tileset in Adobe Photoshop and assembled the map directly in Unity, allowing me to visualize the entire map, make adjustments efficiently, and align its layout with the player's level progression and land expansion."
+        ],
+        "vi": [
+          "Sau khi brainstorm cùng team, chúng mình quyết định sử dụng map dạng tileset thay vì vẽ toàn bộ map thành một hình hoàn chỉnh. Tôi thiết kế tileset bằng Adobe Photoshop, sau đó trực tiếp xây dựng map trong Unity để quan sát tổng thể bố cục một cách trực quan, dễ dàng điều chỉnh và đảm bảo map phù hợp với tiến trình mở khóa level cũng như mở rộng đất của người chơi."
+        ]
+      },
+      "images": [
+        "tileset.png"
+      ]
+    }
+  ],
+  "thumbnail": "images/thumbnail.jpg",
+  "logo": "images/logo.jpg",
+  "cover": "images/cover.jpg",
+  "challenges": [
+    {
+      "problem": {
+        "en": "A large, fully illustrated map increased the game's resource demands and could affect performance.",
+        "vi": "Map được vẽ thành một hình ảnh lớn làm tăng tài nguyên cần thiết và có thể ảnh hưởng đến hiệu năng game."
+      },
+      "solution": {
+        "en": "Proposed and implemented a tileset-based map to optimize map construction and reduce reliance on a single large image.",
+        "vi": "Đề xuất và triển khai map dạng tileset nhằm tối ưu quá trình xây dựng map và giảm sự phụ thuộc vào một hình ảnh lớn duy nhất."
+      }
+    },
+    {
+      "problem": {
+        "en": "The game's complex economy required careful balancing, but the Game Designer lacked sufficient experience in economy design, resulting in balancing issues that remained unresolved during production. (remained unresolved)",
+        "vi": "Hệ thống kinh tế trong game có độ phức tạp cao, đòi hỏi khả năng cân bằng tốt. Tuy nhiên, Game Designer còn thiếu kinh nghiệm về thiết kế economy, dẫn đến các vấn đề mất cân bằng chưa được giải quyết trong quá trình sản xuất. (chưa được giải quyết)"
+      }
+    }
+  ],
+  "learned": [
+    {
+      "title": "Tileset Design & Unity",
+      "text": {
+        "en": "Gained my first experience designing tileset-based maps and using Unity to build and adjust in-game environments.",
+        "vi": "Lần đầu trải nghiệm thiết kế map bằng tileset và sử dụng Unity để xây dựng, điều chỉnh môi trường trong game."
+      }
+    },
+    {
+      "title": "Project Planning & Team Capabilities",
+      "text": {
+        "en": "Learned to assess a project's design complexity and required expertise against the team's capabilities before production, helping identify potential risks and plan resources more effectively.",
+        "vi": "Học cách đánh giá độ phức tạp trong thiết kế game và chuyên môn cần thiết so với năng lực của đội ngũ trước khi bắt đầu sản xuất, từ đó nhận diện rủi ro tiềm ẩn và lập kế hoạch nhân sự hiệu quả hơn."
+      }
     }
   ]
 }
