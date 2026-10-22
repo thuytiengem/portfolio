@@ -1,0 +1,75 @@
+{
+  "title": "Find the Capybara",
+  "tagline": {
+    "en": "7 members | puzzle mobile game",
+    "vi": "7 thành viên | puzzle mobile game"
+  },
+  "tags": [
+    "Lead Artist",
+    "UI/UX Designer"
+  ],
+  "exploreUrl": "",
+  "featured": false,
+  "studio": "Champion Game Studio x Falcon Game Studio",
+  "period": {
+    "en": "since 2024",
+    "vi": "từ 2024"
+  },
+  "members": 7,
+  "genre": "PUZZLE",
+  "roles": [
+    {
+      "title": "Lead Artist"
+    },
+    {
+      "title": "UI/UX Designer"
+    }
+  ],
+  "progression": [
+    {
+      "id": "ui-design",
+      "name": "UI Design",
+      "images": [
+        "loading-screen.jpg",
+        "home.jpg",
+        "level-popup.jpg",
+        "main-gameplay.jpg",
+        "congratulation-fix.jpg",
+        "shop1.jpg",
+        "shop2.jpg",
+        "daily-login.jpg",
+        "gift-day7.jpg",
+        "gift-open.jpg",
+        "weekly-event.jpg",
+        "level-chest.jpg",
+        "level-chest-open.jpg",
+        "star-chest.jpg",
+        "star-chest-open.jpg",
+        "level-failed.jpg",
+        "out-of-live.jpg",
+        "minishop.jpg",
+        "time-is-up.jpg",
+        "profile.jpg",
+        "setting.jpg",
+        "rate.jpg",
+        "no-internet.jpg",
+        "buy-stage.jpg",
+        "collection.jpg",
+        "expand-stage.jpg",
+        "id-card.jpg",
+        "loading-ads.jpg"
+      ]
+    }
+  ],
+  "description": {
+    "en": [
+      "A timed puzzle game where players search for hidden capybaras across a large, uncolored illustration."
+    ],
+    "vi": [
+      "Một game giải đố có giới hạn thời gian, nơi người chơi tìm kiếm những chú capybara ẩn trong một bức tranh lớn chưa tô màu."
+    ]
+  },
+  "logo": "images/logo.jpg",
+  "cover": "images/cover.jpg",
+  "thumbnail": "images/thumbnail.jpg"
+}

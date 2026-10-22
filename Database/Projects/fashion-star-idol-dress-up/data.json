@@ -38,28 +38,164 @@
   "genre": "CASUAL",
   "roles": [
     {
-      "title": "UI/UX DESIGNER"
+      "title": "UI/UX DESIGNER",
+      "text": {
+        "en": [
+          "Designed all in-game UI based on existing UX wireframes."
+        ],
+        "vi": [
+          "Thiết kế toàn bộ UI trong game dựa trên UX wireframe có sẵn."
+        ]
+      }
     },
     {
-      "title": "CONCEPT ARTIST"
+      "title": "CONCEPT ARTIST",
+      "text": {
+        "en": [
+          "Researched and established the art style, then designed and produced approximately 90% of the game's art assets."
+        ],
+        "vi": [
+          "Nghiên cứu và định hướng art style, sau đó thiết kế concept và hoàn thiện khoảng 90% art asset của game."
+        ]
+      }
     }
   ],
   "progression": [
     {
       "id": "sketches",
-      "name": "SKETCHES"
+      "name": "SKETCHES",
+      "text": {
+        "en": [
+          "Given the game's fashion-focused theme and its primarily Asian female audience, I developed a Japanese manga/anime-inspired art style. I explored different character shape and form through initial sketches and conducted an internal company survey to evaluate their feasibility. Below are selected character sketches from my design exploration."
+        ],
+        "vi": [
+          "Với chủ đề game thời trang và đối tượng người chơi chủ yếu là nữ giới tại châu Á, mình phát triển art style lấy cảm hứng từ manga/anime Nhật Bản. Mình thử nghiệm nhiều dáng nhân vật khác nhau thông qua các bản sketch ban đầu và thực hiện khảo sát nội bộ công ty để đánh giá tính khả thi của từng phương án. Dưới đây là một số bản phác thảo nhân vật tiêu biểu trong quá trình phát triển thiết kế."
+        ]
+      },
+      "images": [
+        "sketch.jpg",
+        "color-sketch.jpg"
+      ]
     },
     {
       "id": "art-assets",
-      "name": "ART ASSETS"
+      "name": "ART ASSETS",
+      "text": {
+        "en": [
+          "At an early stage of the company's development, I was the sole artist on the project and created approximately 90% of the game's art assets before another artist joined the team. Below is a showcase of most of the assets I produced for the project."
+        ],
+        "vi": [
+          "Trong giai đoạn đầu phát triển của công ty, mình là artist duy nhất của dự án và đã thực hiện khoảng 90% art asset của game trước khi có thêm một artist mới tham gia team. Dưới đây là phần tổng hợp phần lớn asset do mình thực hiện trong dự án."
+        ]
+      },
+      "images": [
+        "skin-type.jpg",
+        "dresses.jpg",
+        "hair.jpg",
+        "pant.jpg",
+        "shirt.jpg",
+        "accessory-1.jpg",
+        "accessory-2.jpg"
+      ]
     },
     {
       "id": "ui-design",
-      "name": "UI DESIGN"
+      "name": "UI DESIGN",
+      "text": {
+        "en": [
+          "This was my first mobile game UI design project, and I was solely responsible for all in-game UI design.",
+          "I researched similar fashion games and mobile game UI designs to develop an approach that best suited the project's gameplay and art style."
+        ],
+        "vi": [
+          "Đây là dự án đầu tiên mà mình thiết kế UI cho dòng game mobile, và mình là người duy nhất phụ trách toàn bộ thiết kế giao diện trong game.",
+          "Mình đã nghiên cứu các game thời trang tương tự và tham khảo thiết kế UI của các game mobile nói chung để phát triển phương án phù hợp nhất với gameplay và art style của dự án."
+        ]
+      },
+      "images": [
+        "loading.jpg",
+        "home.png",
+        "picking-topic-2.png",
+        "pk.jpg",
+        "win.jpg",
+        "dress-up-full-body.jpg",
+        "dress-up-half-body.jpg",
+        "camera-preview.png",
+        "popup-buy-item.png",
+        "vip.png",
+        "ruby-pack.png",
+        "setting.png",
+        "change-avt.png",
+        "cup.png",
+        "top-star.jpg",
+        "daily-mission.jpg",
+        "live-2.jpg",
+        "live-1-light-mode.jpg",
+        "reward-close.jpg",
+        "reward-open.jpg",
+        "popup-rate-2.jpg",
+        "transition-2.jpg",
+        "transition.jpg"
+      ]
     },
     {
       "id": "store-listing",
-      "name": "STORE LISTING"
+      "name": "STORE LISTING",
+      "text": {
+        "en": [
+          "Marketing Assets for the Initial Release, including logo, game icon, banner, in-game screenshots."
+        ],
+        "vi": [
+          "Các sản phẩm hình ảnh quảng bá cho phiên bản phát hành đầu tiên, bao gồm logo, icon game, banner và ảnh chụp màn hình gameplay."
+        ]
+      },
+      "images": [
+        "screenshot-1.png",
+        "screenshot-2.png",
+        "screenshot-7.jpg",
+        "icon-3.png",
+        "icon-4.jpg",
+        "icon.jpg",
+        "4096x2304.jpg",
+        "feature.jpg",
+        "screenshot-6.png",
+        "screenshot-5-1.jpg",
+        "screenshot-5-2.jpg",
+        "screenshot-3.png",
+        "screenshot-4.png"
+      ]
+    }
+  ],
+  "thumbnail": "images/thumbnail.jpg",
+  "logo": "images/logo.png",
+  "cover": "images/cover.jpg",
+  "learned": [
+    {
+      "title": "UI Design Research",
+      "text": {
+        "en": "Learned to research mobile game UI design and adapt design decisions to the target audience and player preferences.",
+        "vi": "Học cách nghiên cứu thiết kế UI cho game mobile và điều chỉnh phương án thiết kế theo đối tượng người chơi mục tiêu cũng như sở thích của họ."
+      }
+    },
+    {
+      "title": "Production Planning",
+      "text": {
+        "en": "Learned to estimate overall production timelines based on the asset task list provided by the Game Designer.",
+        "vi": "Học cách ước tính tổng thời gian sản xuất dự án dựa trên danh sách asset và thứ tự công việc do Game Designer cung cấp."
+      }
+    },
+    {
+      "title": "Cross-functional Collaboration",
+      "text": {
+        "en": "Gained insight into cross-functional workflows and collaboration within a small team of 3–5 members.",
+        "vi": "Hiểu rõ hơn về quy trình làm việc và sự phối hợp giữa các bộ phận trong một nhóm nhỏ gồm 3–5 thành viên."
+      }
+    },
+    {
+      "title": "Game Testing & Feedback",
+      "text": {
+        "en": "Learned to test gameplay and provide actionable feedback to developers and Game Designers to improve game feel.",
+        "vi": "Học cách kiểm thử gameplay và đưa ra phản hồi cụ thể, có tính ứng dụng cho đội ngũ lập trình và Game Designer nhằm cải thiện game feel (cảm giác chơi game)."
+      }
     }
   ]
 }

@@ -1,0 +1,51 @@
+{
+  "title": "Tictac Transform: Mini Games",
+  "tagline": {
+    "en": "16 members | puzzle mobile game | 10K+ downloads",
+    "vi": "16 thành viên | puzzle mobile game | 10K+ lượt tải"
+  },
+  "tags": [
+    "Lead Artist",
+    "Concept Artist"
+  ],
+  "exploreUrl": "",
+  "stores": {
+    "googlePlay": "https://play.google.com/store/apps/details?id=com.fc.p.cp.transform.game.tricky.puzzle&hl=en"
+  },
+  "studio": "Champion Game Studio x Falcon Game Studio",
+  "period": {
+    "en": "since 2025",
+    "vi": "từ 2025"
+  },
+  "downloads": "10K+",
+  "members": 16,
+  "roles": [
+    {
+      "title": "Lead Artist"
+    },
+    {
+      "title": "Concept Artist"
+    }
+  ],
+  "progression": [
+    {
+      "id": "art-assets",
+      "name": "Art Assets"
+    },
+    {
+      "id": "store-listing",
+      "name": "Store Listing",
+      "images": [
+        "feature.jpg",
+        "icon-1.jpg",
+        "icon-2.jpg",
+        "icon-3.jpg",
+        "icon-4.jpg"
+      ]
+    }
+  ],
+  "thumbnail": "images/thumbnail.jpg",
+  "cover": "images/cover.jpg",
+  "genre": "PUZZLE",
+  "featured": false
+}

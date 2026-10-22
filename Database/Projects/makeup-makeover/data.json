@@ -1,0 +1,52 @@
+{
+  "title": "Makeup Makeover",
+  "tags": [
+    "Concept Artist"
+  ],
+  "exploreUrl": "",
+  "thumbnail": "images/thumbnail.jpg",
+  "cover": "images/cover.jpg",
+  "progression": [
+    {
+      "id": "character-1-design",
+      "name": "Character 1 design",
+      "images": [
+        "frame-story-nv3.png",
+        "demo-1.jpg",
+        "demo-3.jpg",
+        "demo-5.jpg",
+        "demo-7.jpg",
+        "demo-9.jpg",
+        "demo-11.jpg",
+        "demo-13.jpg",
+        "demo-15.jpg"
+      ]
+    },
+    {
+      "id": "character-2-design",
+      "name": "Character 2 design",
+      "images": [
+        "thumbnail-char9.png",
+        "demo-1.jpg",
+        "demo-3.jpg",
+        "demo-4.jpg",
+        "demo-5.jpg",
+        "demo-7.jpg",
+        "demo-9.jpg",
+        "demo-11.jpg",
+        "demo-13.jpg"
+      ]
+    },
+    {
+      "id": "store-listing",
+      "name": "Store Listing",
+      "images": [
+        "screenshot-1.jpg",
+        "screenshot-2.jpg",
+        "screenshot-3.jpg",
+        "screenshot-4.jpg"
+      ]
+    }
+  ],
+  "featured": false
+}

@@ -1,0 +1,61 @@
+{
+  "title": "Lucky Scoop",
+  "tags": [
+    "Lead Artist",
+    "Concept Artist",
+    "UI/UX Designer",
+    "Asset Planner"
+  ],
+  "exploreUrl": "",
+  "featured": false,
+  "thumbnail": "images/thumbnail.jpg",
+  "logo": "images/logo.jpg",
+  "cover": "images/cover.jpg",
+  "tagline": {
+    "en": "11 members | casual mobile game",
+    "vi": ""
+  },
+  "studio": "Champion Game Studio x Falcon Game Studio",
+  "period": {
+    "en": "since 2026",
+    "vi": "từ 2026"
+  },
+  "members": 11,
+  "genre": "CASUAL",
+  "roles": [
+    {
+      "title": "Lead Artist"
+    },
+    {
+      "title": "Concept Artist"
+    },
+    {
+      "title": "UI/UX Designer"
+    },
+    {
+      "title": "Asset Planner"
+    }
+  ],
+  "progression": [
+    {
+      "id": "art-assets",
+      "name": "Art Assets"
+    },
+    {
+      "id": "asset-planning",
+      "name": "Asset Planning"
+    },
+    {
+      "id": "ui-design",
+      "name": "UI Design"
+    }
+  ],
+  "description": {
+    "en": [
+      "A casual simulation game where players scoop stickers and charms to fulfill customer orders based on a given checklist, or unleash their creativity in a DIY mode."
+    ],
+    "vi": [
+      "Một game mô phỏng casual, nơi người chơi xúc sticker và charm để hoàn thành đơn hàng theo danh sách có sẵn, hoặc thỏa sức sáng tạo trong chế độ DIY."
+    ]
+  }
+}

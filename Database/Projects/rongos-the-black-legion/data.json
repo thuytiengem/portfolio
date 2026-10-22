@@ -1,0 +1,77 @@
+{
+  "title": "RONGOS - The Black Legion",
+  "tagline": {
+    "en": "web3 - NFT game",
+    "vi": ""
+  },
+  "tags": [
+    "Concept Artist"
+  ],
+  "exploreUrl": "",
+  "studio": "Yunero Studio",
+  "genre": "WEB3 - NFT",
+  "roles": [
+    {
+      "title": "Concept Artist"
+    }
+  ],
+  "progression": [
+    {
+      "id": "dragon-concept",
+      "name": "Dragon Concept",
+      "images": [
+        "light-2-baby.png",
+        "light-dragon2-mature.png"
+      ]
+    },
+    {
+      "id": "one-eye-monster-concept",
+      "name": "One Eye Monster Concept",
+      "images": [
+        "eye-fire.png",
+        "eye-earth.png",
+        "eye-wood.png",
+        "eye-water.png",
+        "eye-gold.png",
+        "eye-dark.png",
+        "eye-light.png"
+      ]
+    },
+    {
+      "id": "bulldog-monster-concept",
+      "name": "Bulldog Monster Concept",
+      "images": [
+        "bulldog-monster-fire.png",
+        "bulldog-monster-earth.png",
+        "bulldog-monster-wood.png",
+        "bulldog-monster-water.png",
+        "bulldog-monster-gold.png",
+        "bulldog-monster-dark.png",
+        "bulldog-monster-light.png"
+      ]
+    },
+    {
+      "id": "spirit-monster-concept",
+      "name": "Spirit Monster Concept",
+      "images": [
+        "fire.png",
+        "earth-spirit.png",
+        "wood-spirit.png",
+        "water-spirit.png",
+        "gold-spirit.png",
+        "dark-spirit.png",
+        "light-spiritt.png"
+      ]
+    },
+    {
+      "id": "splash-art",
+      "name": "Splash Art",
+      "images": [
+        "dark2-painting-full.jpg"
+      ]
+    }
+  ],
+  "thumbnail": "images/thumbnail.jpg",
+  "cover": "images/cover.jpg",
+  "featured": false
+}
