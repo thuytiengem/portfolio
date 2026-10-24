@@ -12,13 +12,29 @@
   "genre": "WEB3 - NFT",
   "roles": [
     {
-      "title": "Concept Artist"
+      "title": "Concept Artist",
+      "text": {
+        "en": [
+          "Designed dragon and monster concepts for the game, and created splash art."
+        ],
+        "vi": [
+          "Thiết kế concept rồng và quái vật trong game, đồng thời thực hiện splash art."
+        ]
+      }
     }
   ],
   "progression": [
     {
       "id": "dragon-concept",
       "name": "Dragon Concept",
+      "text": {
+        "en": [
+          "Designed the young and adult forms of a Light Dragon, combining dragon features with the symbolism of a wise owl"
+        ],
+        "vi": [
+          "Thiết kế concept rồng Ánh Sáng ở hai giai đoạn: rồng non và rồng trưởng thành, kết hợp đặc điểm của loài rồng với hình tượng cú mèo thông thái."
+        ]
+      },
       "images": [
         "light-2-baby.png",
         "light-dragon2-mature.png"
@@ -27,6 +43,14 @@
     {
       "id": "one-eye-monster-concept",
       "name": "One Eye Monster Concept",
+      "text": {
+        "en": [
+          "The monster roster features seven elemental types: Fire, Earth, Wood, Water, Gold, Darkness, and Light. Below is the concept of a one-eyed, magic-type monster wielding a staff as its weapon."
+        ],
+        "vi": [
+          "Hệ thống quái vật gồm bảy thuộc tính: Hỏa, Thổ, Mộc, Thủy, Kim (Vàng), Bóng Tối và Ánh Sáng. Dưới đây là concept quái vật một mắt thuộc hệ phép thuật, sử dụng trượng làm vũ khí."
+        ]
+      },
       "images": [
         "eye-fire.png",
         "eye-earth.png",
@@ -40,6 +64,14 @@
     {
       "id": "bulldog-monster-concept",
       "name": "Bulldog Monster Concept",
+      "text": {
+        "en": [
+          "Designed a bulldog-inspired monster specializing in physical combat and wielding a mace."
+        ],
+        "vi": [
+          "Thiết kế quái vật lấy cảm hứng từ giống chó bulldog, chuyên về chiến đấu vật lý và sử dụng chùy làm vũ khí."
+        ]
+      },
       "images": [
         "bulldog-monster-fire.png",
         "bulldog-monster-earth.png",
@@ -53,6 +85,14 @@
     {
       "id": "spirit-monster-concept",
       "name": "Spirit Monster Concept",
+      "text": {
+        "en": [
+          "Designed a spirit-like monster specializing in physical combat, using sharp claws to slash at its enemies."
+        ],
+        "vi": [
+          "Thiết kế quái vật mang hình dạng linh thể, chuyên về chiến đấu vật lý và sử dụng những móng vuốt sắc nhọn để cào xé kẻ địch."
+        ]
+      },
       "images": [
         "fire.png",
         "earth-spirit.png",
@@ -66,6 +106,14 @@
     {
       "id": "splash-art",
       "name": "Splash Art",
+      "text": {
+        "en": [
+          "A splash art of the Dark Dragon"
+        ],
+        "vi": [
+          "Splash art về Rồng Bóng Tối"
+        ]
+      },
       "images": [
         "dark2-painting-full.jpg"
       ]
@@ -73,5 +121,30 @@
   ],
   "thumbnail": "images/thumbnail.jpg",
   "cover": "images/cover.jpg",
-  "featured": false
+  "featured": false,
+  "description": {
+    "en": [
+      "A Web3/NFT game where players hatch dragon eggs, raise and own dragons, and command their dragon army in turn-based battles against monsters."
+    ],
+    "vi": [
+      "Một game Web3/NFT, nơi người chơi ấp trứng rồng, nuôi dưỡng và sở hữu những chú rồng, đồng thời chỉ huy đội quân rồng chiến đấu với quái vật theo cơ chế đánh theo lượt."
+    ]
+  },
+  "logo": "images/logo.jpg",
+  "learned": [
+    {
+      "title": "Character Design & Animation Pipeline",
+      "text": {
+        "en": "Learned the full character production pipeline for a combat game, from sketching and base coloring to rendering, part separation, and file preparation to ensure a smooth animation workflow.",
+        "vi": "Học được toàn bộ quy trình sản xuất nhân vật cho game đối kháng, từ phác thảo, lên màu base, render đến tách bộ phận và chuẩn bị file nhằm đảm bảo quy trình animation diễn ra thuận lợi."
+      }
+    },
+    {
+      "title": "Game Production Workflow",
+      "text": {
+        "en": "As this was my first experience working at a game studio, I learned how different departments collaborate and operate within a game production pipeline through observation and hands-on experience.",
+        "vi": "Vì đây là công ty game đầu tiên tôi làm việc, tôi học được cách các bộ phận phối hợp và vận hành trong quy trình sản xuất game thông qua quan sát và trải nghiệm thực tế."
+      }
+    }
+  ]
 }

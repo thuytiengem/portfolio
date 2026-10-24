@@ -24,26 +24,58 @@
   "genre": "CASUAL",
   "roles": [
     {
-      "title": "Lead Artist"
+      "title": "Lead Artist",
+      "text": {
+        "en": [
+          "Assigned tasks, provided feedback, and reviewed art team deliverables to ensure visual consistency and maintain production quality."
+        ],
+        "vi": [
+          "Phân công công việc, đưa ra phản hồi và kiểm duyệt đầu ra của team art nhằm đảm bảo tính nhất quán về art style và chất lượng sản phẩm."
+        ]
+      }
     },
     {
-      "title": "Concept Artist"
+      "title": "Concept Artist",
+      "text": {
+        "en": [
+          "Designed and produced selected art assets for the main gameplay."
+        ],
+        "vi": [
+          "Thiết kế và hoàn thiện một số art asset cho phần gameplay chính."
+        ]
+      }
     },
     {
-      "title": "UI/UX Designer"
+      "title": "UI/UX Designer",
+      "text": {
+        "en": [
+          "Designed selected UI elements for the main gameplay and the complete UI for the DIY mode."
+        ],
+        "vi": [
+          "Thiết kế một phần UI cho gameplay chính và toàn bộ UI cho chế độ DIY."
+        ]
+      }
     },
     {
-      "title": "Asset Planner"
+      "title": "Asset Planner",
+      "text": {
+        "en": [
+          "Created and maintained an art asset tracker to align the art team's workflow with the project roadmap and provide other teams with clear visibility into asset progress."
+        ],
+        "vi": [
+          "Xây dựng và cập nhật bảng theo dõi art asset nhằm đảm bảo quy trình làm việc của team art bám sát roadmap dự án, đồng thời giúp các team khác dễ dàng theo dõi tiến độ asset."
+        ]
+      }
     }
   ],
   "progression": [
     {
-      "id": "art-assets",
-      "name": "Art Assets"
-    },
-    {
       "id": "asset-planning",
       "name": "Asset Planning"
+    },
+    {
+      "id": "art-assets",
+      "name": "Art Assets"
     },
     {
       "id": "ui-design",

@@ -1,5 +1,5 @@
 {
-  "title": "Makeup Makeover",
+  "title": "Beauty Story: Makeup Makeover",
   "tags": [
     "Concept Artist"
   ],
@@ -48,5 +48,25 @@
       ]
     }
   ],
-  "featured": false
+  "featured": false,
+  "tagline": {
+    "en": "5 members | casual mobile game | 1M+ downloads",
+    "vi": "5 thành viên | casual mobile game | 1M+ lượt tải"
+  },
+  "description": {
+    "en": [
+      "A casual makeup and makeover game where players transform characters through skincare treatments, makeup application, and beauty styling."
+    ],
+    "vi": [
+      "Một game casual về trang điểm và thay đổi diện mạo, nơi người chơi làm đẹp cho nhân vật thông qua các bước chăm sóc da, trang điểm và tạo kiểu."
+    ]
+  },
+  "stores": {
+    "googlePlay": "https://play.google.com/store/apps/details?id=com.fc.p.cp.diy.beauty.makeup.makeover.asmr&hl=en"
+  },
+  "roles": [
+    {
+      "title": "Concept Artist"
+    }
+  ]
 }

@@ -55,11 +55,11 @@
       "text": {
         "en": [
           "After researching games in the mukbang and jelly-making genres, I established a visual direction blending Asian and European influences. The character designs feature soft, rounded shapes and a bright yet gentle color palette to create a friendly, approachable feel for players aged 3 and above.",
-          "The following explorations document the design process, from early character sketches and color studies to character expressions and in-game asset variations."
+          "The following explorations document the design process, from early character sketches and color studies to character expressions."
         ],
         "vi": [
           "Sau khi nghiên cứu các tựa game thuộc thể loại mukbang và làm thạch, mình xây dựng định hướng thị giác kết hợp các yếu tố thẩm mỹ Á Đông và châu Âu. Thiết kế nhân vật sử dụng các đường cong và hình khối bo tròn mềm mại, cùng bảng màu tươi sáng nhưng dịu nhẹ, nhằm tạo cảm giác thân thiện và gần gũi với người chơi từ 3 tuổi trở lên.",
-          "Các hình ảnh dưới đây ghi lại quá trình phát triển thiết kế, từ những bản phác thảo nhân vật ban đầu và thử nghiệm màu sắc đến biểu cảm nhân vật và các biến thể asset trong game."
+          "Các hình ảnh dưới đây ghi lại quá trình phát triển thiết kế, từ những bản phác thảo nhân vật ban đầu và thử nghiệm màu sắc đến biểu cảm nhân vật."
         ]
       },
       "images": [
@@ -83,10 +83,6 @@
             "en": "Main character Jiji and emotion demo",
             "vi": "Nhân vật chính Jiji và biểu cảm demo"
           }
-        },
-        {
-          "src": "jelly-demo.jpg",
-          "caption": "Jelly demo"
         }
       ]
     },
@@ -102,7 +98,7 @@
         ]
       },
       "images": [
-        "jelly-fbf-demo.jpg",
+        "jelly-demo.jpg",
         "fbf-demo.jpg",
         "food-asset.jpg",
         "jiji-room.jpg",
