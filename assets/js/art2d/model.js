@@ -3,10 +3,13 @@
 //
 //   { "intro": rich,
 //     "sections": [ { "id": "fanart", "name": rich, "text": rich | [rich…], "cover"?: "file.jpg",
-//                     "images": [ "01.jpg" | { "src": "01.jpg", "caption": rich } ],
+//                     "homeOther"?: true (one of the 3 cards of the home page "Other 2D Projects"),
+//                     "images": [ "01.jpg" | { "src": "01.jpg", "caption": rich, "home"?: true, "title"?: rich } ],
 //                     "steps"?: [ { "title": rich, "text": rich | [rich…], "images": [ … ] } ] } ] }
 //
 // Images = file names inside Database/Art2D/images/<section id>/ (steps use the same folder); full URLs pass through.
+// An image with "home": true is also a slide of the home page Personal Artworks carousel ("title" = its big title there,
+// "caption" = the line under it).
 import { resolvePath } from "../utils.js";
 import { has } from "../project/model.js";
 
@@ -42,7 +45,7 @@ export function normalize(raw, base) {
       .filter(st => has(st.title) || has(st.text) || st.images.length);
     const all = [...images, ...steps.flatMap(st => st.images)];   // count: section images, then step images
     const cover = has(s?.cover) ? imageList([s.cover], dir)[0].src : all[0]?.src || "";
-    return { id, folder, name: has(s?.name) ? s.name : folder, text: s?.text, images, steps, all, count: all.length, cover };
+    return { id, folder, name: has(s?.name) ? s.name : folder, text: s?.text, images, steps, all, count: all.length, cover, homeOther: s?.homeOther === true };
   }).filter(s => has(s.name) || has(s.text) || s.count || s.steps.length);
   return { intro: raw?.intro, sections, total: sections.reduce((n, s) => n + s.count, 0) };
 }

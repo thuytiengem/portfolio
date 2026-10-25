@@ -3,6 +3,7 @@
 //
 //   { "intro": rich,
 //     "projects": [ { "id": "blossom-fairy", "name": rich, "text": rich | [rich…], "tools"?: [rich…], "cover"?: "file.jpg",
+//                     "home"?: true (also shown in the home page 3D Blender section), "tags"?: [rich…] (role tags there; empty → tools),
 //                     "final": { "videos": [ { "youtube": "id | url", "orientation"?: "landscape|portrait", "caption"?: rich } ],
 //                                "images": [ "01.jpg" | { "src": "01.jpg", "caption": rich } ] },
 //                     "steps": [ { "title": rich, "text": rich | [rich…], "images": [ … ], "video"?: { "youtube", "orientation", "caption" } } ] } ] }
@@ -65,11 +66,12 @@ export function normalize(raw, base) {
       .map(st => ({ title: st?.title, text: st?.text, images: imageList(st?.images, dir), video: videoOf(st?.video) }))
       .filter(st => has(st.title) || has(st.text) || st.images.length || st.video);
     const tools = (Array.isArray(p?.tools) ? p.tools : []).filter(has);
+    const tags = (Array.isArray(p?.tags) ? p.tags : []).filter(has);
     const all = [...images, ...steps.flatMap(st => st.images)];
     // cover: stored for later layouts (the current page does not show it)
     const cover = has(p?.cover) ? imageList([p.cover], dir)[0].src : all[0]?.src || "";
     return {
-      id, folder, name: has(p?.name) ? p.name : folder, text: p?.text, tools,
+      id, folder, name: has(p?.name) ? p.name : folder, text: p?.text, tools, tags, home: p?.home === true,
       final: { videos, images }, steps, cover,
       count: { images: all.length, videos: videos.length + steps.filter(st => st.video).length, steps: steps.length },
     };

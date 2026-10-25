@@ -11,7 +11,8 @@ The owner writes in Vietnamese — reply in Vietnamese.
 
 ## Structure
 - `index.html` — page skeleton; all text comes from `web-config.json` (EN + VI, `i18n.<lang>.<key>` for UI labels).
-- `Database/Projects|Blender/<folder>/data.json` + `index.json` (order); `Database/Artworks/index.json` + `images/`.
+- `Database/Projects/<folder>/data.json` + `index.json` (order). Home 3D Blender + 2D Artwork sections have NO data of their own:
+  they read `Database/Art3D` / `Database/Art2D` (old `Database/Blender` + `Database/Artworks` were merged in and deleted).
 - `assets/js/main.js` entry · `i18n.js` (tr/label/bind*; every text goes through `richtext.js` = Unity-style tags, list in `RICHTEXT.md`) · `ui-frames.js` (9-slice image frames from `assets/ui/<name>/frame.png + frame.json`) · `youtube.js` (autoplay muted when in view) · `carousel.js` · `rain-bg.js` (letter rain) · `sections/*`.
 - `assets/js/intro/` — intro "Power Surge": `timeline.js` (order/timing), `steps.js` (step registry), `effects/*`
   (`glass.js` scene + shard glitch, `particles.js`, `title.js` idle glitch, `shake.js`). Textures in `assets/images/intro-texture/`. Styles in `assets/css/intro.css`.
@@ -44,7 +45,7 @@ The owner writes in Vietnamese — reply in Vietnamese.
 - Every YouTube video (home Featured + Blender, project page) sits in the cyan HUD corner frame: `framedVideo()` in youtube.js, `.hud-frame` in sections.css.
 - Featured/Blender: YouTube only, autoplay when scrolled into view, portrait (Shorts) layout supported; portrait video → info panel stretches to video height.
 - Artworks: looping coverflow carousel, auto snap, autoplay, background cross-fade "Dissolve + zoom", per-image title/description.
-- Explore buttons stay. Featured Explore → `exploreUrl` if set, else `project.html?id=<folder>`; Blender / Artworks Explore fall back to art3d.html / art2d.html (below); About unchanged.
+- Explore buttons stay. Featured Explore → `exploreUrl` if set, else `project.html?id=<folder>`; Blender → `art3d.html#<id>`, Personal Artworks → `art2d.html#<section of the slide>` (below); About unchanged.
 - Project detail page = variant 3 "HUD" (owner's pick from 5 demos, demos deleted) with variant 1's numbered role cards and
   variant 2's vertical stages + horizontal filmstrip + lightbox; Challenges = split cards, Learned = checklist. Every field optional,
   empty = hidden, section numbers count only rendered sections; no `roles` → `responsibilities` as one untitled role.
@@ -77,15 +78,27 @@ The owner writes in Vietnamese — reply in Vietnamese.
 - Project data.json: `"featured": false` hides it from the home Featured Projects (missing = shown; games.html lists all);
   `"thumbnail"` = card image. Studio ("Dự án game") has a "Hiện ở trang chủ" toggle, a thumbnail picker
   (`images/thumbnail.<ext>`) and an "Ẩn ở trang chủ" badge in the list.
-- Home "Other game projects" Explore → games.html when `links.otherProjects` is empty or "#"; home "Personal Artworks"
-  Explore → art2d.html when `links.artworks` is empty or "#"; home 3D Blender Explore → art3d.html when that video's
-  `exploreUrl` is empty or "#" (`renderBlender` in sections/projects.js).
+- Home "Other game projects" Explore → games.html when `links.otherProjects` is empty or "#"; home "Other 2D Projects"
+  Explore → art2d.html when `links.artworks` is empty or "#".
+- Home 3D Blender = Art3D projects with `"home": true` that have a final video (`renderBlender` in sections/projects.js): name,
+  first final video, `tags` (role tags, home only; empty → `tools`), `text` (string → p, list → bullets), Explore → `art3d.html#<id>`.
+  Menu label "Portfolio → 3D Artwork" and the home title "3D BLENDER" stay as they are (owner's decision). Studio "3D Artwork":
+  "Hiện ở trang chủ (3D Blender)" toggle + "Tag vai trò" chips (red note when no final video).
+- Home 2D ARTWORK section (owner's pick after a preview; `sections/artworks.js`): band `artworks_title` "2D ARTWORK", then
+  "01 PERSONAL ARTWORKS" (`artworks_personal`, cyan number + dotted rule = `.sub-head`) = the coverflow carousel of every Art2D image
+  with `"home": true` (order = sections → images, step images too; big title = image `title`, line under it = `caption`); its Explore
+  → `art2d.html#<section of the slide in view>`. Then "02 OTHER 2D PROJECTS" (`artworks_other`) = fixed row of 3 section cards
+  (`.art-card`: HUD frame + `cover` → first image, name with titleFont, "{n} artworks" = `a2_count`; card → `art2d.html#<id>`):
+  first 3 sections with `"homeOther": true`, none → first 3; phone = same row, swipe sideways (scroll-snap). Explore → art2d.html.
+  The 9 original carousel images (2400px) replaced the smaller cuts in Art2D (illustration ×6, character-design/final-lineup.jpg)
+  or were added as first image (fanart/wuthering-waves.jpg, sketchbook/inktober.jpg). Studio "2D Artwork": "★ Carousel trang chủ"
+  under every image (+ title EN / VI) and "Hiện ở “Other 2D Projects”" per section; old Studio routes #/blender, #/artworks redirect.
 - 2D Artwork page = demo variant 1 "Progression" + the page banner of variant 2 (owner's pick of 2 demos, demos deleted):
   banner (title `a2_page_title`, data `intro`, "5 SECTIONS" / "29 ARTWORKS" chips), sticky jump-chip bar (scroll-spy),
   sections "01 NAME · n images" (HUD number + dotted rule) with text + filmstrip + lightbox; optional steps = numbered rows on a
   cyan rail, each with text + its own filmstrip. Section/step titles with Vietnamese letters Qualy lacks switch to Montserrat
   (EN look unchanged). Data `{ intro, sections: [{ id, name, text, cover?, images, steps?: [{ title, text, images }] }] }`;
-  text = 1 line → paragraph, list → bullets; `cover` stored but not shown by this layout. Labels `a2_*`.
+  text = 1 line → paragraph, list → bullets; `cover` not shown by this layout (= home Other 2D Projects card). Labels `a2_*`.
   Studio view "2D Artwork" edits it (sections/steps/images, id = folder, renamed on save; API `/api/art2d`, images
   `/api/art2d/images?dir=<id>`, `/api/art2d/rename-section`); its image manager is the generic `imgGroup()` also used by
   the project progression steps.

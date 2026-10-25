@@ -58,8 +58,8 @@ The server only listens on 127.0.0.1. On GitHub Pages the Studio page is static 
 |---|---|
 | All UI texts (EN + VI), name, email, phone, profile, work experience, social links, Explore links | `web-config.json` |
 | Featured projects | `Database/Projects/index.json` + `Database/Projects/<folder>/data.json` |
-| 3D Blender video | `Database/Blender/index.json` + `Database/Blender/<folder>/data.json` |
-| Personal artworks | `Database/Artworks/index.json` + images in `Database/Artworks/images/` |
+| Home 3D Blender section | the 3D Artwork projects with `"home": true` (`Database/Art3D/data.json`) |
+| Home 2D Artwork section | Personal Artworks carousel = 2D Artwork images with `"home": true` (+ `"title"`); Other 2D Projects = sections with `"homeOther": true` (`Database/Art2D/data.json`) |
 | 2D Artwork page | `Database/Art2D/data.json` + images in `Database/Art2D/images/<section id>/` (guide: [ART2D.md](ART2D.md)) |
 | 3D Artwork page | `Database/Art3D/data.json` + images in `Database/Art3D/images/<project id>/` (guide: [ART3D.md](ART3D.md)) |
 | Graphic Design page | `Database/GraphicDesign/data.json` + images in `Database/GraphicDesign/images/<project id>/` (guide: [GD.md](GD.md)) |

@@ -16,18 +16,18 @@ const PORT = Number(process.env.PORT) || 4100;
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const CONFIG = path.join(ROOT, "web-config.json");
 const DB = path.join(ROOT, "Database");
-const KINDS = { projects: path.join(DB, "Projects"), blender: path.join(DB, "Blender") };
-const ARTWORKS = path.join(DB, "Artworks");
+const KINDS = { projects: path.join(DB, "Projects") };
 const ART2D = path.join(DB, "Art2D");          // 2D Artwork page: data.json + images/<section id>/
 const ART3D = path.join(DB, "Art3D");          // 3D Artwork page: data.json + images/<project id>/
 const GRAPHIC = path.join(DB, "GraphicDesign"); // Graphic Design page: data.json + images/<project id>/
+// (the home page 3D Blender / Personal Artworks sections read Art3D / Art2D — no data of their own)
 // pages made of one data.json listing items whose id = image folder (images/<id>/); rename = API route of a folder rename
 const PAGES = {
   art2d: { dir: ART2D, list: "sections", rename: "rename-section" },
   art3d: { dir: ART3D, list: "projects", rename: "rename-project" },
   graphic: { dir: GRAPHIC, list: "projects", rename: "rename-project" },
 };
-const UPLOAD_DIRS = { artworks: path.join(ARTWORKS, "images"), assets: path.join(ROOT, "assets", "images") };
+const UPLOAD_DIRS = { assets: path.join(ROOT, "assets", "images") };
 const UI = path.join(ROOT, "assets", "ui");     // 9-slice UI frames: assets/ui/<name>/frame.png + frame.json
 const ID_RE = /^[a-z0-9][a-z0-9-]{0,79}$/;
 const NAME_RE = /^[a-z0-9][a-z0-9._-]{0,119}$/i;
@@ -212,7 +212,7 @@ function checkFrameConfig(c) {
 // Only these paths ever reach git; the client sends a view key (or "all"), never a path.
 const GIT_SCOPES = {
   settings: ["web-config.json"], experience: ["web-config.json"], texts: ["web-config.json"],
-  projects: ["Database/Projects"], blender: ["Database/Blender"], artworks: ["Database/Artworks"], art2d: ["Database/Art2D"], art3d: ["Database/Art3D"],
+  projects: ["Database/Projects"], art2d: ["Database/Art2D"], art3d: ["Database/Art3D"],
   graphic: ["Database/GraphicDesign"], ui: ["assets/ui"],
 };
 const GIT_PATHS = new Set(Object.values(GIT_SCOPES).flat());
@@ -298,8 +298,6 @@ async function api(req, res, url) {
     return send(res, 200, {
       config: await readJSONFile(CONFIG, {}),
       projects: await readCollection("projects"),
-      blender: await readCollection("blender"),
-      artworks: await readJSONFile(path.join(ARTWORKS, "index.json"), []),
       art2d: await readJSONFile(path.join(ART2D, "data.json"), {}),
       art3d: await readJSONFile(path.join(ART3D, "data.json"), {}),
       graphic: await readJSONFile(path.join(GRAPHIC, "data.json"), {}),
@@ -365,18 +363,6 @@ async function api(req, res, url) {
     }
   }
 
-  if (parts[0] === "artworks" && m === "PUT") {
-    const { items, remove = [] } = await readBodyJSON(req);
-    if (!Array.isArray(items)) throw new HttpError(400, "items must be a list");
-    await writeJSON(path.join(ARTWORKS, "index.json"), items);
-    const used = new Set(items.map(x => x.src));
-    for (const rel of remove) {               // delete image files of removed artworks (only inside images/)
-      if (used.has(rel) || !String(rel).startsWith("images/")) continue;
-      await fsp.rm(safeJoin(ARTWORKS, rel), { force: true });
-    }
-    return send(res, 200, { ok: true });
-  }
-
   // 2D / 3D Artwork + Graphic Design pages: /api/art2d…, /api/art3d…, /api/graphic…
   if (Object.hasOwn(PAGES, parts[0])) return pageApi(req, res, url, PAGES[parts[0]], parts);
 
@@ -422,8 +408,7 @@ async function api(req, res, url) {
     const buf = await readBody(req, MAX_UPLOAD);
     await fsp.mkdir(dir, { recursive: true });
     await fsp.writeFile(safeJoin(dir, name), buf);
-    const rel = target === "artworks" ? `images/${name}` : `assets/images/${name}`;
-    return send(res, 201, { path: rel, size: buf.length });
+    return send(res, 201, { path: `assets/images/${name}`, size: buf.length });
   }
 
   throw new HttpError(404, "Unknown API route");

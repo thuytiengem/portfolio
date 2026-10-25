@@ -10,6 +10,8 @@ import { initPortfolioMenu } from "./portfolio-menu.js";
 import { runIntro } from "./intro/index.js";
 import { renderFeatured, renderBlender, isFeatured } from "./sections/projects.js";
 import { renderArtworks } from "./sections/artworks.js";
+import { normalize as art2dModel } from "./art2d/model.js";
+import { normalize as art3dModel } from "./art3d/model.js";
 import { renderAbout, renderContact } from "./sections/about.js";
 
 async function main() {
@@ -26,10 +28,10 @@ async function main() {
 
   setBrand(config);
   const links = config.links || {};
-  // "Other game projects" / "Personal Artworks": the Video Games / 2D Artwork page unless a link is set
+  // "Other game projects" / "Other 2D Projects": the Video Games / 2D Artwork page unless a link is set
   const linkOr = (v, page) => (v && v.trim() && v.trim() !== "#" ? v.trim() : page);
   $("#otherExplore").href = linkOr(links.otherProjects, "games.html");
-  $("#artworksExplore").href = linkOr(links.artworks, "art2d.html");
+  $("#otherArtExplore").href = linkOr(links.artworks, "art2d.html");
   $("#aboutExplore").href = links.about || "#";
 
   // background letter rain — only runs while the hero is not covering the screen
@@ -37,16 +39,15 @@ async function main() {
   new IntersectionObserver(([e]) => (e.intersectionRatio > 0.98 ? rain.pause() : rain.resume()),
     { threshold: [0.98, 1] }).observe($("#home"));
 
-  // content
-  const [projects, blender, artworks] = await Promise.all([
+  // content — 3D Blender / 2D Artwork come from the 3D / 2D Artwork page data (one source for the home page and the sub-page)
+  const [projects, art3d, art2d] = await Promise.all([
     loadCollection("Projects"),
-    loadCollection("Blender"),
-    loadJSON("Database/Artworks/index.json").catch(() => []),
+    loadJSON("Database/Art3D/data.json").catch(() => ({})),
+    loadJSON("Database/Art2D/data.json").catch(() => ({})),
   ]);
   renderFeatured(projects.filter(isFeatured));   // "featured": false → only on the Video Games page
-  renderBlender(blender);
-  if (!blender.length) $("#blender").hidden = true;
-  renderArtworks(artworks);
+  renderBlender(art3dModel(art3d, "Database/Art3D/").projects);
+  renderArtworks(art2dModel(art2d, "Database/Art2D/"));
   renderAbout(config);
   renderContact(config);
   $$("main .reveal:not(.in)").forEach(reveal);

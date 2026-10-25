@@ -152,16 +152,6 @@ textarea { resize: vertical; min-height: 60px; }
 .yt .ytp { width: 200px; aspect-ratio: 16 / 9; border-radius: 8px; background: #000 center / cover no-repeat; border: 1px solid var(--line2); display: grid; place-items: center; color: var(--dim); font-size: .75rem; }
 @media (max-width: 900px) { .yt { grid-template-columns: 1fr; } }
 
-/* artworks grid */
-.agrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
-.acard { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; }
-.acard .img { aspect-ratio: 2 / 1; background: #000 center / cover no-repeat; position: relative; }
-.acard .img span { position: absolute; left: 8px; top: 8px; font: 700 .7rem var(--mono); background: #000a; color: var(--pink); padding: 2px 8px; border-radius: 6px; }
-.acard .body { padding: 12px; display: grid; gap: 10px; }
-.acard .item-h { padding: 8px 12px 0; }
-.drop { border: 2px dashed var(--line2); border-radius: 14px; display: grid; place-items: center; min-height: 160px; color: var(--dim); cursor: pointer; text-align: center; padding: 20px; }
-.drop:hover, .drop.over { border-color: var(--lilac); color: var(--lilac); }
-
 /* i18n table */
 .ktable { display: grid; gap: 10px; }
 .krow { display: grid; grid-template-columns: 200px 1fr 1fr; gap: 10px; align-items: start; }

@@ -18,12 +18,12 @@ const STORES = [
 const badUrl = v => !!String(v ?? "").trim() && !/^https?:\/\//i.test(String(v).trim());
 const KINDS = {
   projects: { title: "Dự án game", noun: "dự án", dir: "Projects", section: "#featured" },
-  blender: { title: "3D Blender", noun: "video", dir: "Blender", section: "#blender" },
 };
 // short explanations for the UI text keys in web-config.json → i18n
 const KEY_HINTS = {
   nav_home: "Menu: Home", nav_portfolio: "Menu: Portfolio", nav_about: "Menu: About me", nav_contact: "Menu: Contact",
-  featured_title: "Tiêu đề section dự án", blender_title: "Tiêu đề section Blender", artworks_title: "Tiêu đề section artworks", about_title: "Tiêu đề section About",
+  featured_title: "Tiêu đề section dự án", blender_title: "Tiêu đề section Blender", artworks_title: "Tiêu đề section 2D Artwork",
+  artworks_personal: "2D Artwork trang chủ: tiêu đề phần 01 (carousel)", artworks_other: "2D Artwork trang chủ: tiêu đề phần 02 (3 thẻ mục)", about_title: "Tiêu đề section About",
   description: "Nhãn khung mô tả", responsibilities: "Nhãn khung trách nhiệm", explore: "Chữ trên nút Explore",
   other_title: "Tiêu đề khối dự án khác", other_text: "Mô tả khối dự án khác (<br> = xuống dòng)",
   profile_suffix: "Chữ sau tên ở About", photo: "Chữ khi chưa có ảnh", experience_title: "Tiêu đề kinh nghiệm",
@@ -155,10 +155,9 @@ function confirmDlg(title, html, yes = "Xoá", kind = "danger") {
 }
 
 // ══════════════ state ══════════════
-const S = { config: {}, projects: null, blender: null, artworks: [], art2d: {}, art3d: {}, graphic: {} };
+const S = { config: {}, projects: null, art2d: {}, art3d: {}, graphic: {} };
 let CFG = null;   // shared draft for the 3 config views: { d, saved }
 let ED = null;    // collection item editor: { kind, id, orig, d, folder, saved }
-let ART = null;   // artworks draft: { d, saved, removed }
 let UIF = null;   // UI frames: [{ name, d, saved, w, h, bust, zoom }] (loaded on first visit of #/ui)
 let VIEW = "";
 
@@ -284,12 +283,6 @@ function draftToItem(kind, d, orig = {}) {
 const edSnap = () => JSON.stringify([draftToItem(ED.kind, ED.d, ED.orig), ED.folder]);
 const edDirty = () => ED && edSnap() !== ED.saved;
 
-// ---- artworks ----
-const artToDraft = list => (list || []).map(a => ({ src: a.src || "", title: L(a.title), desc: L(a.desc) }));
-const artSnap = () => JSON.stringify(ART.d);
-const artDirty = () => ART && artSnap() !== ART.saved;
-function resetArt() { ART = { d: artToDraft(S.artworks), removed: new Set() }; ART.saved = artSnap(); }
-
 // ---- UI frames (assets/ui/<name>/frame.json) ----
 const UI_LABELS = { "description-frame": "Khung mô tả (Description)", "explore-button": "Nút Explore", "text-frame": "Khung câu chào (Quote)" };
 const EDGE_OPTS = [["stretch", "Kéo giãn (Sliced)"], ["repeat", "Lặp (Tiled)"], ["round", "Lặp vừa khít (Round)"], ["space", "Lặp có khoảng cách (Space)"]];
@@ -317,9 +310,9 @@ async function loadUI() {
   await Promise.all(UIF.map(async f => { [f.w, f.h] = await imgSize(uiImg(f)); }));
 }
 
-const anyDirty = () => cfgDirty() || edDirty() || artDirty() || anyPgDirty() || uiDirty();
+const anyDirty = () => cfgDirty() || edDirty() || anyPgDirty() || uiDirty();
 function updateDirty() {
-  const d = VIEW === "artworks" ? artDirty() : PAGES[VIEW] ? pgDirty(PG()) : VIEW === "ui" ? uiDirty() : ED ? edDirty() : cfgDirty();
+  const d = PAGES[VIEW] ? pgDirty(PG()) : VIEW === "ui" ? uiDirty() : ED ? edDirty() : cfgDirty();
   const el = $("dirtyFlag"); if (el) el.hidden = !d;
   const b = $("saveBtn"); if (b) b.disabled = !d;
   gitSync();
@@ -404,8 +397,8 @@ function viewSettings() {
         <span class="ico"><img src="../assets/icons/${k}.svg" alt=""></span><b>${name}</b>
         <input type="url" data-path="social.${k}" value="${esc(CFG.d.social[k])}" placeholder="${ph}"></div>`).join(""), "để trống = không hiện trên trang") +
     sec("Liên kết nút Explore", `<div class="grid3">
-      ${inp("links.otherProjects", "Khối “Other game projects”", { ph: "games.html", hint: "Để trống hoặc # = trang Video Games." })}${inp("links.artworks", "Section Artworks", { ph: "art2d.html", hint: "Để trống hoặc # = trang 2D Artwork." })}${inp("links.about", "Section About", { ph: "#" })}</div>
-      <span class="hint">Nút Explore của từng dự án / video Blender chỉnh trong trang của mục đó.</span>`) +
+      ${inp("links.otherProjects", "Khối “Other game projects”", { ph: "games.html", hint: "Để trống hoặc # = trang Video Games." })}${inp("links.artworks", "Khối “Other 2D Projects”", { ph: "art2d.html", hint: "Để trống hoặc # = trang 2D Artwork." })}${inp("links.about", "Section About", { ph: "#" })}</div>
+      <span class="hint">Nút Explore của từng dự án chỉnh trong trang của dự án. Explore của 3D Blender / Personal Artworks tự mở đúng dự án / mục trên trang 3D / 2D Artwork.</span>`) +
     sec("Khác", `<div class="grid2">
       ${inp("background.rainWord", "Chữ của hiệu ứng mưa chữ", { key: "background.rainWord" })}
       <div class="f"><label>Ngôn ngữ mặc định</label>${seg("site.defaultLang", [["en", "English"], ["vi", "Tiếng Việt"]])}</div></div>
@@ -506,7 +499,7 @@ function viewItemEditor() {
     ${sec("Khác", `<div class="grid2">
       <div class="f"><label>Tên thư mục <code>Database/${K.dir}/…</code></label><input type="text" data-path="@folder" value="${esc(ED.folder)}" placeholder="vd: fashion-star">
         <span class="hint">Chữ thường, số, dấu gạch ngang. Tự tạo từ tên nếu để trống.</span><span class="err" id="folderErr"></span></div>
-      ${kind === "blender" ? inp("exploreUrl", "Link nút Explore", { ph: "art3d.html", hint: "Để trống hoặc # = trang 3D Artwork." }) : inp("exploreUrl", "Link nút Explore", { ph: "# (để sau)" })}</div>`)}`;
+      ${inp("exploreUrl", "Link nút Explore", { ph: "# (để sau)" })}</div>`)}`;
 }
 
 // ---- project detail page (project.html?id=<folder>): extra fields of a featured project ----
@@ -570,7 +563,7 @@ function projStepGroup(i) {
 //   url(folder, name) · enabled / off (drop-zone text when disabled) · where() → folder path HTML · ready() → the folder to
 //   write into, or "" after a toast saying why · dirName(folder) · api(folder) → ".../images?dir=…" · done(folder) after an
 //   upload / scan · del(folder, name) → delete that file on save · alive() → the draft is still the open one ·
-//   badge(im) → extra tile badge · hint → help line under the grid (default IMG_HINT)
+//   badge(im) → extra tile badge · extra(im, path) → extra fields under the captions · hint → help line under the grid (default IMG_HINT)
 const IMG_GROUPS = new Map();
 const IMG_HINT = `<span class="hint">Ảnh JPG được nén ≤ 2400px; PNG có nền trong suốt giữ nguyên PNG. Có thể tự chép ảnh vào thư mục trên rồi bấm <b>Quét thư mục</b>
       (thêm ảnh mới theo tên file, đánh dấu ảnh bị thiếu). Kéo ảnh để đổi thứ tự; chú thích để trống thì không hiện.</span>`;
@@ -589,6 +582,7 @@ function imgGroup(g) {
         <button class="icon-btn del" type="button" data-act="rmImg" data-g="${g.key}" data-j="${j}" title="Gỡ ảnh">✕</button></div>
       <input type="text" data-path="${p}.caption.en" value="${esc(im.caption.en)}" placeholder="Chú thích EN (không bắt buộc)">
       <input type="text" data-path="${p}.caption.vi" value="${esc(im.caption.vi)}" placeholder="Chú thích VI">
+      ${g.extra?.(im, p) || ""}
     </div>`;
   }).join("");
   const missing = files ? g.list.filter(im => !files.has(im.src)).length : 0, dis = g.enabled ? "" : "disabled";
@@ -637,19 +631,6 @@ function detailSections() {
       `<span class="hint">Có tiêu đề thì hiện dạng tiêu đề + đoạn văn; không có thì chỉ là một dòng.</span>`, cnt(d.learned, "mục"));
 }
 
-function viewArtworks() {
-  draftOf = () => ART.d;
-  const list = ART.d;
-  return saveBar("Personal Artworks", "Ảnh trong carousel. Ảnh mới được nén thành JPG (tối đa 2400px) và lưu vào <code>Database/Artworks/images/</code>.",
-    `<button class="btn ghost" type="button" data-act="addArt">+ Thêm ảnh</button>`) +
-    `<div class="agrid">${list.map((a, i) => `<div class="acard">
-      <div class="img" style="background-image:url('${esc(`/Database/Artworks/${a.src}`)}')"><span>${String(i + 1).padStart(2, "0")}</span></div>
-      ${itemHead("@art", i, list.length, esc(a.title.en || a.title.vi || a.src.split("/").pop()))}
-      <div class="body">${bi(`${i}.title`, "Tiêu đề")}${bi(`${i}.desc`, "Mô tả", { area: true })}
-        <button class="btn ghost sm" type="button" data-act="replaceArt" data-i="${i}">Đổi ảnh…</button></div></div>`).join("")}
-      <div class="drop" id="drop" data-act="addArt">Kéo thả ảnh vào đây<br>hoặc bấm để chọn (chọn được nhiều ảnh)</div></div>`;
-}
-
 // ---- 2D / 3D Artwork + Graphic Design pages (art2d.html / art3d.html / graphic-design.html ← Database/Art2D|Art3D|GraphicDesign/data.json) ----
 // Both pages = one data.json listing items (2D sections / 3D projects) whose id = image folder images/<id>/ (steps use the
 // same folder). P = page descriptor (PAGES[VIEW]); its draft PS[view] = { orig, d: { intro, <list>: [...] }, saved, open,
@@ -662,7 +643,7 @@ const PS = {};   // page drafts by view key (null = re-read on the next visit)
 const PAGES = {
   art2d: { view: "art2d", title: "2D Artwork", dir: "Database/Art2D", api: "/api/art2d", rename: "rename-section", list: "sections",
     noun: "mục", Noun: "Mục", fallback: "section", toDraft: raw => ({ intro: introL(raw.intro), sections: arr(raw.sections).map(a2SecDraft) }),
-    toData: (d, orig) => a2ToData(d, orig), item: () => a2SecDraft(), step: () => a2StepDraft(), used: s => a2Used(s), html: () => viewArt2D() },
+    toData: (d, orig) => a2ToData(d, orig), item: () => a2SecDraft(), step: () => a2SecStepDraft(), used: s => a2Used(s), html: () => viewArt2D() },
   art3d: { view: "art3d", title: "3D Artwork", dir: "Database/Art3D", api: "/api/art3d", rename: "rename-project", list: "projects",
     noun: "dự án", Noun: "Dự án", fallback: "project", toDraft: raw => ({ intro: introL(raw.intro), projects: arr(raw.projects).map(a3ProjDraft) }),
     toData: (d, orig) => a3ToData(d, orig), item: () => a3ProjDraft(), step: () => a3StepDraft(), used: p => a3Used(p), html: () => viewArt3D(),
@@ -748,7 +729,7 @@ function pgGroup(P, i, o) {
     dirName: f => `images/${f}/`, api: f => `${P.api}/images?dir=${encodeURIComponent(f)}`,
     done: f => { s._folder = f; s._auto = false; st.bust = Date.now(); },
     del: (f, name) => st.delFiles.push({ folder: f, name }), alive: () => PS[P.view] === st,
-    badge: im => (s.cover === im.src ? `<span class="bdg y">ảnh bìa</span>` : ""),
+    badge: im => (s.cover === im.src ? `<span class="bdg y">ảnh bìa</span>` : "") + (im.home ? `<span class="bdg c">★ trang chủ</span>` : ""),
   };
 }
 const STEP_IMG_HINT = `<span class="hint">Ảnh của bước nằm chung thư mục. Quét thư mục ở đây chỉ thêm các file chưa có trong danh sách nào.</span>`;
@@ -822,38 +803,62 @@ function pgList(P, cards, hint) {
 }
 
 // ---- 2D Artwork (art2d.html): sections → images + steps ----
+// also feeds the home page 2D ARTWORK section: images with "home": true (+ "title") = Personal Artworks carousel,
+// sections with "homeOther": true = the 3 cards of Other 2D Projects
 const a2StepDraft = (st = {}) => ({ title: L(st.title), text: pairs(st.text), images: imgsDraft(st.images), _x: rest(st, ["title", "text", "images"]) });
+const a2ImgDraft = im => { const d = stepImgDraft(im), { home, title, ...x } = d._x; return { ...d, home: home === true, title: L(title), _x: x }; };
+const a2Imgs = list => arr(list).map(a2ImgDraft).filter(im => im.src);
+const a2SecStepDraft = (st = {}) => ({ ...a2StepDraft(st), images: a2Imgs(st.images) });
 const a2SecDraft = (s = {}) => ({
-  ...pgItemBase(s), images: imgsDraft(s.images), steps: arr(s.steps).map(a2StepDraft),
-  _x: rest(s, ["id", "name", "text", "cover", "images", "steps"]),
+  ...pgItemBase(s), homeOther: s.homeOther === true, images: a2Imgs(s.images), steps: arr(s.steps).map(a2SecStepDraft),
+  _x: rest(s, ["id", "name", "text", "cover", "homeOther", "images", "steps"]),
 });
+// image: "file.jpg", or { src, home, title, caption } when it has any of them (or unknown keys)
+const a2ImgsOut = list => outMany(list.map(im => {
+  const o = outObj({ src: im.src, home: im.home || undefined, title: im.home ? outL(L(im.title)) : undefined, caption: outL(im.caption) }, im._x);
+  return Object.keys(o).length > 1 ? o : im.src;
+}));
 const a2Used = s => new Set([...s.images, ...s.steps.flatMap(st => st.images)].map(im => im.src));
+const a2HomeCount = s => [...s.images, ...s.steps.flatMap(st => st.images)].filter(im => im.home).length;
 function a2ToData(d, orig = {}) {
   const sections = d.sections.map(s => outObj({
-    id: s.id.trim() || undefined, name: outL(s.name), text: para(s.text), cover: coverOut(s, a2Used(s)), images: imgsOut(s.images),
-    steps: outMany(s.steps.map(st => outObj({ title: outL(st.title), text: para(st.text), images: imgsOut(st.images) }, st._x)).filter(o => Object.keys(o).length)),
+    id: s.id.trim() || undefined, name: outL(s.name), text: para(s.text), cover: coverOut(s, a2Used(s)), homeOther: s.homeOther || undefined,
+    images: a2ImgsOut(s.images),
+    steps: outMany(s.steps.map(st => outObj({ title: outL(st.title), text: para(st.text), images: a2ImgsOut(st.images) }, st._x)).filter(o => Object.keys(o).length)),
   }, s._x));
   return mergeKeys(orig, { intro: outL(d.intro), sections: outMany(sections) });
 }
+// per image: ★ = slide of the home page carousel (big title EN / VI, the caption is the line under it)
+const a2HomeFields = (im, p) => `<label class="sl-chk"><input type="checkbox" data-path="${p}.home" data-rerender${im.home ? " checked" : ""}> ★ Carousel trang chủ</label>
+  ${im.home ? `<input type="text" data-path="${p}.title.en" value="${esc(im.title?.en)}" placeholder="Tiêu đề carousel EN">
+    <input type="text" data-path="${p}.title.vi" value="${esc(im.title?.vi)}" placeholder="Tiêu đề carousel VI">` : ""}`;
 function a2Section(s, i) {
-  const P = PAGES.art2d;
-  return pgCard(P, i, `${a2Used(s).size} ảnh${s.steps.length ? ` · ${s.steps.length} bước` : ""}`, `
+  const P = PAGES.art2d, nh = a2HomeCount(s);
+  return pgCard(P, i, `${a2Used(s).size} ảnh${s.steps.length ? ` · ${s.steps.length} bước` : ""}${nh ? ` · ★ ${nh}` : ""}${s.homeOther ? " · thẻ trang chủ" : ""}`, `
       ${pgNameId(P, i, "Tên mục (tiêu đề trên web)")}
       ${bullets(`sections.${i}.text`, "Nội dung", PARA)}
-      ${pgCover(P, i, "Ảnh đại diện của mục (lưu sẵn cho các kiểu hiển thị sau; trang hiện tại chưa dùng). Để mặc định thì là ảnh đầu tiên.")}
-      ${imgGroup(pgGroup(P, i, { key: `s${i}`, path: `sections.${i}.images`, list: s.images, label: "Ảnh của mục" }))}
+      <div class="grid2" style="align-items:start">${pgCover(P, i, "Ảnh của thẻ “Other 2D Projects” ở trang chủ. Để mặc định thì là ảnh đầu tiên.")}
+        <div class="f"><span class="lbl">Trang chủ</span>
+          <label class="sl-chk"><input type="checkbox" data-path="sections.${i}.homeOther" data-rerender${s.homeOther ? " checked" : ""}> Hiện ở “Other 2D Projects”</label>
+          <span class="hint">Trang chủ hiện 3 thẻ: 3 mục đầu tiên được chọn (theo thứ tự dưới đây); không chọn mục nào thì lấy 3 mục đầu.</span></div></div>
+      ${imgGroup(pgGroup(P, i, { key: `s${i}`, path: `sections.${i}.images`, list: s.images, label: "Ảnh của mục", extra: a2HomeFields }))}
       ${pgSteps(P, i, (st, k) => `${bi(`sections.${i}.steps.${k}.title`, "Tên bước")}
         ${bullets(`sections.${i}.steps.${k}.text`, "Nội dung", PARA)}
-        ${imgGroup(pgGroup(P, i, { key: `s${i}.${k}`, path: `sections.${i}.steps.${k}.images`, list: st.images, label: "Ảnh của bước", hint: STEP_IMG_HINT }))}`,
+        ${imgGroup(pgGroup(P, i, { key: `s${i}.${k}`, path: `sections.${i}.steps.${k}.images`, list: st.images, label: "Ảnh của bước", hint: STEP_IMG_HINT, extra: a2HomeFields }))}`,
         `Các bước <code>tuỳ chọn — mỗi bước một hàng đánh số, có chữ + dải ảnh riêng</code>`, "Chưa có bước nào — mục chỉ có ảnh.")}`);
 }
 function viewArt2D() {
   const P = PAGES.art2d, d = PS.art2d.d;
   draftOf = () => PS.art2d.d;
-  return saveBar("2D Artwork", `Trang <code>art2d.html</code> (menu Portfolio → 2D Artwork, nút Explore của Personal Artworks). Lưu trong
+  const slides = d.sections.reduce((n, s) => n + a2HomeCount(s), 0), cards = d.sections.filter(s => s.homeOther).length;
+  return saveBar("2D Artwork", `Trang <code>art2d.html</code> (menu Portfolio → 2D Artwork) <b>và</b> section 2D ARTWORK ở trang chủ. Lưu trong
       <code>${P.dir}/data.json</code>, ảnh của mỗi mục trong <code>${P.dir}/images/&lt;id mục&gt;/</code>.`,
       `<a class="btn ghost sm" href="/art2d.html" target="_blank" rel="noopener">Xem trang ↗</a>`) +
     pgIntro(P, "2D ARTWORK") +
+    sec("Trang chủ — section 2D ARTWORK", `<span class="hint"><b>01 Personal Artworks</b> (carousel): các ảnh bật <b>★ Carousel trang chủ</b> — hiện ${slides} ảnh, theo thứ tự
+      mục → ảnh dưới đây; tiêu đề lớn = “Tiêu đề carousel”, dòng dưới = chú thích. Nút Explore mở đúng mục của ảnh đang xem.<br>
+      <b>02 Other 2D Projects</b>: 3 thẻ mục (ảnh bìa, tên, số ảnh) — ${cards ? `đang chọn ${cards} mục` : "chưa chọn mục nào → 3 mục đầu"}; bấm thẻ mở mục đó,
+      Explore mở trang 2D Artwork.</span>`) +
     pgList(P, d.sections.map(a2Section).join(""), `Mỗi mục = một phần “01 TÊN MỤC · n hình” trên trang, theo thứ tự dưới đây (↑ ↓ để đổi). Mục nào trống hẳn thì không hiện.
       Nội dung: 1 dòng = đoạn văn, nhiều dòng = gạch đầu dòng. ${RT_HINT}`);
 }
@@ -878,19 +883,21 @@ const a3StepDraft = (st = {}) => ({
   title: L(st.title), text: pairs(st.text), images: imgsDraft(st.images), video: a3VideoDraft(st.video),
   _x: rest(st, ["title", "text", "images", "video"]),
 });
+const chipList = v => arr(v).map(t => String(isObj(t) ? t.en || t.vi || "" : t ?? "").trim()).filter(Boolean);
 const a3ProjDraft = (p = {}) => ({
-  ...pgItemBase(p),
-  tools: arr(p.tools).map(t => String(isObj(t) ? t.en || t.vi || "" : t ?? "").trim()).filter(Boolean),
+  ...pgItemBase(p), home: p.home === true, tags: chipList(p.tags),
+  tools: chipList(p.tools),
   final: { videos: arr(p.final?.videos).map(a3VideoDraft), images: imgsDraft(p.final?.images), _x: rest(p.final, ["videos", "images"]) },
   steps: arr(p.steps).map(a3StepDraft),
-  _x: rest(p, ["id", "name", "tools", "text", "cover", "final", "steps"]),
+  _x: rest(p, ["id", "name", "home", "tags", "tools", "text", "cover", "final", "steps"]),
 });
 const a3Used = p => new Set([...p.final.images, ...p.steps.flatMap(st => st.images)].map(im => im.src));
 function a3ToData(d, orig = {}) {
   const projects = d.projects.map(p => {
     const fin = outObj({ videos: outMany(p.final.videos.map(a3VideoOut).filter(Boolean)), images: imgsOut(p.final.images) }, p.final._x);
     return outObj({
-      id: p.id.trim() || undefined, name: outL(p.name), tools: outMany(p.tools), text: para(p.text), cover: coverOut(p, a3Used(p)),
+      id: p.id.trim() || undefined, name: outL(p.name), home: p.home || undefined, tags: outMany(p.tags), tools: outMany(p.tools),
+      text: para(p.text), cover: coverOut(p, a3Used(p)),
       final: Object.keys(fin).length ? fin : undefined,
       steps: outMany(p.steps.map(st => outObj({ title: outL(st.title), text: para(st.text), images: imgsOut(st.images), video: a3VideoOut(st.video) }, st._x))
         .filter(o => Object.keys(o).length)),
@@ -940,8 +947,14 @@ function a3Project(p, i) {
   const P = PAGES.art3d, nv = p.final.videos.length + p.steps.filter(st => st.video.youtube.trim()).length;
   const videos = p.final.videos.map((v, j) => `<div class="item">${a3Video(`projects.${i}.final.videos.${j}`, v,
     itemHead(`projects.${i}.final.videos`, j, p.final.videos.length, `Video ${j + 1}${v.orientation === "portrait" ? " · dọc" : ""}`))}</div>`).join("");
-  return pgCard(P, i, `${a3Used(p).size} ảnh · ${nv} video${p.steps.length ? ` · ${p.steps.length} bước` : ""}`, `
+  const homeHint = p.home && !p.final.videos.some(v => ytInfo(v.youtube).id)
+    ? `<span class="err">Chưa có video thành phẩm — trang chủ chỉ hiện dự án có video.</span>`
+    : `<span class="hint">Hiện ở section <b>3D BLENDER</b> trang chủ: tên, video thành phẩm đầu tiên, tag vai trò (trống thì dùng công cụ), nội dung; Explore mở dự án này.</span>`;
+  return pgCard(P, i, `${a3Used(p).size} ảnh · ${nv} video${p.steps.length ? ` · ${p.steps.length} bước` : ""}${p.home ? " · trang chủ" : ""}`, `
       ${pgNameId(P, i, "Tên dự án (tiêu đề trên web)")}
+      <div class="f"><span class="lbl">Trang chủ</span>
+        <label class="sl-chk"><input type="checkbox" data-path="projects.${i}.home" data-rerender${p.home ? " checked" : ""}> Hiện ở trang chủ (3D Blender)</label>${homeHint}</div>
+      ${chips(`projects.${i}.tags`, "Tag vai trò <code>tags · tuỳ chọn, chỉ hiện ở trang chủ</code>", "Gõ vai trò (3D Modeling, VFX…) rồi Enter. Kéo để đổi thứ tự.")}
       ${chips(`projects.${i}.tools`, "Công cụ <code>tools · tuỳ chọn</code>", "Gõ tên (Blender, Substance Painter…) rồi Enter. Kéo để đổi thứ tự.")}
       ${bullets(`projects.${i}.text`, "Nội dung", PARA)}
       ${pgCover(P, i, "Ảnh đại diện của dự án (lưu sẵn cho các kiểu hiển thị sau; trang hiện tại chưa dùng). Để mặc định thì là ảnh đầu tiên.")}
@@ -960,7 +973,7 @@ function a3Project(p, i) {
 function viewArt3D() {
   const P = PAGES.art3d, d = PS.art3d.d;
   draftOf = () => PS.art3d.d;
-  return saveBar("3D Artwork", `Trang <code>art3d.html</code> (menu Portfolio → 3D Artwork, nút Explore của mục 3D Blender ở trang chủ). Lưu trong
+  return saveBar("3D Artwork", `Trang <code>art3d.html</code> (menu Portfolio → 3D Artwork) <b>và</b> section 3D BLENDER ở trang chủ (các dự án bật “Hiện ở trang chủ”). Lưu trong
       <code>${P.dir}/data.json</code>, ảnh của mỗi dự án trong <code>${P.dir}/images/&lt;id dự án&gt;/</code>.`,
       `<a class="btn ghost sm" href="/art3d.html" target="_blank" rel="noopener">Xem trang ↗</a>`) +
     pgIntro(P, "3D ARTWORK") +
@@ -1164,7 +1177,6 @@ async function replaceFrameImage(f) {
 const GIT_SCOPES = {
   settings: [["web-config.json"], "Update profile"], experience: [["web-config.json"], "Update work experience"],
   texts: [["web-config.json"], "Update UI texts"], projects: [["Database/Projects"], "Update projects"],
-  blender: [["Database/Blender"], "Update Blender"], artworks: [["Database/Artworks"], "Update artworks"],
   art2d: [["Database/Art2D"], "Update 2D artwork"], art3d: [["Database/Art3D"], "Update 3D artwork"],
   graphic: [["Database/GraphicDesign"], "Update graphic design"], ui: [["assets/ui"], "Update UI frames"],
 };
@@ -1261,17 +1273,18 @@ function render() {
   const h = location.hash || "#/settings";
   let m;
   ED = ED && h.startsWith(`#/${ED.kind}/`) ? ED : null;
-  if ((m = h.match(/^#\/(projects|blender)\/edit\/([a-z0-9-]+)/)) || (m = h.match(/^#\/(projects|blender)\/(new)$/))) {
+  if ((m = h.match(/^#\/(projects)\/edit\/([a-z0-9-]+)/)) || (m = h.match(/^#\/(projects)\/(new)$/))) {
     const [, kind, id] = m;
     if (!ED || ED.kind !== kind || (ED.id || "new") !== id) openEditor(kind, id === "new" ? null : id);
     if (!ED) return;
     VIEW = kind;
     $("app").innerHTML = viewItemEditor();
     if (kind === "projects") bindImgs();
-  } else if ((m = h.match(/^#\/(projects|blender)$/))) {
+  } else if ((m = h.match(/^#\/(projects)$/))) {
     VIEW = m[1]; $("app").innerHTML = viewCollection(VIEW); bindListDnD(VIEW);
-  } else if (h === "#/artworks") {
-    VIEW = "artworks"; if (!ART) resetArt(); $("app").innerHTML = viewArtworks(); bindDrop();
+  } else if (h === "#/blender" || h === "#/artworks") {
+    location.replace(h === "#/blender" ? "#/art3d" : "#/art2d");   // old views: now part of 3D / 2D Artwork
+    return;
   } else if ((m = h.match(/^#\/(\w+)$/)) && PAGES[m[1]]) {
     VIEW = m[1]; const P = PG();
     if (!PS[VIEW]) resetPg(P);
@@ -1320,15 +1333,13 @@ async function checkStepFiles(ed) {
 let lastHash = location.hash;
 addEventListener("hashchange", () => {
   const leavingEditor = ED && !location.hash.startsWith(`#/${ED.kind}/`);
-  const leavingArt = VIEW === "artworks" && location.hash !== "#/artworks";
   const leavingCfg = ["settings", "experience", "texts"].includes(VIEW) && !/^#\/(settings|experience|texts)?$/.test(location.hash);
   const leavingUI = VIEW === "ui" && location.hash !== "#/ui";
   const leavingPg = !!PAGES[VIEW] && location.hash !== `#/${VIEW}`;
-  if (((leavingEditor && edDirty()) || (leavingArt && artDirty()) || (leavingPg && pgDirty(PG())) || (leavingCfg && cfgDirty()) || (leavingUI && uiDirty())) && !confirm("Bạn có thay đổi chưa lưu. Rời trang?")) {
+  if (((leavingEditor && edDirty()) || (leavingPg && pgDirty(PG())) || (leavingCfg && cfgDirty()) || (leavingUI && uiDirty())) && !confirm("Bạn có thay đổi chưa lưu. Rời trang?")) {
     history.replaceState(null, "", lastHash); return;
   }
   if (leavingEditor) ED = null;
-  if (leavingArt) resetArt();
   if (leavingPg) PS[VIEW] = null;                  // re-read (and re-checked) on the next visit
   if (leavingCfg) resetCfg();
   if (leavingUI) UIF = null;                       // re-read from disk on the next visit
@@ -1405,16 +1416,16 @@ $("app").addEventListener("change", e => {
   if (e.target.dataset.yt !== undefined) { const id = parseYT(e.target.value); if (id) { e.target.value = id; setPath(draftOf(), "video.youtube", id); updateDirty(); } }
 });
 
-const listAt = p => p === "@art" ? ART.d : getPath(draftOf(), p);
+const listAt = p => getPath(draftOf(), p);
 const ACTS = {
   async save() { try { await doSave(); } catch (e) { toast(e.message, "err"); } },
   revert() {
-    if (VIEW === "artworks") resetArt(); else if (PAGES[VIEW]) { resetPg(PG()); pgCheckFiles(PG(), PS[VIEW]); } else if (VIEW === "ui") resetUI(); else resetCfg();
+    if (PAGES[VIEW]) { resetPg(PG()); pgCheckFiles(PG(), PS[VIEW]); } else if (VIEW === "ui") resetUI(); else resetCfg();
     render(); toast("Đã hoàn tác");
   },
   seg(el) { setPath(draftOf(), el.dataset.path, el.dataset.v); render(); },
   addRow(el) { listAt(el.dataset.path).push({ en: "", vi: "" }); render(); },
-  rmItem(el) { const arr = listAt(el.dataset.path), i = +el.dataset.i; if (el.dataset.path === "@art") ART.removed.add(arr[i].src); arr.splice(i, 1); render(); },
+  rmItem(el) { listAt(el.dataset.path).splice(+el.dataset.i, 1); render(); },
   mvItem(el) {
     const arr = listAt(el.dataset.path), i = +el.dataset.i, j = i + +el.dataset.d;
     if (j < 0 || j >= arr.length) return;
@@ -1436,13 +1447,6 @@ const ACTS = {
     } catch (e) { toast(e.message, "err"); }
   },
   clearImg(el) { setPath(draftOf(), el.dataset.path, ""); render(); },
-  addArt() { pickFiles("image/*", true).then(addArtFiles); },
-  async replaceArt(el) {
-    const [file] = await pickFiles(); if (!file) return;
-    const i = +el.dataset.i;
-    const src = await uploadArt(file); if (!src) return;
-    ART.removed.add(ART.d[i].src); ART.d[i].src = src; render();
-  },
   // ---- project detail page ----
   async pdImg(el) {
     const key = el.dataset.key, [file] = await pickFiles(); if (!file || !ED?.id) return;
@@ -1520,10 +1524,7 @@ document.addEventListener("keydown", e => {
 });
 
 async function doSave() {
-  if (VIEW === "artworks") {
-    await api("PUT", "/api/artworks", { items: ART.d.map(a => ({ src: a.src, title: a.title, desc: a.desc })), remove: [...ART.removed] });
-    S.artworks = clone(ART.d); resetArt();
-  } else if (PAGES[VIEW]) {
+  if (PAGES[VIEW]) {
     const P = PG();
     if (!(await pgSave(P))) return;
     PS[VIEW].checked = true; pgCheckFiles(P, PS[VIEW]);
@@ -1605,33 +1606,8 @@ function bindListDnD(kind) {
   });
 }
 
-// ---- artworks upload ----
-async function uploadArt(file) {
-  try {
-    const blob = await compress(file, 2400);
-    const base = slug(file.name.replace(/\.[^.]+$/, "")) || "artwork";
-    return (await upload("artworks", `${base}-${Date.now().toString(36)}.jpg`, blob)).path;
-  } catch (e) { toast(e.message, "err"); return ""; }
-}
-async function addArtFiles(files) {
-  files = files.filter(f => f.type.startsWith("image/"));
-  if (!files.length) return;
-  toast(`Đang tải ${files.length} ảnh…`);
-  for (const f of files) {
-    const src = await uploadArt(f);
-    if (src) ART.d.push({ src, title: { en: "", vi: "" }, desc: { en: "", vi: "" } });
-  }
-  render(); toast("Đã thêm ảnh — điền tiêu đề / mô tả rồi bấm Lưu"); gitRefresh();
-}
-function bindDrop() {
-  const d = $("drop"); if (!d) return;
-  ["dragenter", "dragover"].forEach(t => d.addEventListener(t, e => { e.preventDefault(); d.classList.add("over"); }));
-  ["dragleave", "drop"].forEach(t => d.addEventListener(t, () => d.classList.remove("over")));
-  d.addEventListener("drop", e => { e.preventDefault(); addArtFiles([...e.dataTransfer.files]); });
-}
-
 // ---- project detail: progression step images ----
-// resize to ≤ max px; PNG / WebP with real transparency stay PNG, everything else → JPG (like artworks)
+// resize to ≤ max px; PNG / WebP with real transparency stay PNG, everything else → JPG
 async function prepImg(file, max = 2400) {
   if (file.type === "image/gif") return { blob: file, ext: "gif" };
   const bmp = await createImageBitmap(file);
@@ -1763,7 +1739,7 @@ function bindFilter() {
 
 // ══════════════ preview ══════════════
 // home page section (#id) or another page (*.html) shown in the preview
-const PV_SECTION = { settings: "", experience: "#about", texts: "", projects: "#featured", blender: "#blender", artworks: "#artworks", art2d: "art2d.html", art3d: "art3d.html", graphic: "graphic-design.html", ui: "#featured" };
+const PV_SECTION = { settings: "", experience: "#about", texts: "", projects: "#featured", art2d: "art2d.html", art3d: "art3d.html", graphic: "graphic-design.html", ui: "#featured" };
 let pvOn = false, pvSection = null;
 function reloadPreview() {
   if (!pvOn) return;
@@ -1786,7 +1762,7 @@ $("pvSize").addEventListener("click", e => {
 });
 
 // ══════════════ boot ══════════════
-load().then(() => { resetCfg(); resetArt(); render(); }).catch(() => {
+load().then(() => { resetCfg(); render(); }).catch(() => {
   $("srv").classList.add("off");
   $("srv").lastElementChild.textContent = "offline";
   $("app").innerHTML = `<div class="empty"><h3 style="color:var(--bright);margin-bottom:8px">Chưa chạy server Studio</h3>

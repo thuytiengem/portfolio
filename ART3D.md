@@ -1,7 +1,11 @@
 # Trang 3D Artwork — `art3d.html`
 
 Trang các dự án 3D của portfolio. Mở từ menu **Portfolio → 3D Artwork**, hoặc nút **Explore** của mục **3D Blender** ở trang chủ
-(khi `exploreUrl` của video đó để trống hoặc `#`). Link thẳng tới một dự án: `art3d.html#<id dự án>` (vd. `art3d.html#blossom-fairy`).
+(mở đúng dự án đó). Link thẳng tới một dự án: `art3d.html#<id dự án>` (vd. `art3d.html#blossom-fairy`).
+
+Mục **3D BLENDER** ở trang chủ lấy từ chính dữ liệu này (không còn dữ liệu riêng `Database/Blender`): mỗi dự án có
+`"home": true` **và có video thành phẩm** hiện một khối gồm tên, video thành phẩm đầu tiên, hàng tag vai trò (`tags`; trống thì
+dùng `tools`), đoạn chữ `text` và nút Explore → `art3d.html#<id>`.
 
 Bố cục = mẫu 1 "Progression" (chủ web đã chọn), cùng nhịp với trang 2D Artwork:
 
@@ -34,6 +38,8 @@ Chạy `node portfolio-studio/server.mjs`, mở http://localhost:4100/portfolio-
 - **Quét thư mục**: tự chép ảnh vào `Database/Art3D/images/<id dự án>/` rồi bấm nút này → ảnh mới được thêm vào danh sách
   (theo tên file), ảnh trong danh sách mà không còn file thì được đánh dấu "thiếu file". Ảnh của các bước nằm **chung thư mục** với dự án.
 - **Ảnh bìa** (`cover`): chọn một ảnh của dự án làm ảnh đại diện. Bố cục hiện tại **chưa hiển thị** ảnh bìa (lưu sẵn cho sau).
+- **Trang chủ**: ô **Hiện ở trang chủ (3D Blender)** + ô **Tag vai trò** (chỉ hiện ở trang chủ). Bật mà dự án chưa có video
+  thành phẩm thì Studio báo đỏ (trang chủ chỉ hiện dự án có video).
 - Bấm **Lưu**, rồi **Commit & Push** ở cuối trang (phạm vi `Database/Art3D`, nội dung mặc định "Update 3D artwork").
 
 Tên trang, nhãn "Thành phẩm", "Quá trình thực hiện", "Công cụ", "{n} video"… nằm trong Studio → **Văn bản giao diện** (các khoá `a3_*`).
@@ -56,6 +62,8 @@ Database/Art3D/
     {
       "id": "blossom-fairy",
       "name": { "en": "Blossom Fairy", "vi": "Tiên hoa" },
+      "home": true,
+      "tags": ["3D Modeling", "3D Animator", "VFX"],
       "tools": ["Blender", "Substance Painter"],
       "text": { "en": "Final project of the Basic Blender course…", "vi": "Dự án cuối khoá Blender cơ bản…" },
       "final": {
@@ -93,6 +101,6 @@ Montserrat đậm; tiêu đề tiếng Anh giữ nguyên Qualy.
 
 ## Nội dung hiện tại
 
-3 dự án **demo** (chữ có ghi "Demo", ảnh giữ chỗ có chữ "DEMO · PLACEHOLDER"): **Blossom Fairy** (video thật của mục 3D Blender,
+3 dự án **demo** (chữ có ghi "Demo", ảnh giữ chỗ có chữ "DEMO · PLACEHOLDER"): **Blossom Fairy** (video, tag và đoạn mô tả thật của mục 3D Blender trang chủ — `"home": true`,
 2 ảnh, 4 bước; bước cuối có video mượn từ một dự án game), **Crystal Shrine** (video dọc — id mượn từ dự án khác, thật ra là video
 ngang, chỉ đánh dấu Shorts để thử bố cục dọc), **Moon Garden** (chỉ ảnh, không video). Thay bằng dự án 3D thật của bạn.

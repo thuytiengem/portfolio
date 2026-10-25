@@ -67,11 +67,12 @@
     <div class="container blender" id="blenderList"></div>
   </section>
 
-  <!-- ============ Personal artworks ============ -->
+  <!-- ============ 2D Artwork: 01 Personal artworks (carousel) · 02 Other 2D projects (3 cards) ============ -->
   <section id="artworks">
     <div class="band"><h2 data-i18n="artworks_title"></h2></div>
-    <div class="artworks" id="artworksSection">
+    <div class="artworks" id="artworksPersonal">
       <div class="artworks-bg" id="artworksBg"></div>
+      <div class="container sub-head"><span class="sub-num">01</span><h3 data-i18n="artworks_personal"></h3><i></i></div>
       <div class="carousel" id="carousel" tabindex="0" aria-roledescription="carousel">
         <button class="carousel-arrow prev" type="button" aria-label="Previous">
           <svg width="30" height="34" viewBox="0 0 30 34"><path d="M16 3 4 17l12 14M26 3 14 17l12 14" stroke="#f2d9ff" stroke-width="4" fill="none"/></svg>
@@ -82,7 +83,12 @@
       </div>
       <div class="artworks-caption" id="artworksCaption" aria-live="polite"><h3></h3><p></p></div>
       <div class="carousel-dots" id="carouselDots"></div>
-      <div class="cta"><a class="btn-explore" id="artworksExplore" href="#" data-i18n="explore"></a></div>
+      <div class="cta"><a class="btn-explore" id="artworksExplore" href="art2d.html" data-i18n="explore"></a></div>
+    </div>
+    <div class="container other-art reveal" id="artworksOther">
+      <div class="sub-head"><span class="sub-num">02</span><h3 data-i18n="artworks_other"></h3><i></i></div>
+      <div class="art-cards" id="otherArtGrid"></div>
+      <div class="cta"><a class="btn-explore" id="otherArtExplore" href="art2d.html" data-i18n="explore"></a></div>
     </div>
   </section>
 
