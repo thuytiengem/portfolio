@@ -17,13 +17,13 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const CONFIG = path.join(ROOT, "web-config.json");
 const DB = path.join(ROOT, "Database");
 const KINDS = { projects: path.join(DB, "Projects") };
-const ART2D = path.join(DB, "Art2D");          // 2D Artwork page: data.json + images/<section id>/
+const ART2D = path.join(DB, "Art2D");          // 2D Artwork page: data.json + images/<project id>/
 const ART3D = path.join(DB, "Art3D");          // 3D Artwork page: data.json + images/<project id>/
 const GRAPHIC = path.join(DB, "GraphicDesign"); // Graphic Design page: data.json + images/<project id>/
 // (the home page 3D Blender / Personal Artworks sections read Art3D / Art2D — no data of their own)
 // pages made of one data.json listing items whose id = image folder (images/<id>/); rename = API route of a folder rename
 const PAGES = {
-  art2d: { dir: ART2D, list: "sections", rename: "rename-section" },
+  art2d: { dir: ART2D, list: "projects", rename: "rename-project" },
   art3d: { dir: ART3D, list: "projects", rename: "rename-project" },
   graphic: { dir: GRAPHIC, list: "projects", rename: "rename-project" },
 };

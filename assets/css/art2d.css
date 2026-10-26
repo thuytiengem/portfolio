@@ -1,5 +1,5 @@
-/* 2D Artwork page (art2d.html) — owner's pick: variant 1 "Progression" + the page banner (page-banner.css).
-   Sticky jump chips, numbered HUD sections with a filmstrip each, steps = numbered sub-rows on a vertical rail.
+/* 2D Artwork page (art2d.html) — owner's pick "Tab scroll": page banner (page-banner.css), sticky tab bar, ONE tab at a time =
+   numbered HUD heading + text + its projects as HUD panels (filmstrip each); steps = numbered sub-rows on a vertical rail.
    Section heading (.pd-h), .pd-count, .stage-text, filmstrip and lightbox come from project.css. */
 
 .a2 { padding: calc(var(--topbar-h) + 34px) 0 30px; min-height: 70vh; }
@@ -71,4 +71,27 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .a2-chip { transition: none; }
+}
+
+/* ---------- tabs → projects ---------- */
+.a2-cat-text { margin-top: 10px; max-width: 900px; }
+
+/* the chosen tab: its projects stacked as HUD panels */
+.a2-cat > .container:first-child { padding-top: 40px; }
+.a2-projs { display: grid; gap: 26px; margin-top: 26px; }
+.a2-proj {
+  position: relative; display: grid; gap: 16px; padding: 22px 26px 26px; scroll-margin-top: calc(var(--topbar-h) + 70px);
+  background: linear-gradient(180deg, #2a17487a, #1a0e2e66); box-shadow: inset 0 0 0 1px #d38cff2e, inset 3px 0 0 #3ef2ff99;
+}
+.a2-proj-h { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 14px; }
+.a2-proj-n { font: 700 13px/1 ui-monospace, Consolas, monospace; color: #9ff6ff; }
+.a2-proj-title { font: 28px/1.1 var(--font-title); letter-spacing: .02em; overflow-wrap: anywhere; min-width: 0; }
+.a2-proj-title.alt-font { font-size: 24px; }
+.a2-proj .fs-track .g-item { height: 300px; }
+.a2-proj .g-filmstrip[data-count="1"] .fs-track .g-item { max-width: 680px; }
+
+@media (max-width: 700px) {
+  .a2-proj { padding: 16px 14px 18px; }
+  .a2-proj-title { font-size: 22px; }
+  .a2-proj .fs-track .g-item { height: 200px; }
 }

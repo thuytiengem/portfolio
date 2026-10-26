@@ -3,7 +3,15 @@
     "en": "<i>Demo text — replace with your own.</i> Character designs, illustrations, fanart and pages from my sketchbook, grouped by topic.",
     "vi": "<i>Chữ demo — thay bằng nội dung của bạn.</i> Thiết kế nhân vật, minh hoạ, fanart và các trang sổ phác thảo, xếp theo chủ đề."
   },
-  "sections": [
+  "categories": [
+    {
+      "id": "personal-artworks",
+      "name": "Personal Artworks",
+      "text": {
+        "en": "Demo — my own illustrations and characters — each one with how it was made.",
+        "vi": "Demo — tranh và nhân vật của riêng mình — kèm quá trình thực hiện."
+      }
+    },
     {
       "id": "character-design",
       "name": {
@@ -11,10 +19,204 @@
         "vi": "Thiết kế nhân vật"
       },
       "text": {
+        "en": "Demo — character sheets and concepts.",
+        "vi": "Demo — thiết kế nhân vật và concept."
+      }
+    },
+    {
+      "id": "fanart",
+      "name": "Fanart",
+      "text": {
+        "en": "Demo — characters from games I love.",
+        "vi": "Demo — nhân vật từ những game mình yêu thích."
+      }
+    },
+    {
+      "id": "sketchbook",
+      "name": {
+        "en": "Sketchbook",
+        "vi": "Sổ phác thảo"
+      },
+      "text": {
+        "en": "Demo — challenges and studies.",
+        "vi": "Demo — thử thách và bài luyện tập."
+      }
+    }
+  ],
+  "projects": [
+    {
+      "id": "cast-spell",
+      "category": "personal-artworks",
+      "name": "Cast Spell",
+      "text": {
+        "en": "A splash art about my original character - a girl  was born as a dragon's guardian.",
+        "vi": "Một bức tranh minh họa (splash art) về nhân vật gốc của mình – một cô gái sinh ra với sứ mệnh làm người bảo vệ rồng."
+      },
+      "cover": "cast-spell.jpg",
+      "images": [
+        "cast-spell.jpg"
+      ]
+    },
+    {
+      "id": "narcis-lilies",
+      "category": "personal-artworks",
+      "name": "Narcis × Lilies",
+      "text": {
+        "en": "A narrative art series about my two original characters: Nacis and Lilies.",
+        "vi": "Một loạt tác phẩm nghệ thuật kể chuyện về hai nhân vật gốc của mình: Nacis và Lilies."
+      },
+      "cover": "narcis-lilies.jpg",
+      "images": [
+        "narcis-lilies.jpg"
+      ],
+      "steps": [
+        {
+          "title": {
+            "en": "Sketch",
+            "vi": "Phác thảo"
+          },
+          "text": {
+            "en": "Demo — first study of the two characters.",
+            "vi": "Demo — bản nghiên cứu đầu tiên của hai nhân vật."
+          },
+          "images": [
+            "study-narcis.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wuthering-waves",
+      "category": "personal-artworks",
+      "name": "Wuthering Waves Fanart",
+      "text": {
+        "en": "A fanart series about several characters in the game Wuthering Waves.",
+        "vi": "Một loạt tranh fanart về một số nhân vật trong trò chơi Wuthering Waves."
+      },
+      "cover": "wuthering-waves.jpg",
+      "images": [
+        "wuthering-waves.jpg"
+      ]
+    },
+    {
+      "id": "mina",
+      "category": "personal-artworks",
+      "name": "Mina Fanart",
+      "text": {
+        "en": "A fanart about Mina - a general in the game Arena of Valor",
+        "vi": "Một bức tranh fanart về Mina - một vị tướng trong tựa game Arena of Valor."
+      },
+      "cover": "mina.jpg",
+      "images": [
+        "mina.jpg"
+      ]
+    },
+    {
+      "id": "werewolf",
+      "category": "personal-artworks",
+      "name": "Werewolf Game",
+      "text": {
+        "en": "A characters series for the board game \"Werewolf\".",
+        "vi": "Một bộ nhân vật dành cho trò chơi board game \"Ma Sói\"."
+      },
+      "cover": "final-lineup.jpg",
+      "images": [
+        "final-lineup.jpg"
+      ]
+    },
+    {
+      "id": "dragon-temple",
+      "category": "personal-artworks",
+      "name": "Dragon Temple",
+      "text": {
+        "en": "A splash art about a dragon temple with Japanese architecture.",
+        "vi": "Một bức tranh minh họa (splash art) về ngôi đền rồng mang kiến ​​trúc Nhật Bản."
+      },
+      "cover": "dragon-temple.jpg",
+      "images": [
+        "dragon-temple.jpg"
+      ]
+    },
+    {
+      "id": "inktober",
+      "category": "personal-artworks",
+      "name": "Inktober Challenge",
+      "text": {
+        "en": "An annual Inktober challenge with my own narrative. I have joined this challenge for 3 years (2023 - 2024 - 2025)",
+        "vi": "Thử thách Inktober thường niên với câu chuyện của riêng mình. Mình đã tham gia thử thách này trong 3 năm (2023 - 2024 - 2025)."
+      },
+      "cover": "inktober.jpg",
+      "images": [
+        "inktober.jpg"
+      ]
+    },
+    {
+      "id": "ghost-bride",
+      "category": "personal-artworks",
+      "name": "Ghost Bride",
+      "text": {
+        "en": "A splash art about a ghost bride from the ancient Chinese custom of \"posthumous marriage\".",
+        "vi": "Một bức tranh minh họa (splash art) về cô dâu ma, lấy cảm hứng từ hủ tục \"minh hôn\" của Trung Quốc xưa."
+      },
+      "cover": "ghost-bride.jpg",
+      "images": [
+        "ghost-bride.jpg"
+      ],
+      "steps": [
+        {
+          "title": {
+            "en": "Sketch",
+            "vi": "Phác thảo"
+          },
+          "text": {
+            "en": "Demo — pose and costume study.",
+            "vi": "Demo — nghiên cứu dáng và trang phục."
+          },
+          "images": [
+            "study-bride.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "string-demon",
+      "category": "personal-artworks",
+      "name": "String Demon",
+      "text": {
+        "en": "A splash art about my original character - a demon using strings as a spider.",
+        "vi": "Một bức tranh minh họa (splash art) về nhân vật gốc của mình – một con quỷ sử dụng dây tơ tựa như loài nhện."
+      },
+      "cover": "string-demon.jpg",
+      "images": [
+        "string-demon.jpg"
+      ],
+      "steps": [
+        {
+          "title": {
+            "en": "Sketch",
+            "vi": "Phác thảo"
+          },
+          "text": {
+            "en": "Demo — the spider-like silhouette.",
+            "vi": "Demo — dáng hình như nhện."
+          },
+          "images": [
+            "study-demon.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "werewolf-board-game",
+      "category": "character-design",
+      "name": {
+        "en": "Werewolf Board Game",
+        "vi": "Board game Ma Sói"
+      },
+      "text": {
         "en": "Demo — a character set for the board game <b>Werewolf</b>, from rough silhouettes to the final line-up.",
         "vi": "Demo — bộ nhân vật cho board game <b>Ma Sói</b>, từ phác thảo dáng đến bản hoàn chỉnh."
       },
-      "homeOther": true,
       "steps": [
         {
           "title": {
@@ -69,121 +271,15 @@
             "colour-wolf.jpg",
             "colour-hunter.jpg"
           ]
-        },
-        {
-          "title": {
-            "en": "Final line-up",
-            "vi": "Bản hoàn chỉnh"
-          },
-          "images": [
-            {
-              "src": "final-lineup.jpg",
-              "home": true,
-              "title": "WEREWOLF GAME",
-              "caption": {
-                "en": "A characters series for the board game \"Werewolf\".",
-                "vi": "Một bộ nhân vật dành cho trò chơi board game \"Ma Sói\"."
-              }
-            }
-          ]
         }
       ]
     },
     {
-      "id": "illustration",
+      "id": "temple-key-art",
+      "category": "character-design",
       "name": {
-        "en": "Illustration",
-        "vi": "Minh hoạ"
-      },
-      "text": {
-        "en": "Demo — splash arts of my original characters.",
-        "vi": "Demo — các bức splash art về nhân vật gốc của mình."
-      },
-      "images": [
-        {
-          "src": "cast-spell.jpg",
-          "home": true,
-          "title": "CAST SPELL",
-          "caption": {
-            "en": "A splash art about my original character - a girl  was born as a dragon's guardian.",
-            "vi": "Một bức tranh minh họa (splash art) về nhân vật gốc của mình – một cô gái sinh ra với sứ mệnh làm người bảo vệ rồng."
-          }
-        },
-        {
-          "src": "narcis-lilies.jpg",
-          "home": true,
-          "title": "NARCIS X LILIES",
-          "caption": {
-            "en": "A narrative art series about my two original characters: Nacis and Lilies.",
-            "vi": "Một loạt tác phẩm nghệ thuật kể chuyện về hai nhân vật gốc của mình: Nacis và Lilies."
-          }
-        },
-        {
-          "src": "mina.jpg",
-          "home": true,
-          "title": "MINA FANART",
-          "caption": {
-            "en": "A fanart about Mina - a general in the game Arena of Valor",
-            "vi": "Một bức tranh fanart về Mina - một vị tướng trong tựa game Arena of Valor."
-          }
-        },
-        {
-          "src": "dragon-temple.jpg",
-          "home": true,
-          "title": "DRAGON TEMPLE",
-          "caption": {
-            "en": "A splash art about a dragon temple with Japanese architecture.",
-            "vi": "Một bức tranh minh họa (splash art) về ngôi đền rồng mang kiến ​​trúc Nhật Bản."
-          }
-        },
-        {
-          "src": "ghost-bride.jpg",
-          "home": true,
-          "title": "GHOST BRIDE",
-          "caption": {
-            "en": "A splash art about a ghost bride from the ancient Chinese custom of \"posthumous marriage\".",
-            "vi": "Một bức tranh minh họa (splash art) về cô dâu ma, lấy cảm hứng từ hủ tục \"minh hôn\" của Trung Quốc xưa."
-          }
-        },
-        {
-          "src": "string-demon.jpg",
-          "home": true,
-          "title": "STRING DEMON",
-          "caption": {
-            "en": "A splash art about my original character - a demon using strings as a spider.",
-            "vi": "Một bức tranh minh họa (splash art) về nhân vật gốc của mình – một con quỷ sử dụng dây tơ tựa như loài nhện."
-          }
-        }
-      ]
-    },
-    {
-      "id": "fanart",
-      "name": "Fanart",
-      "text": {
-        "en": "Demo — characters from <i>Wuthering Waves</i>.",
-        "vi": "Demo — các nhân vật trong <i>Wuthering Waves</i>."
-      },
-      "homeOther": true,
-      "images": [
-        {
-          "src": "wuthering-waves.jpg",
-          "home": true,
-          "title": "WUTHERING WAVES FANART",
-          "caption": {
-            "en": "A fanart series about several characters in the game Wuthering Waves.",
-            "vi": "Một loạt tranh fanart về một số nhân vật trong trò chơi Wuthering Waves."
-          }
-        },
-        "ww-01.jpg",
-        "ww-02.jpg",
-        "ww-03.jpg"
-      ]
-    },
-    {
-      "id": "concept-art",
-      "name": {
-        "en": "Concept Art",
-        "vi": "Concept art"
+        "en": "Temple Courtyard",
+        "vi": "Sân đền"
       },
       "text": {
         "en": "Demo — environment key art.",
@@ -200,56 +296,124 @@
       ]
     },
     {
-      "id": "sketchbook",
+      "id": "wuthering-waves-set",
+      "category": "fanart",
       "name": {
-        "en": "Sketchbook",
-        "vi": "Sổ phác thảo"
+        "en": "Wuthering Waves Characters",
+        "vi": "Nhân vật Wuthering Waves"
       },
+      "text": {
+        "en": "Demo — characters from <i>Wuthering Waves</i>.",
+        "vi": "Demo — các nhân vật trong <i>Wuthering Waves</i>."
+      },
+      "images": [
+        "ww-01.jpg",
+        "ww-02.jpg",
+        "ww-03.jpg"
+      ],
+      "steps": [
+        {
+          "title": {
+            "en": "Sketch",
+            "vi": "Phác thảo"
+          },
+          "text": {
+            "en": "Demo — line study before colour.",
+            "vi": "Demo — nét phác trước khi tô màu."
+          },
+          "images": [
+            "study-ww.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mina-study",
+      "category": "fanart",
+      "name": {
+        "en": "Mina Study",
+        "vi": "Nghiên cứu Mina"
+      },
+      "text": {
+        "en": "Demo — a quick study of Mina from Arena of Valor.",
+        "vi": "Demo — bản nghiên cứu nhanh Mina trong Liên Quân."
+      },
+      "images": [
+        "study-mina.jpg"
+      ]
+    },
+    {
+      "id": "inktober-pages",
+      "category": "sketchbook",
+      "name": "Inktober",
       "text": {
         "en": "Demo — Inktober pages and quick studies.",
         "vi": "Demo — các trang Inktober và bài tập nhanh."
       },
-      "homeOther": true,
+      "steps": [
+        {
+          "title": {
+            "en": "Days 1 – 3",
+            "vi": "Ngày 1 – 3"
+          },
+          "text": {
+            "en": "Demo — the story begins.",
+            "vi": "Demo — câu chuyện bắt đầu."
+          },
+          "images": [
+            {
+              "src": "inktober-1.jpg",
+              "caption": "Inktober · Day 1"
+            },
+            {
+              "src": "inktober-2.jpg",
+              "caption": "Inktober · Day 2"
+            },
+            {
+              "src": "inktober-3.jpg",
+              "caption": "Inktober · Day 3"
+            }
+          ]
+        },
+        {
+          "title": {
+            "en": "Days 4 – 6",
+            "vi": "Ngày 4 – 6"
+          },
+          "text": {
+            "en": "Demo — the journey continues.",
+            "vi": "Demo — hành trình tiếp tục."
+          },
+          "images": [
+            {
+              "src": "inktober-4.jpg",
+              "caption": "Inktober · Day 4"
+            },
+            {
+              "src": "inktober-5.jpg",
+              "caption": "Inktober · Day 5"
+            },
+            {
+              "src": "inktober-6.jpg",
+              "caption": "Inktober · Day 6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "face-studies",
+      "category": "sketchbook",
+      "name": {
+        "en": "Face Studies",
+        "vi": "Luyện vẽ mặt"
+      },
+      "text": {
+        "en": "Demo — expressions and lighting.",
+        "vi": "Demo — biểu cảm và ánh sáng."
+      },
       "images": [
-        {
-          "src": "inktober.jpg",
-          "home": true,
-          "title": "INKTOBER CHALLENGE",
-          "caption": {
-            "en": "An annual Inktober challenge with my own narrative. I have joined this challenge for 3 years (2023 - 2024 - 2025)",
-            "vi": "Thử thách Inktober thường niên với câu chuyện của riêng mình. Mình đã tham gia thử thách này trong 3 năm (2023 - 2024 - 2025)."
-          }
-        },
-        {
-          "src": "inktober-1.jpg",
-          "caption": "Inktober · Day 1"
-        },
-        {
-          "src": "inktober-2.jpg",
-          "caption": "Inktober · Day 2"
-        },
-        {
-          "src": "inktober-3.jpg",
-          "caption": "Inktober · Day 3"
-        },
-        "study-face.jpg",
-        {
-          "src": "inktober-4.jpg",
-          "caption": "Inktober · Day 4"
-        },
-        "study-bride.jpg",
-        {
-          "src": "inktober-5.jpg",
-          "caption": "Inktober · Day 5"
-        },
-        "study-narcis.jpg",
-        {
-          "src": "inktober-6.jpg",
-          "caption": "Inktober · Day 6"
-        },
-        "study-mina.jpg",
-        "study-ww.jpg",
-        "study-demon.jpg"
+        "study-face.jpg"
       ]
     }
   ]

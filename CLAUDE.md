@@ -84,24 +84,23 @@ The owner writes in Vietnamese — reply in Vietnamese.
   first final video, `tags` (role tags, home only; empty → `tools`), `text` (string → p, list → bullets), Explore → `art3d.html#<id>`.
   Menu label "Portfolio → 3D Artwork" and the home title "3D BLENDER" stay as they are (owner's decision). Studio "3D Artwork":
   "Hiện ở trang chủ (3D Blender)" toggle + "Tag vai trò" chips (red note when no final video).
-- Home 2D ARTWORK section (owner's pick after a preview; `sections/artworks.js`): band `artworks_title` "2D ARTWORK", then
-  "01 PERSONAL ARTWORKS" (`artworks_personal`, cyan number + dotted rule = `.sub-head`) = the coverflow carousel of every Art2D image
-  with `"home": true` (order = sections → images, step images too; big title = image `title`, line under it = `caption`); its Explore
-  → `art2d.html#<section of the slide in view>`. Then "02 OTHER 2D PROJECTS" (`artworks_other`) = fixed row of 3 section cards
-  (`.art-card`: HUD frame + `cover` → first image, name with titleFont, "{n} artworks" = `a2_count`; card → `art2d.html#<id>`):
-  first 3 sections with `"homeOther": true`, none → first 3; phone = same row, swipe sideways (scroll-snap). Explore → art2d.html.
-  The 9 original carousel images (2400px) replaced the smaller cuts in Art2D (illustration ×6, character-design/final-lineup.jpg)
-  or were added as first image (fanart/wuthering-waves.jpg, sketchbook/inktober.jpg). Studio "2D Artwork": "★ Carousel trang chủ"
-  under every image (+ title EN / VI) and "Hiện ở “Other 2D Projects”" per section; old Studio routes #/blender, #/artworks redirect.
-- 2D Artwork page = demo variant 1 "Progression" + the page banner of variant 2 (owner's pick of 2 demos, demos deleted):
-  banner (title `a2_page_title`, data `intro`, "5 SECTIONS" / "29 ARTWORKS" chips), sticky jump-chip bar (scroll-spy),
-  sections "01 NAME · n images" (HUD number + dotted rule) with text + filmstrip + lightbox; optional steps = numbered rows on a
-  cyan rail, each with text + its own filmstrip. Section/step titles with Vietnamese letters Qualy lacks switch to Montserrat
-  (EN look unchanged). Data `{ intro, sections: [{ id, name, text, cover?, images, steps?: [{ title, text, images }] }] }`;
-  text = 1 line → paragraph, list → bullets; `cover` not shown by this layout (= home Other 2D Projects card). Labels `a2_*`.
-  Studio view "2D Artwork" edits it (sections/steps/images, id = folder, renamed on save; API `/api/art2d`, images
-  `/api/art2d/images?dir=<id>`, `/api/art2d/rename-section`); its image manager is the generic `imgGroup()` also used by
-  the project progression steps.
+- 2D data = TABS → PROJECTS → STEPS (owner restructured it): `Database/Art2D/data.json` = `{ intro, categories: [{ id, name, text }],
+  projects: [{ id, category, name, text, cover?, images, steps?: [{ title, text, images }] }] }`; images in `images/<project id>/`
+  (steps share it). Tabs + projects share one #anchor namespace (`art2d.html#<tab|project id>`). Tab 1 = Personal Artworks, tabs 2–4 =
+  the home "Other 2D Projects". Model: `art2d/model.js` → `{ categories: [{ id, name, text, projects, images, cover }], projects, total }`.
+- Home 2D ARTWORK section (`sections/artworks.js`): band `artworks_title` "2D ARTWORK"; "01 <tab 1 name>" (`.sub-head`, cyan number +
+  dotted rule) = coverflow carousel of tab 1 projects (cover, name, first paragraph of text), Explore → `art2d.html#<project>`;
+  "02 OTHER 2D PROJECTS" (`artworks_other`) = fixed row of the cards of tabs 2–4 (`.art-card`: HUD frame + cover of the tab's first
+  project, tab name with titleFont, "{n} projects" = `a2_projects`) → `art2d.html#<tab>`; phone = same row, swipe sideways. Explore → art2d.html.
+- 2D Artwork page (`art2d/render.js`) = owner's pick "Tab scroll" (of 2 demos, the other removed): page banner (`a2_page_title`, data
+  `intro`, tabs / projects / artworks chips) + sticky tab bar (`.a2-jump` chips "01 Name n") + ONE tab at a time (owner: no scrolling
+  through all tabs) = numbered HUD heading "01 NAME · n projects" + tab text, then its projects stacked as HUD panels (`.a2-proj`:
+  number, name, image count, text, filmstrip + lightbox, steps on the cyan rail). The bar switches tabs (#<tab>); #<project> opens
+  its tab scrolled to it; no hash = tab 1. `jumpBar` / `jumpTo` stay exported for art3d.html. Labels `a2_*`. Owner guide: `ART2D.md`.
+  Studio view "2D Artwork": "Các tab" editor (name EN/VI, id, intro; ↑ ↓, add, delete when empty) + projects grouped by tab (tab
+  select per project, ↑ ↓ inside the tab, "+ Thêm dự án vào tab này"); projects use the generic `PAGES` / `pg*` code (list
+  "projects", API `/api/art2d`, `/api/art2d/images?dir=<project id>`, `/api/art2d/rename-project`); a project points to its tab by
+  the tab draft key `_k`, ids checked on save (tab id ≠ project id); "Xem tab / dự án trên web ↗" links (`art2d.html#id`).
 - 3D Artwork page = demo variant 1 "Progression" (owner's pick of 2 demos, demos deleted): page banner (`a3_page_title`, data
   `intro`, projects / videos / images chips), sticky jump chips (▶ = project has a final video), sections "01 NAME" + counts line
   (steps · images · videos), TOOLS chips + text, FINAL RESULT (videos in `.hud-frame` via framedVideo; portrait / Shorts video
@@ -122,12 +121,16 @@ The owner writes in Vietnamese — reply in Vietnamese.
   `#step-<n>` deep-links a step; unknown id → not-found + link back. Tab title per view. Data `{ intro, projects: [{ id, name, text,
   cover?, client?, year?, tools?, steps: [{ title, text, images }] }] }`. Labels `gd_*`. Studio view "Graphic Design" (`#/graphic`,
   `PAGES.graphic`): API `/api/graphic`, `/api/graphic/images?dir=<id>`, `/api/graphic/rename-project`; commit scope `Database/GraphicDesign`.
+- Studio marks every field whose value is also shown on the home page with a cyan "(H)" after its label (`HM` in studio.js,
+  `.hm` in studio.css, legend in the sidebar note): Intro / Hồ sơ / Mạng xã hội / Explore links / rain word / tab title, Kinh nghiệm,
+  UI text keys shown on home (`isHomeKey`: all but `pd_ games_ a2_ a3_ gd_`, plus `a2_count*`), the featured-project fields, and
+  the 2D / 3D Artwork fields that feed the home sections. Add (H) to any new home-visible field.
 - Project page "← Back to projects" still → index.html#featured (owner hasn't decided whether it should go to games.html).
 
 ## Current status / next step
 - Power Surge intro is live on the site. The old hero image (`intro.heroImage`, `hero.jpg`) was removed — the glass comes from the textures.
-- Placeholder content everywhere (lorem ipsum, sample YouTube ids, generated artwork images). 2D Artwork has 5 demo sections
-  (images cut from Personal Artworks, texts marked "Demo"); 3D Artwork has 3 demo projects (borrowed YouTube ids, placeholder
+- Placeholder content everywhere (lorem ipsum, sample YouTube ids, generated artwork images). 2D Artwork has 4 demo tabs / 15 projects
+  (Personal Artworks = the 9 original carousel artworks; the rest = cuts of them, extra texts marked "Demo"); 3D Artwork has 3 demo projects (borrowed YouTube ids, placeholder
   images marked "DEMO · PLACEHOLDER", texts marked "Demo"). Graphic Design has 5 demo projects (same markers).
 
 ## Conventions

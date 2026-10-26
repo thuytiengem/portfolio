@@ -1,6 +1,6 @@
-// 2D Artwork page layout (owner's pick: variant 1 "Progression" + the variant 2 page banner). Each section = a numbered
-// HUD heading ("01 CHARACTER DESIGN · 7 images ───"), its text and a filmstrip (+ lightbox); steps = numbered sub-rows on
-// a vertical cyan rail, each with its own text + filmstrip. A sticky chip bar jumps between sections (scroll-spy highlight).
+// 2D Artwork page layout (owner's pick of 2 demos, "Tab scroll"): page banner, a sticky bar of tabs (Personal Artworks + the
+// other 2D categories) and ONE tab at a time below it = numbered HUD heading + text, then its projects stacked as HUD panels —
+// each project = text, filmstrip (+ lightbox) and steps (numbered rows on a vertical cyan rail).
 import { h, $$, reveal, reducedMotion } from "../utils.js";
 import { tr, bind, label } from "../i18n.js";
 import { setRich } from "../richtext.js";
@@ -13,6 +13,7 @@ import { has } from "./model.js";
 const title = (tag, value, cls) => has(value) ? bind(h(tag, { class: cls }), el => titleFont(setRich(el, tr(value)))) : null;
 /** "7 images" chip (follows the language) */
 const count = n => n ? bind(h("span", { class: "pd-count" }), el => { el.textContent = label(n === 1 ? "pd_image" : "pd_images", { n }); }) : null;
+const projCount = n => bind(h("span", { class: "pd-count" }), el => { el.textContent = label(n === 1 ? "a2_project_one" : "a2_projects", { n }); });
 
 function stepRow(st, i) {
   return h("li", { class: "a2-step" },
@@ -25,16 +26,11 @@ function stepRow(st, i) {
       rich(st.text, "stage-text"),
       filmstrip(st.images)));
 }
-
-function section(s, n) {
-  return h("section", { class: "pd-sec a2-sec", id: s.id },
-    h("div", { class: "container" },
-      h("header", { class: "pd-h" }, h("span", { class: "pd-h-num" }, num(n)), title("h2", s.name), count(s.count))),
-    h("div", { class: "container a2-body" },
-      rich(s.text, "stage-text a2-text"),
-      filmstrip(s.images),
-      s.steps.length ? h("ol", { class: "a2-steps" }, s.steps.map(stepRow)) : null));
-}
+/** a project's content: text, its own images, then the steps */
+const projectBody = p => [
+  rich(p.text, "stage-text a2-text"),
+  filmstrip(p.images),
+  p.steps.length ? h("ol", { class: "a2-steps" }, p.steps.map(stepRow)) : null];
 
 // ---------- jump to a section ----------
 // The heading lands just under the topbar + sticky chip bar. Layout position (offsetTop) ignores the .reveal slide-in
@@ -51,48 +47,88 @@ export function jumpTo(id, smooth = true) {
   addEventListener("scrollend", () => { if (Math.abs(scrollY - y()) > 4) scrollTo({ top: y(), behavior: "auto" }); }, { once: true });
 }
 
-/** sticky chip bar "01 Character Design 7" + scroll-spy (art3d.html too: its own aria label key + chip tail) */
+/** chip "01 Character Design 7" */
 const countTail = s => s.count ? h("span", { class: "a2-chip-c" }, s.count) : null;
-export function jumpBar(sections, { aria = "a2_jump", tail = countTail } = {}) {
-  const chips = sections.map((s, i) => h("a", { class: "a2-chip", href: `#${s.id}`, "data-id": s.id },
-    h("span", { class: "a2-chip-n" }, num(i + 1)),
-    has(s.name) ? bind(h("span", { class: "a2-chip-name" }), el => setRich(el, tr(s.name))) : null,
-    tail(s)));
-  const track = h("div", { class: "a2-jump-track" }, chips);
-  const bar = bind(h("nav", { class: "a2-jump" }, h("div", { class: "container" }, track)), el => el.setAttribute("aria-label", label(aria)));
-
-  chips.forEach(c => c.addEventListener("click", e => {
-    if (!document.getElementById(c.dataset.id)) return;
-    e.preventDefault();
-    jumpTo(c.dataset.id);
-    history.replaceState(null, "", `#${c.dataset.id}`);
-  }));
-
-  // highlight the section crossing the upper third of the screen; keep its chip visible in the (phone) track
-  const setOn = id => chips.forEach(c => {
+const chip = (s, i, tail) => h("a", { class: "a2-chip", href: `#${s.id}`, "data-id": s.id },
+  h("span", { class: "a2-chip-n" }, num(i + 1)),
+  has(s.name) ? bind(h("span", { class: "a2-chip-name" }), el => setRich(el, tr(s.name))) : null,
+  tail(s));
+const chipBar = (chips, aria) => bind(h("nav", { class: "a2-jump" }, h("div", { class: "container" }, h("div", { class: "a2-jump-track" }, chips))),
+  el => el.setAttribute("aria-label", label(aria)));
+/** mark one chip as current; keep it visible in the (phone) track */
+function setOn(chips, id) {
+  const track = chips[0]?.parentElement;
+  chips.forEach(c => {
     const on = c.dataset.id === id;
     if (on && !c.classList.contains("on") && track.scrollWidth > track.clientWidth)
       track.scrollTo({ left: c.offsetLeft - (track.clientWidth - c.offsetWidth) / 2, behavior: reducedMotion() ? "auto" : "smooth" });
     c.classList.toggle("on", on);
     on ? c.setAttribute("aria-current", "true") : c.removeAttribute("aria-current");
   });
-  const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) setOn(e.target.id); }),
-    { rootMargin: "-35% 0px -60% 0px" });
-  requestAnimationFrame(() => sections.forEach(s => { const el = document.getElementById(s.id); if (el) io.observe(el); }));
-  return bar;
 }
 
-/** banner ("← Home", 2D ARTWORK, intro, "5 sections" / "29 artworks") + jump bar + sections (or "No artworks yet.") */
+/** sticky chip bar + scroll-spy (art3d.html too: its own aria label key + chip tail) */
+export function jumpBar(sections, { aria = "a2_jump", tail = countTail } = {}) {
+  const chips = sections.map((s, i) => chip(s, i, tail));
+  chips.forEach(c => c.addEventListener("click", e => {
+    if (!document.getElementById(c.dataset.id)) return;
+    e.preventDefault();
+    jumpTo(c.dataset.id);
+    history.replaceState(null, "", `#${c.dataset.id}`);
+  }));
+  // highlight the section crossing the upper third of the screen
+  const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) setOn(chips, e.target.id); }),
+    { rootMargin: "-35% 0px -60% 0px" });
+  requestAnimationFrame(() => sections.forEach(s => { const el = document.getElementById(s.id); if (el) io.observe(el); }));
+  return chipBar(chips, aria);
+}
+
+/** banner ("← Home", 2D ARTWORK, intro, "4 tabs" / "15 projects" / "38 artworks") */
+const banner = model => pageBanner({
+  back: { key: "a2_back", href: "index.html" }, title: "a2_page_title", intro: model.intro,
+  chips: model.total.projects ? [{ key: "a2_tabs", n: model.categories.length },
+    { key: model.total.projects === 1 ? "a2_project_one" : "a2_projects", n: model.total.projects },
+    { key: model.total.images === 1 ? "a2_count_one" : "a2_count", n: model.total.images }] : [],
+});
+const empty = () => h("div", { class: "container" }, lbl("p", "a2_empty", "a2-empty"));
+const tabTail = c => h("span", { class: "a2-chip-c" }, c.projects.length);
+
+// ---------- one tab: heading + its projects ----------
+function projectBlock(p, i) {
+  return h("article", { class: "a2-proj", id: p.id },
+    h("header", { class: "a2-proj-h" },
+      h("span", { class: "a2-proj-n" }, num(i + 1)), title("h3", p.name, "a2-proj-title"), count(p.count)),
+    h("div", { class: "a2-body" }, projectBody(p)));
+}
+function tabSection(c, n) {
+  return h("section", { class: "pd-sec a2-sec a2-cat", id: c.id },
+    h("div", { class: "container" },
+      h("header", { class: "pd-h" }, h("span", { class: "pd-h-num" }, num(n)), title("h2", c.name), projCount(c.projects.length)),
+      rich(c.text, "stage-text a2-text a2-cat-text")),
+    h("div", { class: "container a2-projs" }, c.projects.map(projectBlock)));
+}
+/** banner + tab bar + the chosen tab; the bar switches the tab below it (#<tab id>), #<project id> = its tab scrolled to
+ *  that project, nothing = the first tab. Returns open(id) = go to a tab / project from the page #hash. */
 export function renderArt2D(model, main) {
-  const secs = model.sections, total = model.total;
-  const banner = pageBanner({
-    back: { key: "a2_back", href: "index.html" }, title: "a2_page_title", intro: model.intro,
-    chips: secs.length ? [{ key: "a2_sections_count", n: secs.length }, { key: total === 1 ? "a2_count_one" : "a2_count", n: total }] : [],
-  });
-  main.replaceChildren(...[
-    banner,
-    secs.length > 1 ? jumpBar(secs) : null,
-    ...secs.map((s, i) => section(s, i + 1)),
-    secs.length ? null : h("div", { class: "container" }, lbl("p", "a2_empty", "a2-empty"))].filter(Boolean));
-  $$(".a2-sec", main).forEach(reveal);
+  const cats = model.categories;
+  const chips = cats.map((c, i) => chip(c, i, tabTail));
+  const view = h("div", { class: "a2-view" });
+  main.replaceChildren(...[banner(model), cats.length ? chipBar(chips, "a2_jump") : null, view, model.total.projects ? null : empty()].filter(Boolean));
+  let shown = null;
+  const show = (id, scroll) => {
+    const p = model.projects.find(x => x.id === id), c = p ? cats.find(x => x.id === p.category) : cats.find(x => x.id === id) || cats[0];
+    if (!c) return;
+    if (c !== shown) {
+      shown = c;
+      setOn(chips, c.id);
+      view.replaceChildren(tabSection(c, cats.indexOf(c) + 1));
+      // slide-in per heading / project panel, never on the whole tab: a tall tab opened in its middle (#project) stays under
+      // the reveal threshold (15 % of it on screen) and would keep everything invisible
+      $$(".a2-sec > .container:first-child, .a2-proj", view).forEach(reveal);
+    }
+    if (scroll) jumpTo(p ? p.id : c.id, !p);
+  };
+  addEventListener("hashchange", () => show(decodeURIComponent(location.hash.slice(1)), true));
+  show(decodeURIComponent(location.hash.slice(1)), false);
+  return id => { if (id) show(id, true); };
 }

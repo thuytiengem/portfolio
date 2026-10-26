@@ -84,6 +84,7 @@ main { padding: 24px 28px 140px; min-width: 0; }
 .f > label, .f > .lbl { font-size: .78rem; font-weight: 700; color: var(--text); }
 .f > label code, .f > .lbl code { color: var(--dim); font-weight: 400; margin-left: 4px; }
 .hint { font-size: .74rem; color: var(--dim); }
+.hm { color: var(--cyan); font: 700 .78em var(--mono); letter-spacing: .03em; white-space: nowrap; }
 .err { font-size: .74rem; color: var(--red); }
 input[type=text], input[type=url], input[type=email], input[type=number], input:not([type]), textarea, select {
   width: 100%; padding: 8px 10px; background: var(--field); border: 1px solid var(--line2); border-radius: 8px; color: var(--bright); outline: none; transition: border-color .15s;
@@ -295,3 +296,7 @@ span.bad { color: var(--red); }
 .v3 { display: grid; gap: 10px; }
 .v3 .ytp.portrait { width: 110px; aspect-ratio: 9 / 16; justify-self: center; }
 .v3 .ytp.bad { border-color: #ff6a7a99; color: var(--red); }
+.a2-group { margin-top: 22px; display: grid; gap: 10px; }
+.a2-group-h { font-size: 1rem; color: var(--bright); padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+.a2-group-h small { margin-left: 8px; font-weight: 400; color: var(--dim); }
+.a2-open { justify-self: start; margin-top: 6px; }

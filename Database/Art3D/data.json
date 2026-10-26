@@ -40,6 +40,16 @@
       "steps": [
         {
           "title": "Concept sketch",
+          "text": {
+            "en": [
+              "With the goal of creating a complete 3D animated short, I began by developing the initial concept and sketching the storyboard, environment, and characters in Adobe Photoshop.",
+              "The story follows a Blossom Fairy whose touch brings flowers into bloom, transforming every place she visits into a vibrant spring landscape. She spreads light and breathes life into the flowers, awakening the beauty of nature wherever she goes."
+            ],
+            "vi": [
+              "Với mục tiêu tạo ra một phim hoạt hình 3D ngắn hoàn chỉnh, mình bắt đầu bằng việc phát triển ý tưởng ban đầu và phác thảo storyboard, bối cảnh và nhân vật bằng Adobe Photoshop.",
+              "Câu chuyện kể về một nàng Tiên Hoa, người mang đến sự nở rộ cho những bông hoa nơi nàng chạm tay tới, biến mọi nơi nàng đi qua thành khung cảnh mùa xuân tràn đầy sức sống. Nàng lan tỏa ánh sáng và ban sự sống cho muôn hoa, đánh thức vẻ đẹp của thiên nhiên trên mỗi bước chân."
+            ]
+          },
           "images": [
             {
               "src": "idea.jpg",
@@ -72,30 +82,37 @@
           ]
         },
         {
-          "title": "Modeling & Retopo",
+          "title": "3D Modeling & Retopology",
+          "text": {
+            "en": [
+              "I modeled the 3D character and environment in Blender based on the initial concept sketches.",
+              "After that, I performed retopology on the completed models to create clean, optimized mesh topology for subsequent production stages."
+            ],
+            "vi": [
+              "Mình đã dựng hình nhân vật và bối cảnh 3D bằng Blender dựa trên các bản phác thảo concept ban đầu.",
+              "Sau đó mình thực hiện retopology trên các model đã hoàn thiện nhằm tạo cấu trúc lưới mesh gọn gàng, tối ưu cho các công đoạn sản xuất tiếp theo."
+            ]
+          },
           "images": [
             "char-modeling.jpg",
             "map-modeling.jpg"
           ]
         },
         {
-          "title": "UV cutting & Texture painting",
+          "title": "UV Mapping & Texture Painting",
           "text": {
-            "en": "Demo — UV unwrap, hand-painted colour and a soft roughness map.",
-            "vi": "Demo — trải UV, vẽ màu tay và bản đồ độ nhám mềm."
+            "en": "I unwrapped the character's UVs in Blender and exported the UV layout as a PNG file for texture painting in Adobe Photoshop.",
+            "vi": "Mình trải UV cho nhân vật trong Blender và xuất UV layout dưới dạng file PNG để thực hiện texture painting trong Adobe Photoshop."
           },
           "images": [
             "final-char.jpg"
           ]
         },
         {
-          "title": {
-            "en": "Lighting",
-            "vi": "Ánh sáng & diễn hoạt"
-          },
+          "title": "Lighting & Shading",
           "text": {
-            "en": "Demo — three-point light, then a short flying loop.",
-            "vi": "Demo — ánh sáng ba điểm, rồi một đoạn bay lặp ngắn."
+            "en": "I chose a nighttime setting with moonlight-inspired lighting to illuminate the environment. I also used shaders to create color gradients and water effects, complemented by glowing flowers and fireflies to enhance the scene's magical atmosphere.",
+            "vi": "Mình lựa chọn bối cảnh ban đêm với ánh sáng lấy cảm hứng từ ánh trăng để chiếu sáng môi trường. Mình cũng sử dụng shader để tạo hiệu ứng chuyển màu và hiệu ứng mặt nước, kết hợp với ánh sáng phát ra từ hoa và đom đóm nhằm tăng thêm vẻ huyền ảo cho khung cảnh."
           },
           "images": [
             "map-final.png",
@@ -103,23 +120,38 @@
           ]
         },
         {
-          "title": "Animation",
+          "title": "Rigging, Animation & Post-production",
+          "text": {
+            "en": [
+              "I rigged the character and painted skin weights, then added bones to selected flower objects to animate their movements. I also created particle effects for visual enhancement and animated the character and scene using keyframes. Camera movements and keyframes were set up to ensure smooth transitions and dynamic framing.",
+              "I rendered the final animation and completed post-production, including adding background music and ending credit in CapCut."
+            ],
+            "vi": [
+              "Mình gắn xương và vẽ skin weights cho nhân vật, đồng thời thêm xương cho một số cụm hoa để tạo chuyển động. Mình cũng tạo hiệu ứng hạt (particle effects) nhằm tăng tính trực quan, sau đó sử dụng keyframe để tạo animation cho nhân vật và cảnh vật. Camera được thiết lập và tạo chuyển động bằng keyframe nhằm đảm bảo chuyển cảnh mượt mà và góc quay sinh động.",
+              "Mình render video animation hoàn chỉnh và thực hiện hậu kỳ, bao gồm thêm nhạc nền và ending credit bằng CapCut."
+            ]
+          },
           "images": [
             "bone-2.jpg",
             "anim-2.jpg"
-          ]
+          ],
+          "video": {
+            "youtube": "LhaYfT7kzbg",
+            "orientation": "landscape"
+          }
         }
       ]
     },
     {
       "id": "crystal-shrine",
-      "name": {
-        "en": "Crystal Shrine",
-        "vi": "Đền pha lê"
-      },
+      "name": "Bunny",
+      "tags": [
+        "2D Concept Artist",
+        "3D Modeling"
+      ],
       "tools": [
         "Blender",
-        "Photoshop"
+        "Adobe Photoshop"
       ],
       "text": {
         "en": "Demo — a vertical (Shorts) turntable of a glass shrine. <i>The video id is reused from another project and only marked portrait to test the layout.</i>",
@@ -192,61 +224,6 @@
           },
           "images": [
             "compositing-01.jpg"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "moon-garden",
-      "name": {
-        "en": "Moon Garden",
-        "vi": "Khu vườn ánh trăng"
-      },
-      "tools": [
-        "Blender"
-      ],
-      "text": {
-        "en": "Demo — a still-image project: no video, only final renders.",
-        "vi": "Demo — dự án chỉ có ảnh tĩnh: không có video, chỉ có ảnh render cuối."
-      },
-      "final": {
-        "images": [
-          {
-            "src": "final-01.jpg",
-            "caption": {
-              "en": "Demo — night view",
-              "vi": "Demo — cảnh đêm"
-            }
-          },
-          "final-02.jpg",
-          "final-03.jpg",
-          "final-04.jpg"
-        ]
-      },
-      "steps": [
-        {
-          "title": {
-            "en": "Modeling",
-            "vi": "Dựng hình"
-          },
-          "images": [
-            "modeling-01.jpg",
-            "modeling-02.jpg"
-          ]
-        },
-        {
-          "title": {
-            "en": "Render tests",
-            "vi": "Thử render"
-          },
-          "text": {
-            "en": "Demo — Eevee vs Cycles, moonlight colour tests.",
-            "vi": "Demo — so Eevee với Cycles, thử màu ánh trăng."
-          },
-          "images": [
-            "render-test-01.jpg",
-            "render-test-02.jpg",
-            "render-test-03.jpg"
           ]
         }
       ]

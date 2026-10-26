@@ -12,7 +12,7 @@ import { initMenu, setBrand } from "../topbar.js";
 import { initPortfolioMenu } from "../portfolio-menu.js";
 import { renderContact } from "../sections/about.js";
 import { normalize } from "./model.js";
-import { renderArt2D, jumpTo } from "./render.js";
+import { renderArt2D } from "./render.js";
 
 const BASE = "Database/Art2D/";
 
@@ -35,13 +35,13 @@ async function main() {
   setBrand(config);
   createRain($("#rain"), { word: config.background?.rainWord || "thuytiengem" });
 
-  renderArt2D(normalize(raw, BASE), $("#art2d"));
+  const open = renderArt2D(normalize(raw, BASE), $("#art2d"));
   renderContact(config);
   initMenu();
 
-  // opened with #section → jump there once the layout (and the fonts) exist
+  // opened with #tab / #project → go there once the layout (and the fonts) exist
   const id = decodeURIComponent(location.hash.slice(1));
-  if (id && document.getElementById(id)?.classList.contains("a2-sec")) document.fonts.ready.then(() => requestAnimationFrame(() => jumpTo(id, false)));
+  if (id) document.fonts.ready.then(() => requestAnimationFrame(() => open(id)));
 }
 
 main().catch(err => console.error(err));
