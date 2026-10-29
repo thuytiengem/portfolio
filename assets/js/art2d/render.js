@@ -1,6 +1,6 @@
 // 2D Artwork page layout (owner's pick of 2 demos, "Tab scroll"): page banner, a sticky bar of tabs (Personal Artworks + the
-// other 2D categories) and ONE tab at a time below it = numbered HUD heading + text, then its projects stacked as HUD panels —
-// each project = text, filmstrip (+ lightbox) and steps (numbered rows on a vertical cyan rail).
+// other 2D categories) and ONE tab at a time below it = HUD heading + text, then its projects stacked as numbered HUD panels —
+// each project = text + filmstrip (+ lightbox).
 import { h, $$, reveal, reducedMotion } from "../utils.js";
 import { tr, bind, label } from "../i18n.js";
 import { setRich } from "../richtext.js";
@@ -14,23 +14,6 @@ const title = (tag, value, cls) => has(value) ? bind(h(tag, { class: cls }), el 
 /** "7 images" chip (follows the language) */
 const count = n => n ? bind(h("span", { class: "pd-count" }), el => { el.textContent = label(n === 1 ? "pd_image" : "pd_images", { n }); }) : null;
 const projCount = n => bind(h("span", { class: "pd-count" }), el => { el.textContent = label(n === 1 ? "a2_project_one" : "a2_projects", { n }); });
-
-function stepRow(st, i) {
-  return h("li", { class: "a2-step" },
-    h("div", { class: "a2-step-n", "aria-hidden": "true" }, num(i + 1)),
-    h("div", { class: "a2-step-body" },
-      h("div", { class: "a2-step-head" },
-        lbl("span", "a2_step", "a2-step-kicker", { n: i + 1 }),
-        title("h3", st.title, "a2-step-title"),
-        count(st.images.length)),
-      rich(st.text, "stage-text"),
-      filmstrip(st.images)));
-}
-/** a project's content: text, its own images, then the steps */
-const projectBody = p => [
-  rich(p.text, "stage-text a2-text"),
-  filmstrip(p.images),
-  p.steps.length ? h("ol", { class: "a2-steps" }, p.steps.map(stepRow)) : null];
 
 // ---------- jump to a section ----------
 // The heading lands just under the topbar + sticky chip bar. Layout position (offsetTop) ignores the .reveal slide-in
@@ -98,12 +81,12 @@ function projectBlock(p, i) {
   return h("article", { class: "a2-proj", id: p.id },
     h("header", { class: "a2-proj-h" },
       h("span", { class: "a2-proj-n" }, num(i + 1)), title("h3", p.name, "a2-proj-title"), count(p.count)),
-    h("div", { class: "a2-body" }, projectBody(p)));
+    h("div", { class: "a2-body" }, rich(p.text, "stage-text a2-text"), filmstrip(p.images)));
 }
-function tabSection(c, n) {
+function tabSection(c) {
   return h("section", { class: "pd-sec a2-sec a2-cat", id: c.id },
     h("div", { class: "container" },
-      h("header", { class: "pd-h" }, h("span", { class: "pd-h-num" }, num(n)), title("h2", c.name), projCount(c.projects.length)),
+      h("header", { class: "pd-h" }, title("h2", c.name), projCount(c.projects.length)),
       rich(c.text, "stage-text a2-text a2-cat-text")),
     h("div", { class: "container a2-projs" }, c.projects.map(projectBlock)));
 }
@@ -121,7 +104,7 @@ export function renderArt2D(model, main) {
     if (c !== shown) {
       shown = c;
       setOn(chips, c.id);
-      view.replaceChildren(tabSection(c, cats.indexOf(c) + 1));
+      view.replaceChildren(tabSection(c));
       // slide-in per heading / project panel, never on the whole tab: a tall tab opened in its middle (#project) stays under
       // the reveal threshold (15 % of it on screen) and would keep everything invisible
       $$(".a2-sec > .container:first-child, .a2-proj", view).forEach(reveal);

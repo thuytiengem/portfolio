@@ -1,7 +1,8 @@
 // 2D ARTWORK section, from the 2D Artwork page data (Database/Art2D, art2d/model.js):
 //   01 <first tab, "Personal Artworks"> = carousel of its projects (cover, name, first paragraph of the text) + blurred
 //      background that cross-fades (dissolve + zoom); its Explore opens the project of the slide in view.
-//   02 Other 2D Projects = cards of the next 3 tabs (cover of their first project, name, "n projects") → art2d.html#<tab>.
+//   02 Other 2D Projects = cards of the next 3 tabs (cover of their first project, name, "n projects") → art2d.html#<tab>;
+//      its Explore → the first of these tabs (tab 2) unless links.artworks is set.
 import { h, $ } from "../utils.js";
 import { tr, label, bind, onLangChange } from "../i18n.js";
 import { createCarousel } from "../carousel.js";
@@ -24,6 +25,9 @@ export function renderArtworks(model) {
   $("#artworks").hidden = !slides.length && !others.length;
   if (slides.length) renderCarousel(slides);
   $("#otherArtGrid").append(...others.map(otherCard));
+  // Explore of "Other 2D Projects" (no link set in web-config) → the first of these tabs
+  const more = $("#otherArtExplore");
+  if (others.length && more.getAttribute("href") === "art2d.html") more.href = pageUrl(others[0].id);
 }
 
 function renderCarousel(slides) {

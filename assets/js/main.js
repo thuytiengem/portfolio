@@ -59,11 +59,11 @@ async function main() {
     $("#topbar").classList.add("show");
     document.documentElement.classList.remove("intro-lock");
   });
-  // Home link + logo: the intro starts right away while the page scrolls back to the top (the topbar stays)
+  // logo: the intro starts right away while the page scrolls back to the top (the topbar stays); Home link: only the scroll
   $$('#brand, #nav a[href="#home"]').forEach(a => a.addEventListener("click", e => {
     e.preventDefault();
     history.replaceState(null, "", location.pathname + location.search);
-    replayIntro();
+    if (a.id === "brand") replayIntro();
     scrollTo({ top: 0, behavior: "smooth" });
   }));
 }

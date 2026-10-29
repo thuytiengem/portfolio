@@ -60,8 +60,9 @@ The owner writes in Vietnamese — reply in Vietnamese.
 - Custom cursor = "Laser comet" (owner picked design 8 of 10, built from their star-cursor reference): `assets/js/cursor.js`
   (engine + design, `initCursor()` in main.js) + "Custom cursor" rules in base.css. Mouse only; add new clickable classes to CLICKABLE.
 - Coming back from a project page (Back to projects, Portfolio/About links, browser Back) opens the home page WITHOUT the intro
-  (sessionStorage flag, `assets/js/intro/skip.js`); Home / logo on the project page still play it. Same on games.html, art2d.html and art3d.html.
-- Clicking Home or the logo scrolls to the top and replays the intro; the topbar stays visible (`runIntro` returns `replay()`).
+  (sessionStorage flag, `assets/js/intro/skip.js`); only the logo (#brand) on those pages plays it again; their Home link does not (owner). Same on games.html, art2d.html and art3d.html.
+- Clicking the logo scrolls to the top and replays the intro; the topbar stays visible (`runIntro` returns `replay()`). The Home link
+  only scrolls to the top, no intro (owner).
 - Description panel, Explore button and hero quote bar (`assets/ui/text-frame/text-frame.png`, owner's art) = image frames with 9-slice via CSS `border-image` (owner picked this over canvas / 9 files);
   slices edited visually in Studio → "Giao diện" (Unity Sprite Editor style). Default PNGs are generated at 2x (`scale: 0.5`).
   Each frame gets a dark layer behind it cut to the frame's own shape (`::after` + `mask-border` of the same image; `backdrop`
@@ -79,14 +80,15 @@ The owner writes in Vietnamese — reply in Vietnamese.
   `"thumbnail"` = card image. Studio ("Dự án game") has a "Hiện ở trang chủ" toggle, a thumbnail picker
   (`images/thumbnail.<ext>`) and an "Ẩn ở trang chủ" badge in the list.
 - Home "Other game projects" Explore → games.html when `links.otherProjects` is empty or "#"; home "Other 2D Projects"
-  Explore → art2d.html when `links.artworks` is empty or "#".
+  Explore → `art2d.html#<tab 2 id>` (NFT Projects = first card) when `links.artworks` is empty or "#" (set in `sections/artworks.js`).
 - Home 3D Blender = Art3D projects with `"home": true` that have a final video (`renderBlender` in sections/projects.js): name,
   first final video, `tags` (role tags, home only; empty → `tools`), `text` (string → p, list → bullets), Explore → `art3d.html#<id>`.
   Menu label "Portfolio → 3D Artwork" and the home title "3D BLENDER" stay as they are (owner's decision). Studio "3D Artwork":
   "Hiện ở trang chủ (3D Blender)" toggle + "Tag vai trò" chips (red note when no final video).
-- 2D data = TABS → PROJECTS → STEPS (owner restructured it): `Database/Art2D/data.json` = `{ intro, categories: [{ id, name, text }],
-  projects: [{ id, category, name, text, cover?, images, steps?: [{ title, text, images }] }] }`; images in `images/<project id>/`
-  (steps share it). Tabs + projects share one #anchor namespace (`art2d.html#<tab|project id>`). Tab 1 = Personal Artworks, tabs 2–4 =
+- 2D data = TABS → PROJECTS, NO steps (owner dropped them; old step images were merged into the project images): `Database/Art2D/data.json` =
+  `{ intro, categories: [{ id, name, text }], projects: [{ id, category, name, text, cover?, showCover?, images }] }`; images in
+  `images/<project id>/`. `"showCover": false` (Studio checkbox "Hiện ảnh bìa trong trang chi tiết", only false written) = the cover
+  (home image) is left out of the project filmstrip on art2d.html. Tabs + projects share one #anchor namespace (`art2d.html#<tab|project id>`). Tab 1 = Personal Artworks, tabs 2–4 =
   the home "Other 2D Projects". Model: `art2d/model.js` → `{ categories: [{ id, name, text, projects, images, cover }], projects, total }`.
 - Home 2D ARTWORK section (`sections/artworks.js`): band `artworks_title` "2D ARTWORK"; "01 <tab 1 name>" (`.sub-head`, cyan number +
   dotted rule) = coverflow carousel of tab 1 projects (cover, name, first paragraph of text), Explore → `art2d.html#<project>`;
@@ -94,8 +96,8 @@ The owner writes in Vietnamese — reply in Vietnamese.
   project, tab name with titleFont, "{n} projects" = `a2_projects`) → `art2d.html#<tab>`; phone = same row, swipe sideways. Explore → art2d.html.
 - 2D Artwork page (`art2d/render.js`) = owner's pick "Tab scroll" (of 2 demos, the other removed): page banner (`a2_page_title`, data
   `intro`, tabs / projects / artworks chips) + sticky tab bar (`.a2-jump` chips "01 Name n") + ONE tab at a time (owner: no scrolling
-  through all tabs) = numbered HUD heading "01 NAME · n projects" + tab text, then its projects stacked as HUD panels (`.a2-proj`:
-  number, name, image count, text, filmstrip + lightbox, steps on the cyan rail). The bar switches tabs (#<tab>); #<project> opens
+  through all tabs) = HUD heading "NAME · n projects" (NO number; the tab bar keeps "01 …") + tab text, then its projects stacked as
+  HUD panels (`.a2-proj`: number in a cyan chamfered box, name, image count, text, filmstrip + lightbox). The bar switches tabs (#<tab>); #<project> opens
   its tab scrolled to it; no hash = tab 1. `jumpBar` / `jumpTo` stay exported for art3d.html. Labels `a2_*`. Owner guide: `ART2D.md`.
   Studio view "2D Artwork": "Các tab" editor (name EN/VI, id, intro; ↑ ↓, add, delete when empty) + projects grouped by tab (tab
   select per project, ↑ ↓ inside the tab, "+ Thêm dự án vào tab này"); projects use the generic `PAGES` / `pg*` code (list
@@ -103,7 +105,7 @@ The owner writes in Vietnamese — reply in Vietnamese.
   the tab draft key `_k`, ids checked on save (tab id ≠ project id); "Xem tab / dự án trên web ↗" links (`art2d.html#id`).
 - 3D Artwork page = demo variant 1 "Progression" (owner's pick of 2 demos, demos deleted): page banner (`a3_page_title`, data
   `intro`, projects / videos / images chips), sticky jump chips (▶ = project has a final video), sections "01 NAME" + counts line
-  (steps · images · videos), TOOLS chips + text, FINAL RESULT (videos in `.hud-frame` via framedVideo; portrait / Shorts video
+  (steps · images · videos), TOOLS chips + text, FINAL RESULT (project number = big cyan box, always bigger than the step numbers; videos in `.hud-frame` via framedVideo; portrait / Shorts video
   beside the text; final images = filmstrip, bigger when no video), PROCESS steps on the cyan rail (text, optional video,
   filmstrip). `art3d.html#<project id>` deep-links. Data `{ intro, projects: [{ id, name, text, tools?, cover?, final: { videos:
   [{ youtube, orientation?, caption? }], images }, steps: [{ title, text, images, video? }] }] }`; youtube = id or any

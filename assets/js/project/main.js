@@ -29,7 +29,7 @@ async function main() {
   // going back to the home page (Back to projects, Portfolio/About links, browser Back) opens it without the intro;
   // Home / logo still play it, like they do on the home page
   skipNextIntro(true);
-  $$('#brand, #nav a[href="index.html"]').forEach(a => a.addEventListener("click", () => skipNextIntro(false)));
+  $("#brand").addEventListener("click", () => skipNextIntro(false));   // only the logo replays the intro, Home does not
   const id = new URLSearchParams(location.search).get("id")?.trim();
   const [config, project] = await Promise.all([loadJSON("web-config.json"), loadProject(id), loadFrames()]);
   initI18n(config);

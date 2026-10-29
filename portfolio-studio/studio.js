@@ -403,7 +403,7 @@ function viewSettings() {
         <span class="ico"><img src="../assets/icons/${k}.svg" alt=""></span><b>${name}</b>
         <input type="url" data-path="social.${k}" value="${esc(CFG.d.social[k])}" placeholder="${ph}"></div>`).join(""), "để trống = không hiện trên trang") +
     sec(`Liên kết nút Explore${HM}`, `<div class="grid3">
-      ${inp("links.otherProjects", "Khối “Other game projects”", { ph: "games.html", hint: "Để trống hoặc # = trang Video Games." })}${inp("links.artworks", "Khối “Other 2D Projects”", { ph: "art2d.html", hint: "Để trống hoặc # = trang 2D Artwork." })}${inp("links.about", "Section About", { ph: "#" })}</div>
+      ${inp("links.otherProjects", "Khối “Other game projects”", { ph: "games.html", hint: "Để trống hoặc # = trang Video Games." })}${inp("links.artworks", "Khối “Other 2D Projects”", { ph: "art2d.html", hint: "Để trống hoặc # = tab thứ 2 của trang 2D Artwork (thẻ đầu tiên của khối)." })}${inp("links.about", "Section About", { ph: "#" })}</div>
       <span class="hint">Nút Explore của từng dự án chỉnh trong trang của dự án. Explore của 3D Blender / Personal Artworks tự mở đúng dự án / mục trên trang 3D / 2D Artwork.</span>`) +
     sec("Khác", `<div class="grid2">
       ${inp("background.rainWord", `Chữ của hiệu ứng mưa chữ${HM}`, { key: "background.rainWord" })}
@@ -639,7 +639,7 @@ function detailSections() {
 // ---- 2D / 3D Artwork + Graphic Design pages (art2d.html / art3d.html / graphic-design.html ← Database/Art2D|Art3D|GraphicDesign/data.json) ----
 // Both pages = one data.json listing items (2D sections / 3D projects) whose id = image folder images/<id>/ (steps use the
 // same folder). P = page descriptor (PAGES[VIEW]); its draft PS[view] = { orig, d: { intro, <list>: [...] }, saved, open,
-// bust, delFiles, checked }. Item drafts share: id, name, cover, steps, _x (unknown keys), _folder (image folder on disk,
+// bust, delFiles, checked }. Item drafts share: id, name, cover, steps (3D / GD), _x (unknown keys), _folder (image folder on disk,
 // renamed on save when the id changes), _auto (id still follows the EN name), _files (names found by the last folder
 // scan, shared by the item's lists), _k (Studio-only key of a new item: open / closed state before it has a folder).
 const PARA = "1 dòng = đoạn văn, nhiều dòng = gạch đầu dòng";
@@ -648,7 +648,7 @@ const PS = {};   // page drafts by view key (null = re-read on the next visit)
 const PAGES = {
   art2d: { view: "art2d", title: "2D Artwork", dir: "Database/Art2D", api: "/api/art2d", rename: "rename-project", list: "projects",
     noun: "dự án", Noun: "Dự án", fallback: "project", toDraft: raw => a2Draft(raw),
-    toData: (d, orig) => a2ToData(d, orig), item: () => a2ProjDraft(), step: () => a2StepDraft(), used: p => a2Used(p), html: () => viewArt2D(),
+    toData: (d, orig) => a2ToData(d, orig), item: () => a2ProjDraft(), used: p => a2Used(p), html: () => viewArt2D(),
     check: d => a2Check(d) },
   art3d: { view: "art3d", title: "3D Artwork", dir: "Database/Art3D", api: "/api/art3d", rename: "rename-project", list: "projects",
     noun: "dự án", Noun: "Dự án", fallback: "project", toDraft: raw => ({ intro: introL(raw.intro), projects: arr(raw.projects).map(a3ProjDraft) }),
@@ -808,16 +808,16 @@ function pgList(P, cards, hint) {
     <button class="btn ghost add" style="margin-top:12px" type="button" data-act="pgAdd">+ Thêm ${P.noun}</button>`;
 }
 
-// ---- 2D Artwork (art2d.html): tabs (categories) → projects → images + steps ----
+// ---- 2D Artwork (art2d.html): tabs (categories) → projects → cover + images (no steps) ----
 // Tab 1 = Personal Artworks: its projects are the home page carousel (cover, name, first paragraph of the text);
 // tabs 2–4 = the home page "Other 2D Projects" cards. A project points to its tab by the tab's draft key (_k), so a tab
 // id can be renamed freely; the projects list stays grouped by tab (tab order, then their own order).
 const a2StepDraft = (st = {}) => ({ title: L(st.title), text: pairs(st.text), images: imgsDraft(st.images), _x: rest(st, ["title", "text", "images"]) });
 const a2CatDraft = (c = {}) => ({ id: String(c.id || ""), name: L(c.name), text: pairs(c.text), _x: rest(c, ["id", "name", "text"]), _k: String(++PGK) });
 const a2ProjDraft = (p = {}, cats = []) => ({
-  ...pgItemBase(p), images: imgsDraft(p.images), steps: arr(p.steps).map(a2StepDraft),
+  ...pgItemBase(p), images: imgsDraft(p.images), showCover: p.showCover !== false,
   cat: cats.find(c => c.id && c.id === String(p.category ?? "").trim())?._k || "", _catRaw: String(p.category ?? ""),
-  _x: rest(p, ["id", "category", "name", "text", "cover", "images", "steps"]),
+  _x: rest(p, ["id", "category", "name", "text", "cover", "showCover", "images", "steps"]),   // old "steps" are dropped
 });
 function a2Draft(raw) {
   const categories = arr(raw.categories).map(a2CatDraft);
@@ -829,13 +829,14 @@ function a2Sort(d) {
   d.projects.sort((a, b) => a2CatIdx(d, a) - a2CatIdx(d, b) || order.get(a) - order.get(b));
   return d;
 }
-const a2Used = p => new Set([...p.images, ...p.steps.flatMap(st => st.images)].map(im => im.src));
+const a2Used = p => new Set(p.images.map(im => im.src));
 function a2ToData(d, orig = {}) {
   const categories = d.categories.map(c => outObj({ id: c.id.trim() || undefined, name: outL(c.name), text: para(c.text) }, c._x));
   const projects = d.projects.map(p => outObj({
     id: p.id.trim() || undefined, category: d.categories.find(c => c._k === p.cat)?.id.trim() || p._catRaw.trim() || undefined,
-    name: outL(p.name), text: para(p.text), cover: coverOut(p, a2Used(p)), images: imgsOut(p.images),
-    steps: outMany(p.steps.map(st => outObj({ title: outL(st.title), text: para(st.text), images: imgsOut(st.images) }, st._x)).filter(o => Object.keys(o).length)),
+    name: outL(p.name), text: para(p.text), cover: coverOut(p, a2Used(p)),
+    showCover: p.showCover ? undefined : false,   // only "false" is written
+    images: imgsOut(p.images),
   }, p._x));
   return mergeKeys(orig, { intro: outL(d.intro), categories: outMany(categories), projects: outMany(projects) });
 }
@@ -865,7 +866,7 @@ function a2Tab(c, i, d) {
 function a2Project(p, i, d, [lo, hi]) {
   const P = PAGES.art2d, home = a2CatIdx(d, p) === 0, H = home ? HM : "";
   const opts = d.categories.map((c, j) => `<option value="${c._k}"${c._k === p.cat ? " selected" : ""}>Tab ${j + 1} · ${esc(c.name.en || c.name.vi || c.id || "Tab mới")}</option>`).join("");
-  return pgCard(P, i, `${a2Used(p).size} ảnh${p.steps.length ? ` · ${p.steps.length} bước` : ""}${home ? " · carousel trang chủ" : ""}`, `
+  return pgCard(P, i, `${a2Used(p).size} ảnh${p.showCover ? "" : " · ẩn ảnh bìa"}${home ? " · carousel trang chủ" : ""}`, `
       ${pgNameId(P, i, `Tên dự án${H}`)}
       ${a2Open(pgFolder(p), "Xem dự án trên web ↗")}
       <div class="f"><label>Tab</label><select data-path="projects.${i}.cat" data-rerender>${p.cat ? "" : `<option value="" selected>— chọn tab —</option>`}${opts}</select>
@@ -873,11 +874,9 @@ function a2Project(p, i, d, [lo, hi]) {
       ${bullets(`projects.${i}.text`, `Nội dung${H}`, home ? `${PARA} · dòng đầu = dòng mô tả trong carousel trang chủ` : PARA)}
       ${pgCover(P, i, home ? "Ảnh của dự án trong carousel trang chủ. Để mặc định thì là ảnh đầu tiên."
         : "Ảnh của thẻ dự án; dự án đầu tiên của tab còn cho ảnh thẻ tab ở “Other 2D Projects” trang chủ. Để mặc định thì là ảnh đầu tiên.")}
-      ${imgGroup(pgGroup(P, i, { key: `s${i}`, path: `projects.${i}.images`, list: p.images, label: "Ảnh của dự án" }))}
-      ${pgSteps(P, i, (st, k) => `${bi(`projects.${i}.steps.${k}.title`, "Tên bước")}
-        ${bullets(`projects.${i}.steps.${k}.text`, "Nội dung", PARA)}
-        ${imgGroup(pgGroup(P, i, { key: `s${i}.${k}`, path: `projects.${i}.steps.${k}.images`, list: st.images, label: "Ảnh của bước", hint: STEP_IMG_HINT }))}`,
-        `Các bước <code>tuỳ chọn — mỗi bước một hàng đánh số, có chữ + dải ảnh riêng</code>`, "Chưa có bước nào — dự án chỉ có ảnh.")}`, [lo, hi]);
+      <div class="f"><label class="sl-chk"><input type="checkbox" data-path="projects.${i}.showCover" data-rerender${p.showCover ? " checked" : ""}> Hiện ảnh bìa trong trang chi tiết (art2d.html)</label>
+        <span class="hint">Bỏ chọn thì ảnh bìa không có trong dải ảnh của dự án ở trang 2D (ghi <code>"showCover": false</code>) — vẫn dùng ở trang chủ.</span></div>
+      ${imgGroup(pgGroup(P, i, { key: `s${i}`, path: `projects.${i}.images`, list: p.images, label: "Ảnh của dự án" }))}`, [lo, hi]);
 }
 function viewArt2D() {
   const P = PAGES.art2d, d = a2Sort(PS.art2d.d);
@@ -895,8 +894,8 @@ function viewArt2D() {
   };
   return saveBar("2D Artwork", `Trang <code>art2d.html</code> (menu Portfolio → 2D Artwork) <b>và</b> section 2D ARTWORK ở trang chủ. Lưu trong
       <code>${P.dir}/data.json</code>, ảnh của mỗi dự án trong <code>${P.dir}/images/&lt;id dự án&gt;/</code>.<br>
-      Trên trang: banner → thanh tab → <b>chỉ tab đang chọn</b>: tiêu đề “01 TÊN TAB · n dự án”, giới thiệu tab, rồi các dự án của tab xếp dọc
-      (tên, nội dung, dải ảnh, các bước trên đường dọc cyan). Link <code>art2d.html#&lt;id tab&gt;</code> mở tab đó,
+      Trên trang: banner → thanh tab → <b>chỉ tab đang chọn</b>: tiêu đề “TÊN TAB · n dự án” (không số), giới thiệu tab, rồi các dự án của tab xếp dọc
+      (số thứ tự, tên, nội dung, dải ảnh). Link <code>art2d.html#&lt;id tab&gt;</code> mở tab đó,
       <code>art2d.html#&lt;id dự án&gt;</code> mở tab của dự án và cuộn tới dự án.`,
       `<a class="btn ghost sm" href="/art2d.html" target="_blank" rel="noopener">Xem trang ↗</a>`) +
     pgIntro(P, "2D ARTWORK") +
@@ -906,7 +905,7 @@ function viewArt2D() {
       <div class="items">${d.categories.map((c, i) => a2Tab(c, i, d)).join("")}</div>
       <button class="btn ghost sm add" type="button" data-act="a2AddCat">+ Thêm tab</button>`) +
     `<div class="pd-h"><h3>Các dự án <span style="color:var(--dim);font-size:.8em">(${d.projects.length})</span></h3><span class="hint">Mỗi dự án thuộc một tab:
-      tên, nội dung, ảnh, rồi các bước. Dự án trống hẳn thì không hiện. Nội dung: 1 dòng = đoạn văn, nhiều dòng = gạch đầu dòng. ${RT_HINT}</span></div>
+      tên, nội dung, ảnh bìa, ảnh. Dự án trống hẳn thì không hiện. Nội dung: 1 dòng = đoạn văn, nhiều dòng = gạch đầu dòng. ${RT_HINT}</span></div>
     ${groups.map(group).join("")}`;
 }
 
@@ -1550,7 +1549,7 @@ const ACTS = {
   pgAdd() { const P = PG(), s = P.item(); pgItems(P).push(s); PS[VIEW].open[pgKey(s)] = true; render(); },
   async pgRm(el) {
     const P = PG(), i = +el.dataset.i, s = pgItems(P)[i], n = P.used(s).size;
-    const ok = await confirmDlg(`Xoá ${P.noun} này?`, `<p>Xoá ${P.noun} <b>${esc(s.name.en || s.name.vi || s.id || `#${i + 1}`)}</b>${n ? ` (${n} ảnh, ${s.steps.length} bước)` : ""} khỏi trang ${P.title}.</p>
+    const ok = await confirmDlg(`Xoá ${P.noun} này?`, `<p>Xoá ${P.noun} <b>${esc(s.name.en || s.name.vi || s.id || `#${i + 1}`)}</b>${n ? ` (${n} ảnh${s.steps?.length ? `, ${s.steps.length} bước` : ""})` : ""} khỏi trang ${P.title}.</p>
       ${pgFolder(s) ? `<p class="hint">Thư mục ảnh <code>${P.dir}/images/${esc(pgFolder(s))}/</code> vẫn được giữ trên ổ đĩa (xoá tay nếu không cần).</p>` : ""}`, `Xoá ${P.noun}`);
     if (!ok) return;
     pgItems(P).splice(i, 1); render();

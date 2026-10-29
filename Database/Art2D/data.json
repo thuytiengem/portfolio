@@ -13,30 +13,24 @@
       }
     },
     {
-      "id": "character-design",
-      "name": {
-        "en": "Character Design",
-        "vi": "Thiết kế nhân vật"
-      },
+      "id": "nft-projects",
+      "name": "NFT Projects",
       "text": {
         "en": "Demo — character sheets and concepts.",
         "vi": "Demo — thiết kế nhân vật và concept."
       }
     },
     {
-      "id": "fanart",
-      "name": "Fanart",
+      "id": "inktober-challenge",
+      "name": "Inktober Challenge",
       "text": {
-        "en": "Demo — characters from games I love.",
-        "vi": "Demo — nhân vật từ những game mình yêu thích."
+        "en": "An annual Inktober challenge with my own narrative. I have joined this challenge for 3 years (2023 - 2024 - 2025)",
+        "vi": "Thử thách Inktober thường niên với câu chuyện của riêng mình. Mình đã tham gia thử thách này trong 3 năm (2023 - 2024 - 2025)."
       }
     },
     {
-      "id": "sketchbook",
-      "name": {
-        "en": "Sketchbook",
-        "vi": "Sổ phác thảo"
-      },
+      "id": "merchandise",
+      "name": "Merchandise",
       "text": {
         "en": "Demo — challenges and studies.",
         "vi": "Demo — thử thách và bài luyện tập."
@@ -58,31 +52,15 @@
       ]
     },
     {
-      "id": "narcis-lilies",
+      "id": "halloween-2026",
       "category": "personal-artworks",
-      "name": "Narcis × Lilies",
+      "name": "Halloween 2026",
       "text": {
-        "en": "A narrative art series about my two original characters: Nacis and Lilies.",
-        "vi": "Một loạt tác phẩm nghệ thuật kể chuyện về hai nhân vật gốc của mình: Nacis và Lilies."
+        "en": "A splash art for Halloween 2026.",
+        "vi": "Một bức tranh minh họa cho mùa Halloween 2026."
       },
-      "cover": "narcis-lilies.jpg",
       "images": [
-        "narcis-lilies.jpg"
-      ],
-      "steps": [
-        {
-          "title": {
-            "en": "Sketch",
-            "vi": "Phác thảo"
-          },
-          "text": {
-            "en": "Demo — first study of the two characters.",
-            "vi": "Demo — bản nghiên cứu đầu tiên của hai nhân vật."
-          },
-          "images": [
-            "study-narcis.jpg"
-          ]
-        }
+        "img-0158.png"
       ]
     },
     {
@@ -94,8 +72,16 @@
         "vi": "Một loạt tranh fanart về một số nhân vật trong trò chơi Wuthering Waves."
       },
       "cover": "wuthering-waves.jpg",
+      "showCover": false,
       "images": [
-        "wuthering-waves.jpg"
+        "wuthering-waves.jpg",
+        "rover-2.jpg",
+        "changli-3.jpg",
+        "jinhsi-3.jpg",
+        "yinlin-2.jpg",
+        "the-shorekeeper.jpg",
+        "camellya-3.jpg",
+        "zhezhi-2.jpg"
       ]
     },
     {
@@ -107,21 +93,27 @@
         "vi": "Một bức tranh fanart về Mina - một vị tướng trong tựa game Arena of Valor."
       },
       "cover": "mina.jpg",
+      "showCover": false,
       "images": [
-        "mina.jpg"
+        "mina.jpg",
+        "mina-2.jpg"
       ]
     },
     {
-      "id": "werewolf",
+      "id": "narcis-lilies",
       "category": "personal-artworks",
-      "name": "Werewolf Game",
+      "name": "Narcis × Lilies",
       "text": {
-        "en": "A characters series for the board game \"Werewolf\".",
-        "vi": "Một bộ nhân vật dành cho trò chơi board game \"Ma Sói\"."
+        "en": "A narrative art series about my two original characters: Nacis and Lilies.",
+        "vi": "Một loạt tác phẩm nghệ thuật kể chuyện về hai nhân vật gốc của mình: Nacis và Lilies."
       },
-      "cover": "final-lineup.jpg",
+      "cover": "narcis-lilies.jpg",
+      "showCover": false,
       "images": [
-        "final-lineup.jpg"
+        "narcis-lilies.jpg",
+        "lilies-x-narcis-don-t-leave-me-alone-please-2.jpg",
+        "narcis-snake-2.jpg",
+        "narcis-portrait-2.jpg"
       ]
     },
     {
@@ -138,19 +130,6 @@
       ]
     },
     {
-      "id": "inktober",
-      "category": "personal-artworks",
-      "name": "Inktober Challenge",
-      "text": {
-        "en": "An annual Inktober challenge with my own narrative. I have joined this challenge for 3 years (2023 - 2024 - 2025)",
-        "vi": "Thử thách Inktober thường niên với câu chuyện của riêng mình. Mình đã tham gia thử thách này trong 3 năm (2023 - 2024 - 2025)."
-      },
-      "cover": "inktober.jpg",
-      "images": [
-        "inktober.jpg"
-      ]
-    },
-    {
       "id": "ghost-bride",
       "category": "personal-artworks",
       "name": "Ghost Bride",
@@ -161,20 +140,124 @@
       "cover": "ghost-bride.jpg",
       "images": [
         "ghost-bride.jpg"
-      ],
-      "steps": [
+      ]
+    },
+    {
+      "id": "werewolf",
+      "category": "personal-artworks",
+      "name": "Werewolf Game",
+      "text": {
+        "en": "A characters series for the board game \"Werewolf\".",
+        "vi": "Một bộ nhân vật dành cho trò chơi board game \"Ma Sói\"."
+      },
+      "cover": "final-lineup.jpg",
+      "showCover": false,
+      "images": [
+        "final-lineup.jpg",
         {
-          "title": {
-            "en": "Sketch",
-            "vi": "Phác thảo"
-          },
-          "text": {
-            "en": "Demo — pose and costume study.",
-            "vi": "Demo — nghiên cứu dáng và trang phục."
-          },
-          "images": [
-            "study-bride.jpg"
-          ]
+          "src": "werewolf-full.jpg",
+          "caption": {
+            "en": "Werewolf",
+            "vi": "Ma sói"
+          }
+        },
+        {
+          "src": "seer-full.jpg",
+          "caption": {
+            "en": "Seer",
+            "vi": "Tiên tri"
+          }
+        },
+        {
+          "src": "witch-full.jpg",
+          "caption": {
+            "en": "Witch",
+            "vi": "Phù thủy"
+          }
+        },
+        {
+          "src": "guard-full.jpg",
+          "caption": {
+            "en": "Guard",
+            "vi": "Bảo vệ"
+          }
+        },
+        {
+          "src": "cupid-full.jpg",
+          "caption": {
+            "en": "Cupid",
+            "vi": "Thần tình yêu"
+          }
+        },
+        {
+          "src": "hunter-full.jpg",
+          "caption": {
+            "en": "Hunter",
+            "vi": "Thợ săn"
+          }
+        },
+        {
+          "src": "villager-full.jpg",
+          "caption": {
+            "en": "Villager",
+            "vi": "Dân làng"
+          }
+        },
+        {
+          "src": "cursed-full.jpg",
+          "caption": {
+            "en": "Cursed guy",
+            "vi": "Kẻ bị nguyền"
+          }
+        }
+      ]
+    },
+    {
+      "id": "anime-fanart",
+      "category": "personal-artworks",
+      "name": "Anime Fanart",
+      "text": {
+        "en": "Some fanarts about characters in some anime series.",
+        "vi": "Một số tranh fanart về các nhân vật trong một vài bộ anime."
+      },
+      "cover": "anime-fanart.png",
+      "showCover": false,
+      "images": [
+        "anime-fanart.png",
+        {
+          "src": "frieren.jpg",
+          "caption": {
+            "en": "Sousou no Frieren - Frieren fanart",
+            "vi": "Pháp sư tiễn táng - Frieren fanart"
+          }
+        },
+        {
+          "src": "maomao.jpg",
+          "caption": {
+            "en": "The apothecary diaries - Mao Mao fanart",
+            "vi": "Dược sư tự sự - Mao Mao fanart"
+          }
+        },
+        {
+          "src": "violet.jpg",
+          "caption": {
+            "en": "Violet Evergarden - Violet fanart",
+            "vi": "Búp bê ký ức - Violet fanart"
+          }
+        },
+        {
+          "src": "sulxmio-full.jpg",
+          "caption": {
+            "en": "Mobile suit gundam: The witch from mercury - Suletta x Miorine fanart",
+            "vi": "Chiến sĩ cơ động Gundam: Pháp sư đến từ sao Thủy - Suletta x Miorine fanart"
+          }
+        },
+        {
+          "src": "miorine-chan-final.jpg",
+          "caption": {
+            "en": "Mobile suit gundam: The witch from mercury - Miorine fanart",
+            "vi": "Chiến sĩ cơ động Gundam: Pháp sư đến từ sao Thủy - Miorine fanart"
+          }
         }
       ]
     },
@@ -187,233 +270,213 @@
         "vi": "Một bức tranh minh họa (splash art) về nhân vật gốc của mình – một con quỷ sử dụng dây tơ tựa như loài nhện."
       },
       "cover": "string-demon.jpg",
+      "showCover": false,
       "images": [
-        "string-demon.jpg"
-      ],
-      "steps": [
-        {
-          "title": {
-            "en": "Sketch",
-            "vi": "Phác thảo"
-          },
-          "text": {
-            "en": "Demo — the spider-like silhouette.",
-            "vi": "Demo — dáng hình như nhện."
-          },
-          "images": [
-            "study-demon.jpg"
-          ]
-        }
+        "string-demon.jpg",
+        "demon-full.jpg"
       ]
     },
     {
-      "id": "werewolf-board-game",
-      "category": "character-design",
-      "name": {
-        "en": "Werewolf Board Game",
-        "vi": "Board game Ma Sói"
-      },
+      "id": "lucky-factory",
+      "category": "nft-projects",
+      "name": "Lucky Factory",
       "text": {
-        "en": "Demo — a character set for the board game <b>Werewolf</b>, from rough silhouettes to the final line-up.",
-        "vi": "Demo — bộ nhân vật cho board game <b>Ma Sói</b>, từ phác thảo dáng đến bản hoàn chỉnh."
-      },
-      "steps": [
-        {
-          "title": {
-            "en": "Silhouettes & sketches",
-            "vi": "Dáng & phác thảo"
-          },
-          "text": {
-            "en": [
-              "Read each role from its shape alone.",
-              "Three directions per character, the clearest one kept."
-            ],
-            "vi": [
-              "Nhận ra vai trò chỉ qua hình dáng.",
-              "Ba hướng cho mỗi nhân vật, giữ lại hướng rõ nhất."
-            ]
-          },
-          "images": [
-            {
-              "src": "sketch-seer.jpg",
-              "caption": {
-                "en": "Seer — first sketch",
-                "vi": "Tiên tri — phác thảo đầu"
-              }
-            },
-            {
-              "src": "sketch-wolf.jpg",
-              "caption": {
-                "en": "Werewolf — first sketch",
-                "vi": "Ma sói — phác thảo đầu"
-              }
-            },
-            {
-              "src": "sketch-hunter.jpg",
-              "caption": {
-                "en": "Hunter — first sketch",
-                "vi": "Thợ săn — phác thảo đầu"
-              }
-            }
-          ]
-        },
-        {
-          "title": {
-            "en": "Colour & costume",
-            "vi": "Màu & trang phục"
-          },
-          "text": {
-            "en": "One accent colour per role so the cards stay readable on the table.",
-            "vi": "Mỗi vai một màu nhấn để lá bài dễ đọc trên bàn chơi."
-          },
-          "images": [
-            "colour-seer.jpg",
-            "colour-wolf.jpg",
-            "colour-hunter.jpg"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "temple-key-art",
-      "category": "character-design",
-      "name": {
-        "en": "Temple Courtyard",
-        "vi": "Sân đền"
-      },
-      "text": {
-        "en": "Demo — environment key art.",
-        "vi": "Demo — key art bối cảnh."
+        "en": "Selected Illustrations for Lucky Factory NFT Project.",
+        "vi": "Một số tranh minh họa được chọn từ dự án NFT Lucky Factory."
       },
       "images": [
-        {
-          "src": "temple-keyart.jpg",
-          "caption": {
-            "en": "Temple courtyard — key art",
-            "vi": "Sân đền — key art"
-          }
-        }
+        "lucky-x-crazy-bears.jpg",
+        "artwork-27-fix.jpg",
+        "tranh-ap-mat-zo-kinh.jpg",
+        "lucky-artwork.jpg",
+        "lucky-x-drill.jpg",
+        "lunar-new-year.jpg",
+        "lucky-23a-artworkkk.jpg",
+        "noel.jpg"
       ]
     },
     {
-      "id": "wuthering-waves-set",
-      "category": "fanart",
-      "name": {
-        "en": "Wuthering Waves Characters",
-        "vi": "Nhân vật Wuthering Waves"
-      },
+      "id": "yutaka-club",
+      "category": "nft-projects",
+      "name": "Yutaka Club",
       "text": {
-        "en": "Demo — characters from <i>Wuthering Waves</i>.",
-        "vi": "Demo — các nhân vật trong <i>Wuthering Waves</i>."
+        "en": "Selected Map and Character Illustrations from the Yutaka Club NFT Project.",
+        "vi": "Một số tranh minh họa về bản đồ và nhân vật từ dự án NFT Yutaka Club."
       },
       "images": [
-        "ww-01.jpg",
-        "ww-02.jpg",
-        "ww-03.jpg"
-      ],
-      "steps": [
-        {
-          "title": {
-            "en": "Sketch",
-            "vi": "Phác thảo"
-          },
-          "text": {
-            "en": "Demo — line study before colour.",
-            "vi": "Demo — nét phác trước khi tô màu."
-          },
-          "images": [
-            "study-ww.jpg"
-          ]
-        }
+        "yutaka-lobby.jpg",
+        "tet-yutaka.jpg",
+        "gelida.jpg",
+        "land-2-dyserto.jpg"
       ]
     },
     {
-      "id": "mina-study",
-      "category": "fanart",
-      "name": {
-        "en": "Mina Study",
-        "vi": "Nghiên cứu Mina"
-      },
+      "id": "suishi",
+      "category": "nft-projects",
+      "name": "Suishi",
       "text": {
-        "en": "Demo — a quick study of Mina from Arena of Valor.",
-        "vi": "Demo — bản nghiên cứu nhanh Mina trong Liên Quân."
+        "en": "Selected Illustrations and Short Comics from the Suishi NFT Project.",
+        "vi": "Một số tranh minh họa và truyện tranh ngắn từ dự án NFT Suishi."
       },
       "images": [
-        "study-mina.jpg"
+        "comic1.jpg",
+        "tam-xi-dau.jpg",
+        "busy-suishi-gm.jpg",
+        "comic-8.jpg",
+        "comic-5.jpg",
+        "comic-17.jpg",
+        "comic-14.jpg",
+        "comic-15.jpg",
+        "comic-16.jpg",
+        "comic2.jpg",
+        "comic3.jpg",
+        "comic4.jpg",
+        "comic-7.jpg"
       ]
     },
     {
-      "id": "inktober-pages",
-      "category": "sketchbook",
-      "name": "Inktober",
+      "id": "inktober-2023",
+      "category": "inktober-challenge",
+      "name": "Inktober 2023",
       "text": {
-        "en": "Demo — Inktober pages and quick studies.",
-        "vi": "Demo — các trang Inktober và bài tập nhanh."
+        "en": "My first Inktober challenge: drawing for 31 consecutive days based on 31 given prompts. This experience helped me improve my linework consistency and develop discipline and perseverance.",
+        "vi": "Thử thách Inktober đầu tiên của mình: vẽ liên tục 31 ngày theo 31 chủ đề có sẵn. Trải nghiệm này giúp mình cải thiện sự ổn định trong nét vẽ, đồng thời rèn luyện tính kỷ luật và kiên trì."
       },
-      "steps": [
-        {
-          "title": {
-            "en": "Days 1 – 3",
-            "vi": "Ngày 1 – 3"
-          },
-          "text": {
-            "en": "Demo — the story begins.",
-            "vi": "Demo — câu chuyện bắt đầu."
-          },
-          "images": [
-            {
-              "src": "inktober-1.jpg",
-              "caption": "Inktober · Day 1"
-            },
-            {
-              "src": "inktober-2.jpg",
-              "caption": "Inktober · Day 2"
-            },
-            {
-              "src": "inktober-3.jpg",
-              "caption": "Inktober · Day 3"
-            }
-          ]
-        },
-        {
-          "title": {
-            "en": "Days 4 – 6",
-            "vi": "Ngày 4 – 6"
-          },
-          "text": {
-            "en": "Demo — the journey continues.",
-            "vi": "Demo — hành trình tiếp tục."
-          },
-          "images": [
-            {
-              "src": "inktober-4.jpg",
-              "caption": "Inktober · Day 4"
-            },
-            {
-              "src": "inktober-5.jpg",
-              "caption": "Inktober · Day 5"
-            },
-            {
-              "src": "inktober-6.jpg",
-              "caption": "Inktober · Day 6"
-            }
-          ]
-        }
+      "cover": "inktober.jpg",
+      "showCover": false,
+      "images": [
+        "inktober.jpg",
+        "images.jpg",
+        "day-1-dream.jpg",
+        "day-2-spiders.jpg",
+        "day-3-path.jpg",
+        "day-4-dodge.jpg",
+        "day-5-map.jpg",
+        "day-6-golden.jpg",
+        "day-7-drip.jpg",
+        "day-8-toad.jpg",
+        "day-9-bounce.jpg",
+        "day-10-fortune.jpg",
+        "day-11-wander.jpg",
+        "day-12-spicey.jpg",
+        "day-13-rise.jpg",
+        "day-14-castle.jpg",
+        "day-15-dagger.jpg",
+        "day-16-angel.jpg",
+        "day-17-demon.jpg",
+        "day-18-saddle.jpg",
+        "day-19-plump.jpg",
+        "day-20-frost.jpg",
+        "day-21-chains.jpg",
+        "day-22-scratchy.jpg",
+        "day-23-celestial.jpg",
+        "day-24-shallow.jpg",
+        "day-25-dangerous.jpg",
+        "day-26-remove.jpg",
+        "day-27-beast.jpg",
+        "day-28-sparkle.jpg",
+        "day-29-massive.jpg",
+        "day-30-rush.jpg",
+        "day-31-fire.jpg"
       ]
     },
     {
-      "id": "face-studies",
-      "category": "sketchbook",
-      "name": {
-        "en": "Face Studies",
-        "vi": "Luyện vẽ mặt"
-      },
+      "id": "inktober-2024",
+      "category": "inktober-challenge",
+      "name": "Inktober 2024",
       "text": {
-        "en": "Demo — expressions and lighting.",
-        "vi": "Demo — biểu cảm và ánh sáng."
+        "en": "I introduced an original character and turned the challenge into a continuous adventure. Connecting seemingly unrelated prompts into a coherent story was challenging, but it strengthened my storytelling skills.",
+        "vi": "Mình đưa nhân vật tự sáng tạo vào thử thách và biến Inktober thành một chuyến phiêu lưu xuyên suốt. Việc kết nối những chủ đề tưởng chừng không liên quan thành một câu chuyện mạch lạc là thử thách lớn, nhưng đã giúp mình nâng cao kỹ năng kể chuyện (storytelling)."
       },
       "images": [
-        "study-face.jpg"
+        "images.jpg",
+        "day-1-backpack.jpg",
+        "day-2-discover.jpg",
+        "day-3-boots.jpg",
+        "day-4-exotic.jpg",
+        "day-5-binoculars.jpg",
+        "day-6-trek.jpg",
+        "day-7-passport.jpg",
+        "day-8-hike.jpg",
+        "day-9-sun.jpg",
+        "day-10-nomadic.jpg",
+        "day-11-snacks.jpg",
+        "day-12-remote.jpg",
+        "day-13-horizon.jpg",
+        "day-14-roam.jpg",
+        "day-15-guidebook.jpg",
+        "day-16-grungy.jpg",
+        "day-17-journal.jpg",
+        "day-18-drive.jpg",
+        "day-19-ridge.jpg",
+        "day-20-uncharted.jpg",
+        "day-21-rhinoceros.jpg",
+        "day-22-camp.jpg",
+        "day-23-rust.jpg",
+        "day-24-expedition.jpg",
+        "day-25-scarecrow.jpg",
+        "day-26-camera.jpg",
+        "day-27-road.jpg",
+        "day-28-jumbo.jpg",
+        "day-29-navigator.jpg",
+        "day-30-violin.jpg",
+        "day-31-landmark.jpg"
+      ]
+    },
+    {
+      "id": "inktober-2025",
+      "category": "inktober-challenge",
+      "name": "Inktober 2025",
+      "text": {
+        "en": "For my final Inktober challenge, I continued developing a new original character through an illustrated adventure. Building on the previous year's experience, I became more confident in connecting prompts into a cohesive narrative and decided to conclude this three-year journey.",
+        "vi": "Trong thử thách Inktober cuối cùng, mình tiếp tục phát triển một nhân vật mới thông qua hành trình phiêu lưu bằng hình ảnh. Kế thừa kinh nghiệm từ năm trước, mình tự tin hơn trong việc kết nối các chủ đề thành một câu chuyện xuyên suốt và quyết định khép lại hành trình ba năm này."
+      },
+      "images": [
+        "2025promptlist.jpg",
+        "day-1-mustache.jpg",
+        "day-2-weave.jpg",
+        "day-3-crown.jpg",
+        "day-4-murky.jpg",
+        "day-5-deer.jpg",
+        "day-6-pierce.jpg",
+        "day-7-starfish.jpg",
+        "day-8-reckless.jpg",
+        "day-9-heavy.jpg",
+        "day-10-sweep.jpg",
+        "day-11-sting.jpg",
+        "day-12-shredded.jpg",
+        "day-13-drink.jpg",
+        "day-14-trunk.jpg",
+        "day-15-ragged.jpg",
+        "day-16-blunder.jpg",
+        "day-17-ornate.jpg",
+        "day-18-deal.jpg",
+        "day-19-arctic.jpg",
+        "day-20-rivals.jpg",
+        "day-21-blast.jpg",
+        "day-22-button.jpg",
+        "day-23-firefly.jpg",
+        "day-24-rowdy.jpg",
+        "day-25-inferno.jpg",
+        "day-26-puzzling.jpg",
+        "day-27-onion.jpg",
+        "day-28-skeletal.jpg",
+        "day-29-lesson.jpg",
+        "day-30-vacant.jpg",
+        "day-31-award.jpg"
+      ]
+    },
+    {
+      "id": "chibi-art",
+      "category": "merchandise",
+      "name": "Chibi Art",
+      "text": {
+        "en": "A selection of chibi-style illustrations created for merchandise.",
+        "vi": "Một số tranh minh họa theo phong cách chibi được tôi thực hiện cho các sản phẩm merchandise."
+      },
+      "images": [
+        "chibi.jpg",
+        "untitled-1.jpg"
       ]
     }
   ]

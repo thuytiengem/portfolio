@@ -1,7 +1,7 @@
 // Entry point of art3d.html ("3D Artwork"): loads web-config.json + Database/Art3D/data.json and renders the page
 // (render.js). Topbar (+ Portfolio dropdown), letter rain, cursor, image frames, EN/VI and the contact footer work like
 // art2d.html; going back home skips the intro, Home / logo play it. art3d.html#<project id> jumps to that project.
-import { $, $$, loadJSON } from "../utils.js";
+import { $, loadJSON } from "../utils.js";
 import { initI18n, tr, label, onLangChange } from "../i18n.js";
 import { createRain } from "../rain-bg.js";
 import { stripRich } from "../richtext.js";
@@ -21,7 +21,7 @@ async function main() {
   initCursor();
   // like art2d.html: going back home (← Home, Portfolio / About links, browser Back) skips the intro, Home / logo play it
   skipNextIntro(true);
-  $$('#brand, #nav a[href="index.html"]').forEach(a => a.addEventListener("click", () => skipNextIntro(false)));
+  $("#brand").addEventListener("click", () => skipNextIntro(false));   // only the logo replays the intro, Home does not
 
   const [config, raw] = await Promise.all([
     loadJSON("web-config.json"), loadJSON(`${BASE}data.json`).catch(e => { console.warn(e); return {}; }), loadFrames()]);

@@ -4,7 +4,7 @@
 //   graphic-design.html?id=<id>    → that project's detail (detail.js; #step-n deep-links a step; unknown id → not found)
 // Topbar (+ Portfolio dropdown, "Graphic Design" current), letter rain, cursor, image frames, EN/VI and the contact footer
 // work like art3d.html; going back home skips the intro, Home / logo play it.
-import { $, $$, loadJSON } from "../utils.js";
+import { $, loadJSON } from "../utils.js";
 import { initI18n, tr, label, onLangChange } from "../i18n.js";
 import { createRain } from "../rain-bg.js";
 import { stripRich } from "../richtext.js";
@@ -23,7 +23,7 @@ async function main() {
   initCursor();
   // like art3d.html: going back home (← Home, Portfolio / About links, browser Back) skips the intro, Home / logo play it
   skipNextIntro(true);
-  $$('#brand, #nav a[href="index.html"]').forEach(a => a.addEventListener("click", () => skipNextIntro(false)));
+  $("#brand").addEventListener("click", () => skipNextIntro(false));   // only the logo replays the intro, Home does not
 
   const [config, raw] = await Promise.all([
     loadJSON("web-config.json"), loadJSON(`${BASE}data.json`).catch(e => { console.warn(e); return {}; }), loadFrames()]);
