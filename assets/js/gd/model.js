@@ -8,6 +8,8 @@
 //                     "name": rich,                               ← card title + detail title + tab title
 //                     "text": rich | [rich…],                     ← card description (3 lines) + detail intro
 //                     "cover"?: "logo-final.jpg",                 ← card image + detail hero + pager (fallback: first step image)
+//                     "showCover"?: false,                        ← no cover in the detail hero (card + pager keep it); the cover is
+//                                                                    never shown in the steps, even when listed there
 //                     "client"?: rich, "year"?: "2025", "tools"?: [rich…],
 //                     "steps": [ { "title": rich, "text": rich | [rich…],
 //                                  "images": [ "01.jpg" | { "src": "01.jpg", "caption": rich } ] } ] } ] }
@@ -43,16 +45,18 @@ export function normalize(raw, base = BASE) {
     let id = slug(folder) || `project-${i + 1}`;            // unique id (URL ?id= and DOM) even for duplicates
     while (used.has(id)) id += "-x";
     used.add(id);
-    const steps = (Array.isArray(p?.steps) ? p.steps : [])
-      .map(st => ({ title: st?.title, text: st?.text, images: imageList(st?.images, dir) }))
+    const listed = (Array.isArray(p?.steps) ? p.steps : []).map(st => ({ title: st?.title, text: st?.text, images: imageList(st?.images, dir) }));
+    const cover = has(p?.cover) ? imageList([p.cover], dir)[0]?.src || "" : listed.flatMap(st => st.images)[0]?.src || "";
+    // the cover is never repeated in the step filmstrips (owner): detail hero only — and not even there with "showCover": false
+    const showCover = p?.showCover !== false && !!cover;
+    const steps = listed.map(st => ({ ...st, images: st.images.filter(im => im.src !== cover) }))
       .filter(st => has(st.title) || has(st.text) || st.images.length);
-    const all = steps.flatMap(st => st.images);
-    const cover = has(p?.cover) ? imageList([p.cover], dir)[0]?.src || "" : all[0]?.src || "";
+    const all = steps.flatMap(st => st.images);   // step images (without the cover)
     return {
-      id, folder, name: has(p?.name) ? p.name : folder, text: p?.text, cover,
+      id, folder, name: has(p?.name) ? p.name : folder, text: p?.text, cover, showCover,
       client: has(p?.client) ? p.client : null, year: has(p?.year) ? p.year : null,
       tools: (Array.isArray(p?.tools) ? p.tools : []).filter(has),
-      steps, all, count: { steps: steps.length, images: all.length },
+      steps, all, count: { steps: steps.length, images: all.length + (showCover ? 1 : 0) },
     };
   }).filter(p => has(p.name) || has(p.text) || p.steps.length);
   return {

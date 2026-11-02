@@ -13,12 +13,13 @@ import { title, imagesCount, stepsCount, metaLine, scrollToStep } from "./parts.
 const corners = () => ["c1", "c2", "c3", "c4"].map(c => h("i", { class: c, "aria-hidden": "true" }));
 
 function hero(p, index, total) {
-  const all = p.all, at = all.findIndex(im => im.src === p.cover);
-  const cover = p.cover ? h("button", {
+  // the cover (never in the steps) opens the lightbox first, then every step image; "showCover": false = no cover here
+  const all = [{ src: p.cover }, ...p.all];
+  const cover = p.showCover ? h("button", {
     class: "gd-cover", type: "button",
-    onclick: () => at >= 0 ? openLightbox(all, at) : openLightbox([{ src: p.cover }]),
+    onclick: () => openLightbox(all, 0),
   }, h("img", { src: p.cover, alt: "", decoding: "async", fetchpriority: "high" }), corners()) : null;
-  if (cover) bind(cover, el => el.setAttribute("aria-label", label("gd_open_images", { n: all.length || 1 })));
+  if (cover) bind(cover, el => el.setAttribute("aria-label", label("gd_open_images", { n: all.length })));
   const chips = [stepsCount(p.count.steps, "pb-chip"), imagesCount(p.count.images, "pb-chip")].filter(Boolean);
   return h("header", { class: "pb gd-pb" },
     h("div", { class: "container" },

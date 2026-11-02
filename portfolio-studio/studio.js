@@ -1030,15 +1030,16 @@ function viewArt3D() {
 
 // ---- Graphic Design (graphic-design.html list + ?id=<id> detail): projects → client, year, tools, cover, steps (images) ----
 const gdProjDraft = (p = {}) => ({
-  ...pgItemBase(p), client: L(p.client), year: String(p.year ?? ""),
+  ...pgItemBase(p), showCover: p.showCover !== false, client: L(p.client), year: String(p.year ?? ""),
   tools: arr(p.tools).map(t => String(isObj(t) ? t.en || t.vi || "" : t ?? "").trim()).filter(Boolean),
   steps: arr(p.steps).map(a2StepDraft),
-  _x: rest(p, ["id", "name", "text", "cover", "client", "year", "tools", "steps"]),
+  _x: rest(p, ["id", "name", "text", "cover", "showCover", "client", "year", "tools", "steps"]),
 });
 const gdUsed = p => new Set(p.steps.flatMap(st => st.images).map(im => im.src));
 function gdToData(d, orig = {}) {
   const projects = d.projects.map(p => outObj({
     id: p.id.trim() || undefined, name: outL(p.name), text: para(p.text), cover: coverOut(p, gdUsed(p)),
+    showCover: p.showCover ? undefined : false,   // only "false" is written
     client: outL(p.client), year: p.year.trim() || undefined, tools: outMany(p.tools),
     steps: outMany(p.steps.map(st => outObj({ title: outL(st.title), text: para(st.text), images: imgsOut(st.images) }, st._x)).filter(o => Object.keys(o).length)),
   }, p._x));
@@ -1046,13 +1047,15 @@ function gdToData(d, orig = {}) {
 }
 function gdProject(p, i) {
   const P = PAGES.graphic, id = pgFolder(p);
-  return pgCard(P, i, `${gdUsed(p).size} ảnh · ${p.steps.length} bước`, `
+  return pgCard(P, i, `${gdUsed(p).size} ảnh · ${p.steps.length} bước${p.showCover ? "" : " · ẩn ảnh bìa"}`, `
       ${pgNameId(P, i, "Tên dự án (tên thẻ + tiêu đề trang chi tiết)")}
       <div class="grid2" style="align-items:start">${bi(`projects.${i}.client`, "Khách hàng <code>client · tuỳ chọn</code>", { hint: "vd: Dự án cá nhân, tên công ty. Hiện thành dòng “khách hàng · năm”." })}
         ${inp(`projects.${i}.year`, "Năm <code>year · tuỳ chọn</code>", { ph: "2025" })}</div>
       ${chips(`projects.${i}.tools`, "Công cụ <code>tools · tuỳ chọn</code>", "Gõ tên (Illustrator, Photoshop, Figma…) rồi Enter. Kéo để đổi thứ tự. Hiện thành hàng tag trên thẻ và chip CÔNG CỤ ở trang chi tiết.")}
       ${bullets(`projects.${i}.text`, "Mô tả", `${PARA} · thẻ hiện tối đa 3 dòng (danh sách → dòng đầu)`)}
-      ${pgCover(P, i, "Ảnh của thẻ ở trang danh sách + ảnh lớn (không bị cắt) ở trang chi tiết + nút dự án trước / tiếp. Để mặc định thì là ảnh đầu tiên của các bước.")}
+      ${pgCover(P, i, "Ảnh của thẻ ở trang danh sách + ảnh lớn (không bị cắt) ở banner trang chi tiết + nút dự án trước / tiếp; không hiện lại trong bước. Để mặc định thì là ảnh đầu tiên của các bước.")}
+      <div class="f"><label class="sl-chk"><input type="checkbox" data-path="projects.${i}.showCover" data-rerender${p.showCover ? " checked" : ""}> Hiện ảnh bìa trong trang chi tiết</label>
+        <span class="hint">Ảnh bìa không bao giờ hiện trong dải ảnh của bước, chỉ ở banner trang chi tiết. Bỏ chọn thì banner cũng không có ảnh bìa, chữ trải hết chiều ngang (ghi <code>"showCover": false</code>) — thẻ ở trang danh sách và nút dự án trước / tiếp vẫn dùng ảnh bìa.</span></div>
       <div class="sub3"><h4>Quá trình thực hiện <small>process — các bước trên đường dọc cyan ở trang chi tiết${id ? ` · <code>graphic-design.html?id=${esc(id)}#step-1</code>` : ""}</small></h4>
       ${pgSteps(P, i, (st, k) => `${bi(`projects.${i}.steps.${k}.title`, "Tên bước")}
         ${bullets(`projects.${i}.steps.${k}.text`, "Nội dung", PARA)}

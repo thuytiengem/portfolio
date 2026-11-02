@@ -120,7 +120,9 @@ The owner writes in Vietnamese — reply in Vietnamese.
   Detail `?id=<id>` = "← All design projects" (→ `graphic-design.html#gd-<id>`, scrolls to + focuses that card), HUD banner
   ("GRAPHIC DESIGN 01 / 05", title, client · year, text, TOOLS chips, steps / images chips, cover framed on the right, never cropped,
   click → lightbox), PROCESS steps on the art2d cyan rail (number, title, text, filmstrip + lightbox), Prev / All / Next pager.
-  `#step-<n>` deep-links a step; unknown id → not-found + link back. Tab title per view. Data `{ intro, projects: [{ id, name, text,
+  `"showCover": false` (Studio checkbox "Hiện ảnh bìa trong trang chi tiết", only false written) = detail hero without the cover
+  (`.no-cover`, text full width; card + pager keep it). The cover is NEVER shown in the step filmstrips (owner), only in the hero;
+  hero click → lightbox [cover, ...step images]; image count = step images (+1 when the hero shows the cover). `#step-<n>` deep-links a step; unknown id → not-found + link back. Tab title per view. Data `{ intro, projects: [{ id, name, text,
   cover?, client?, year?, tools?, steps: [{ title, text, images }] }] }`. Labels `gd_*`. Studio view "Graphic Design" (`#/graphic`,
   `PAGES.graphic`): API `/api/graphic`, `/api/graphic/images?dir=<id>`, `/api/graphic/rename-project`; commit scope `Database/GraphicDesign`.
 - Studio marks every field whose value is also shown on the home page with a cyan "(H)" after its label (`HM` in studio.js,

@@ -31,6 +31,9 @@ Chạy `node portfolio-studio/server.mjs`, mở http://localhost:4100/portfolio-
   (mô tả dạng danh sách → thẻ lấy dòng đầu); trang chi tiết hiện đầy đủ.
 - **Ảnh bìa** (`cover`): chọn một ảnh trong các bước. Dùng cho ảnh thẻ, ảnh lớn ở trang chi tiết và ảnh nhỏ ở nút dự án trước / tiếp.
   Để mặc định = ảnh đầu tiên của các bước. Ảnh bìa có nhãn vàng "ảnh bìa" trong danh sách ảnh.
+  Ảnh bìa **không hiện trong dải ảnh của bước** (chỉ ở banner); bấm ảnh bìa ở banner → xem to, rồi ← → qua các ảnh của bước.
+- **Hiện ảnh bìa trong trang chi tiết** (ô tick, mặc định có tick): bỏ tích thì banner trang chi tiết không có
+  ảnh lớn bên phải, chữ trải hết chiều ngang (ghi `"showCover": false`). Thẻ ở trang danh sách và nút dự án trước / tiếp vẫn dùng ảnh bìa.
 - **Các bước** ("+ Thêm bước"): tên bước EN / VI, nội dung (như mô tả), ảnh của bước.
 - **Ảnh**: "Tải ảnh lên" (chọn nhiều ảnh, hoặc kéo thả vào khung) — ảnh JPG được nén ≤ 2400px, PNG có nền trong suốt giữ nguyên PNG.
   Kéo ảnh (hoặc ← →) để đổi thứ tự, điền chú thích EN / VI (hiện khi xem ảnh to). ✕ gỡ ảnh khỏi danh sách; tích "Xoá luôn file"
@@ -83,6 +86,7 @@ Database/GraphicDesign/
 | `name` | tên thẻ + tên trang chi tiết + tiêu đề tab | trống → hiện `id` |
 | `text` | mô tả thẻ (cắt 3 dòng) + đoạn mở đầu trang chi tiết | chuỗi = đoạn văn, danh sách `[...]` = gạch đầu dòng |
 | `cover` | ảnh thẻ + ảnh lớn trang chi tiết + nút dự án trước / tiếp | trống → ảnh đầu tiên của các bước |
+| `showCover` | `false` = banner trang chi tiết không có ảnh bìa (ảnh bìa không bao giờ hiện trong các bước) | không ghi = hiện |
 | `client`, `year` | dòng "khách hàng · năm" | tuỳ chọn |
 | `tools` | tag trên thẻ, chip CÔNG CỤ | danh sách tên công cụ |
 | `steps[]` | các bước của "Quá trình thực hiện" | `title`, `text`, `images`; bước không có ảnh → chỉ chữ; bước trống bị bỏ |
