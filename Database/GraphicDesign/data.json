@@ -34,7 +34,7 @@
           ]
         },
         {
-          "title": "Idea, font & color palette",
+          "title": "Idea, Typography & Color Palette",
           "text": {
             "en": "After evaluating the initial concepts, I selected and refined the most suitable direction for the studio. The design represents collective connection and a shared pursuit of a common goal: becoming champions. I incorporated visual cues symbolizing connection and a target, alongside a bold red palette to convey victory and determination.",
             "vi": "Sau khi đánh giá các phương án ban đầu, mình đã lựa chọn và hoàn thiện hướng thiết kế phù hợp nhất với công ty. Ý tưởng thể hiện sự kết nối tập thể và cùng hướng đến một mục tiêu chung: trở thành người chiến thắng. Mình kết hợp các tín hiệu biểu tượng tượng trưng cho sự kết nối và mục tiêu, cùng gam màu đỏ nổi bật nhằm truyền tải tinh thần chiến thắng và quyết tâm."
@@ -67,8 +67,8 @@
         "vi": "Bụi Sao"
       },
       "text": {
-        "en": "Demo — four posters in an 80s sci-fi style: one neon colour per poster, a heavy title and a thin HUD frame.",
-        "vi": "Demo — bốn poster phong cách sci-fi thập niên 80: mỗi poster một màu neon, tiêu đề đậm và khung HUD mảnh."
+        "en": "My university graduation project: an illustrated edition of Stardust, a fantasy novel by Neil Gaiman.",
+        "vi": "Đồ án tốt nghiệp đại học của mình: Thiết kế minh họa cho tiểu thuyết giả tưởng Bụi Sao (Stardust) của tác giả Neil Gaiman."
       },
       "cover": "book-demo-03-2.jpg",
       "client": "Final Year Project",
@@ -80,7 +80,11 @@
       ],
       "steps": [
         {
-          "title": "Sketches",
+          "title": "Sketch Idea",
+          "text": {
+            "en": "After carefully reading and researching the novel, I selected key scenes and visual details that best represented its narrative and atmosphere. I then developed initial sketches, exploring compositions that effectively conveyed each scene.",
+            "vi": "Sau khi đọc và nghiên cứu kỹ cuốn tiểu thuyết, mình đã lựa chọn những phân cảnh và chi tiết hình ảnh tiêu biểu có khả năng truyền tải tốt nhất nội dung và không khí của câu chuyện. Sau đó, mình phát triển các bản sketch ban đầu, thử nghiệm bố cục phù hợp để thể hiện từng phân cảnh."
+          },
           "images": [
             "book-demo-03-2.jpg",
             "sketch.jpg"
@@ -88,12 +92,28 @@
         },
         {
           "title": "Character Design",
+          "text": {
+            "en": [
+              "I studied each character's personality and translated their traits into visual elements through shapes and colors.",
+              "For example, Tristran Thorn, the protagonist, is portrayed as a brave and passionate character. I used flame-inspired shapes for his hair, a stable rectangular form for his body, and red as his signature color.",
+              "I also used soft, rounded shapes for heroic characters and sharp, angular forms for antagonists to reinforce their contrasting personalities."
+            ],
+            "vi": [
+              "Mình nghiên cứu tính cách của từng nhân vật và chuyển tải những đặc điểm đó thành các yếu tố thị giác thông qua hình khối và màu sắc.",
+              "Ví dụ, nhân vật chính Tristran Thorn được xây dựng với hình tượng dũng cảm và nhiệt huyết. Mình đã sử dụng hình khối ngọn lửa cho mái tóc, hình chữ nhật vững chãi cho cơ thể và màu đỏ làm màu sắc chủ đạo của nhân vật.",
+              "Bên cạnh đó, mình sử dụng các hình khối tròn, mềm mại cho nhân vật chính diện và những đường nét sắc nhọn, góc cạnh cho nhân vật phản diện nhằm nhấn mạnh sự đối lập trong tính cách."
+            ]
+          },
           "images": [
             "char-04.jpg"
           ]
         },
         {
-          "title": "Book's cover & Posters",
+          "title": "Book Cover & Poster",
+          "text": {
+            "en": "Below are the finalized book cover and poster designs created for the project.",
+            "vi": "Dưới đây là các thiết kế bìa sách và poster hoàn thiện do mình thực hiện cho dự án."
+          },
           "images": [
             "book-demo-03.jpg",
             "poster-1-02.jpg",
@@ -101,7 +121,11 @@
           ]
         },
         {
-          "title": "Illustrations",
+          "title": "Book Layout & Illustrations",
+          "text": {
+            "en": "Selected illustrated pages from the book. This project also marked my first experience using Adobe InDesign for book layout and typesetting.",
+            "vi": "Một số trang minh họa được chọn trong cuốn sách. Đây cũng là dự án đầu tiên mà mình sử dụng Adobe InDesign để thiết kế và dàn trang sách."
+          },
           "images": [
             "3.jpg",
             "11.jpg",
@@ -114,7 +138,11 @@
           ]
         },
         {
-          "title": "Showroom",
+          "title": "Showcase",
+          "text": {
+            "en": "Photos from the graduation project presentation, featuring the displayed book and accompanying printed materials that I designed.",
+            "vi": "Hình ảnh từ buổi trưng bày và thuyết trình đồ án tốt nghiệp, giới thiệu cuốn sách cùng một số ấn phẩm đi kèm do mình thiết kế."
+          },
           "images": [
             "b612-20241214-215759-176.jpg",
             "b612-20241215-082931-974.jpg",
@@ -127,10 +155,182 @@
       ]
     },
     {
+      "id": "159-subscribtion-concert",
+      "name": "159 Subscribtion Concert",
+      "text": {
+        "en": "A university coursework project focused on designing a visual identity system for a classical music concert event.",
+        "vi": "Dự án thực hiện trong khuôn khổ một học phần chuyên ngành tại trường đại học, tập trung vào thiết kế hệ thống nhận diện hình ảnh cho một sự kiện hòa nhạc cổ điển."
+      },
+      "cover": "banner.jpg",
+      "client": "Personal Project",
+      "year": "2023",
+      "tools": [
+        "Adobe Photoshop",
+        "Adobe Illustrator"
+      ],
+      "steps": [
+        {
+          "title": "Research, Idea, Sketches & Options",
+          "text": {
+            "en": [
+              "As someone who enjoys classical music, I chose this concert event as the subject of my design project. Below are selected initial ideas, sketches, and design options developed during the research and exploration process.",
+              "I chose deep blue as the primary color, accented with gold to reflect the elegance and timeless character of classical music."
+            ],
+            "vi": [
+              "Với niềm yêu thích dành cho âm nhạc cổ điển, mình đã lựa chọn sự kiện hòa nhạc làm chủ đề cho dự án thiết kế này. Dưới đây là một số ý tưởng, bản phác thảo và phương án thiết kế ban đầu được phát triển trong quá trình nghiên cứu và thử nghiệm.",
+              "Mình lựa chọn xanh thẫm làm màu chủ đạo, kết hợp với vàng làm điểm nhấn nhằm thể hiện sự thanh lịch và nét cổ điển của âm nhạc."
+            ]
+          },
+          "images": [
+            "banner.jpg",
+            "op1-04-04.jpg"
+          ]
+        },
+        {
+          "title": "Final Design",
+          "text": {
+            "en": "Below is the final design direction I developed. The typography was inspired by the F clef in musical notation. For the illustration, I combined images of musical instruments to form a G clef, while arranging light blue shapes to create the visual impression of piano keys. These elements bring together musical symbolism and visual identity in a cohesive design.",
+            "vi": "Dưới đây là phương án thiết kế cuối cùng mà mình lựa chọn và phát triển. Phần typography được lấy cảm hứng từ hình ảnh khóa Fa trong ký hiệu âm nhạc. Đối với phần minh họa, mình kết hợp hình ảnh các nhạc cụ để tạo thành hình khóa Sol, đồng thời sắp xếp các mảng màu xanh sáng nhằm gợi liên tưởng đến hình ảnh những phím đàn piano. Các yếu tố này kết hợp với nhau để tạo nên một thiết kế thống nhất, mang đậm dấu ấn âm nhạc."
+          },
+          "images": [
+            "final-logo-10.jpg",
+            "poster-real-03.jpg",
+            "standee-05.jpg",
+            "banner-2.jpg"
+          ]
+        },
+        {
+          "title": "Mockup & Showcase",
+          "text": {
+            "en": "Below are selected mockups and printed materials presented during the final project showcase.",
+            "vi": "Dưới đây là một số hình ảnh mockup và các sản phẩm in ấn được sử dụng trong buổi trình bày dự án."
+          },
+          "images": [
+            "530.jpg",
+            "brochure-mock.png",
+            "z5002049440937-f3e91e7a89942c7b41d6ce70d1ad0608.jpg",
+            "z5002049440936-c8384ca6cf76c75e2c6dfe0730d19320.jpg",
+            "backdrop.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "project-9",
+      "name": "Ananas Web Design",
+      "text": {
+        "en": "A university coursework project focused on designing a website for Ananas, a Vietnamese footwear brand, for its Back-to-School campaign.",
+        "vi": "Dự án thực hiện trong khuôn khổ một học phần chuyên ngành tại trường đại học, tập trung vào thiết kế website cho thương hiệu giày Ananas nhân dịp Back to School."
+      },
+      "cover": "layer-0-3.jpg",
+      "client": "Personal Project",
+      "year": "2023",
+      "tools": [
+        "Adobe Photoshop",
+        "Adobe Illustrator"
+      ],
+      "steps": [
+        {
+          "title": "Site Map & Design Research",
+          "text": {
+            "en": "I developed the site map to define the website's information architecture, including its main pages and subpages. I also explored the primary color palette and grid layouts to establish the visual direction for the website design.",
+            "vi": "Mình xây dựng site map để xác định cấu trúc thông tin, các trang chính và trang phụ của website. Đồng thời, mình cũng nghiên cứu bảng màu chủ đạo và bố cục lưới nhằm định hướng cho quá trình thiết kế giao diện."
+          },
+          "images": [
+            "layer-0-3.jpg",
+            "sitemap-10.jpg"
+          ]
+        },
+        {
+          "title": "Web Design",
+          "text": {
+            "en": "Below are the finalized designs for the homepage and a product detail page, along with website previews presented through desktop and mobile screenshots.",
+            "vi": "Dưới đây là thiết kế hoàn thiện của trang chủ và một trang chi tiết sản phẩm, cùng các hình ảnh chụp giao diện demo trên máy tính và điện thoại."
+          },
+          "images": [
+            "trang-home-01.jpg",
+            "trang-con-02.png",
+            "pc-preview-09.png",
+            "pc-preview-06.png",
+            "pc-preview-07.png",
+            "pc-preview-08.png",
+            "phone-preview-04.png",
+            "phone-preview-05.png"
+          ]
+        },
+        {
+          "title": "Mockup",
+          "text": {
+            "en": "Below are selected mockups showcasing the website design across different presentations.",
+            "vi": "Dưới đây là một số hình ảnh mockup giới thiệu thiết kế website."
+          },
+          "images": [
+            "mock1.jpg",
+            "layer-0-2.jpg",
+            "mock3.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "werewolf-boardgame",
+      "name": "Werewolf Board Game",
+      "text": {
+        "en": "A university coursework project focused on designing a Werewolf board game, including its visual identity, game cards, and promotional materials.",
+        "vi": "Dự án thực hiện trong khuôn khổ một học phần chuyên ngành tại trường đại học, tập trung vào thiết kế bộ board game Ma Sói, bao gồm hệ thống nhận diện, thẻ bài và các ấn phẩm quảng bá."
+      },
+      "cover": "thumbnail.jpg",
+      "client": "Personal Project",
+      "year": "2023",
+      "tools": [
+        "Adobe Photoshop",
+        "Adobe Illustrator"
+      ],
+      "steps": [
+        {
+          "title": "Logo & Poster Design",
+          "text": {
+            "en": "Based on the theme and atmosphere of the Werewolf game, I developed a suitable color palette and typography to establish its visual identity. I also designed a promotional poster to introduce the board game.",
+            "vi": "Dựa trên chủ đề và bầu không khí đặc trưng của trò chơi Ma Sói, mình đã lựa chọn bảng màu và kiểu chữ phù hợp để xây dựng phong cách hình ảnh cho bộ board game. Mình cũng thiết kế poster nhằm giới thiệu và quảng bá trò chơi."
+          },
+          "images": [
+            "thumbnail.jpg",
+            "logo-01.jpg"
+          ]
+        },
+        {
+          "title": "Board Game Cards",
+          "text": {
+            "en": "I illustrated several key character roles featured in the game and designed the corresponding game cards, combining character artwork with clear and cohesive card layouts.",
+            "vi": "Mình minh họa một số vai trò nhân vật chủ đạo trong trò chơi và thiết kế hệ thống thẻ bài tương ứng, kết hợp hình minh họa với bố cục thông tin rõ ràng và thống nhất."
+          },
+          "images": [
+            "card-01-2.jpg"
+          ]
+        },
+        {
+          "title": "Mockup & Showcase",
+          "text": {
+            "en": "Below are selected mockups, finished board game components, and printed materials presented during the final project showcase.",
+            "vi": "Dưới đây là một số hình ảnh mockup, các thành phần board game hoàn thiện và những ấn phẩm in ấn được trình bày trong buổi showcase dự án."
+          },
+          "images": [
+            "mockup-01.jpg",
+            "z4999414952696-f23a4ad67e22d6378256fc41dd637639.jpg",
+            "z4999414963346-ab01532711857e71a1f604589a62154c.jpg"
+          ]
+        }
+      ]
+    },
+    {
       "id": "the-girl-who-reads-on-the-metro",
       "name": {
         "en": "The Girl Who Reads on the Métro",
         "vi": "Juliette và tiệm sách bí ẩn ở Paris"
+      },
+      "text": {
+        "en": "A book cover design project for the Vietnamese edition of The Girl Who Reads on the Métro (Juliette và tiệm sách bí ẩn ở Paris), published by 1980 Books.",
+        "vi": "Dự án thiết kế bìa sách cho ấn bản tiếng Việt của The Girl Who Reads on the Métro (Juliette và tiệm sách bí ẩn ở Paris), do Nhà xuất bản 1980 Books phát hành."
       },
       "cover": "juliette-3.png",
       "client": "1980 Books",
@@ -142,6 +342,10 @@
       "steps": [
         {
           "title": "Sketch Options",
+          "text": {
+            "en": "After reading and studying the book manuscript, I developed several initial concepts and design options for the book cover.",
+            "vi": "Sau khi đọc và nghiên cứu bản thảo tác phẩm, mình đã phát triển một số ý tưởng và phương án thiết kế ban đầu cho bìa sách."
+          },
           "images": [
             "juliette-3.png",
             "op1-01.png",
@@ -149,7 +353,11 @@
           ]
         },
         {
-          "title": "Final Product",
+          "title": "Final Design",
+          "text": {
+            "en": "Below is the finalized book cover design selected and approved by the publisher.",
+            "vi": "Dưới đây là thiết kế bìa sách hoàn thiện được nhà xuất bản lựa chọn và phê duyệt."
+          },
           "images": [
             "juliette.png"
           ]
@@ -163,15 +371,23 @@
         "vi": "Lời tiên tri cuối cùng"
       },
       "text": {
-        "en": "Demo — a candy box for the Jelly Master game mascot: dieline, label art and 3D mockups.",
-        "vi": "Demo — hộp kẹo cho linh vật game Jelly Master: dieline, hình nhãn và mockup 3D."
+        "en": "A book cover design project for the Vietnamese edition of The Golden Enclaves (Lời tiên tri cuối cùng), published by 1980 Books.",
+        "vi": "Dự án thiết kế bìa sách cho ấn bản tiếng Việt của The Golden Enclaves (Lời tiên tri cuối cùng), do 1980 Books phát hành."
       },
       "cover": "loi-tien-tri-cuoi-cung.jpg",
-      "client": "Jelly Master",
-      "year": "2024",
+      "client": "1980 Books",
+      "year": "2023",
+      "tools": [
+        "Adobe Photoshop",
+        "Adobe Illustrator"
+      ],
       "steps": [
         {
           "title": "Sketch Options",
+          "text": {
+            "en": "After reading and studying the book manuscript, I developed several initial concepts and design options for the book cover.",
+            "vi": "Sau khi đọc và nghiên cứu bản thảo tác phẩm, mình đã phát triển một số ý tưởng và phương án thiết kế ban đầu cho bìa sách."
+          },
           "images": [
             "loi-tien-tri-cuoi-cung.jpg",
             "bia-demo-1.jpg",
@@ -180,7 +396,11 @@
           ]
         },
         {
-          "title": "Final Product",
+          "title": "Final Design",
+          "text": {
+            "en": "Below is the finalized book cover design selected and approved by the publisher.",
+            "vi": "Dưới đây là thiết kế bìa sách hoàn thiện được nhà xuất bản lựa chọn và phê duyệt."
+          },
           "images": [
             "loi-tien-tri-cuoi-cung-2.jpg"
           ]
@@ -188,62 +408,132 @@
       ]
     },
     {
-      "id": "hud-icon-set",
-      "name": {
-        "en": "HUD Icon Set",
-        "vi": "Bộ icon HUD"
-      },
+      "id": "watda-fish-logo-design",
+      "name": "Watda Fish Logo Design",
       "text": {
-        "en": "Demo — 12 line icons for a game HUD on a 24 px keyline grid, neon on dark.",
-        "vi": "Demo — 12 icon nét cho HUD trong game, dựng trên lưới 24 px, neon trên nền tối."
+        "en": "A logo design project for Watda Fish, an NFT project developed by Yunero Studio.",
+        "vi": "Dự án thiết kế logo cho Watda Fish, một dự án NFT của Yunero Studio."
       },
-      "cover": "icons-final.jpg",
+      "cover": "cas-03.jpg",
+      "client": "Yunero Studio",
+      "year": "2023",
       "tools": [
-        "Figma",
-        "Illustrator"
+        "Adobe Illustrator"
       ],
       "steps": [
         {
-          "title": {
-            "en": "Sketches",
-            "vi": "Phác thảo"
-          },
-          "images": [
-            "sketch.jpg"
-          ]
-        },
-        {
-          "title": {
-            "en": "Keyline grid",
-            "vi": "Lưới keyline"
-          },
+          "title": "Typography & Color Palette",
           "text": {
-            "en": "Same stroke and corner radius for every icon.",
-            "vi": "Cùng độ dày nét và bo góc cho mọi icon."
+            "en": "Inspired by the main character: a playful fish, and the hidden visual detail of a star replacing the letter “i”, I selected a rounded, playful typeface and orange color to reflect the project's fun and distinctive personality.",
+            "vi": "Lấy cảm hứng từ nhân vật chính là chú cá ngộ nghĩnh cùng chi tiết ẩn sử dụng hình ngôi sao thay cho chữ “i”, mình lựa chọn kiểu chữ bo tròn, vui mắt kết hợp với màu cam rực rỡ để thể hiện tinh thần vui tươi và cá tính riêng của dự án."
           },
           "images": [
-            "keyline.jpg"
+            "cas-03.jpg",
+            "info.png"
           ]
         },
         {
-          "title": {
-            "en": "Final set & in-game",
-            "vi": "Bộ hoàn chỉnh & trong game"
-          },
-          "images": [
-            "icons-final.jpg",
-            "icons-ui.jpg"
-          ]
-        },
-        {
-          "title": {
-            "en": "Handoff",
-            "vi": "Bàn giao"
-          },
+          "title": "Logo Design",
           "text": {
-            "en": "Exported as SVG + a Figma component library.",
-            "vi": "Xuất SVG và thư viện component Figma."
-          }
+            "en": "I incorporated a stylized fish symbol into the logo, creating a distinctive visual identity that connects the character with the project's wordmark.",
+            "vi": "Mình cách điệu hình ảnh chú cá và đưa vào thiết kế logo, tạo nên sự kết hợp giữa biểu tượng nhân vật và phần chữ, góp phần xây dựng dấu ấn nhận diện riêng cho dự án."
+          },
+          "images": [
+            "logo-ca-08.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "carp-stamp",
+      "name": "Carp Stamp",
+      "text": {
+        "en": "A university coursework project focused on designing a postage stamp collection inspired by carp.",
+        "vi": "Dự án thực hiện trong khuôn khổ một học phần chuyên ngành tại trường đại học, tập trung vào thiết kế bộ tem thư với chủ đề cá chép."
+      },
+      "cover": "tem.jpg",
+      "client": "Personal Project",
+      "year": "2022",
+      "tools": [
+        "Adobe Photoshop",
+        "Adobe Illustrator"
+      ],
+      "steps": [
+        {
+          "title": "Sketches",
+          "text": {
+            "en": "Taking carp as the main inspiration, I developed initial sketches to explore the visual concepts and compositions for the stamp collection.",
+            "vi": "Lấy cảm hứng từ hình ảnh cá chép, mình phát triển các bản phác thảo ban đầu nhằm khám phá ý tưởng hình ảnh và bố cục cho bộ tem thư."
+          },
+          "images": [
+            "tem.jpg",
+            "307067254-1774646559553428-3895578427826749710-n.jpg",
+            "305864167-429933725905991-9175787477105189066-n.jpg"
+          ]
+        },
+        {
+          "title": "Final Product",
+          "text": {
+            "en": "The final collection includes two postage stamps, one postmark, and a matching envelope design.",
+            "vi": "Bộ thiết kế hoàn thiện bao gồm hai mẫu tem thư, một mẫu dấu bưu điện và thiết kế phong bì đồng bộ"
+          },
+          "images": [
+            "tem-2.jpg",
+            "stamp.jpg",
+            "layer-1.png"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "symbolize-logo",
+      "name": "Symbol Design",
+      "text": {
+        "en": "A university coursework project focused on designing a graphic symbol inspired by the rabbit.",
+        "vi": "Dự án thực hiện trong khuôn khổ một học phần chuyên ngành tại trường đại học, tập trung vào thiết kế biểu tượng đồ họa lấy cảm hứng từ hình tượng con thỏ."
+      },
+      "cover": "layer-0.jpg",
+      "client": "Personal Project",
+      "year": "2021",
+      "tools": [
+        "Adobe Photoshop",
+        "Adobe Illustrator"
+      ],
+      "steps": [
+        {
+          "title": "Research & Sketches",
+          "text": {
+            "en": "I studied the rabbit's anatomy and sketched its movements and poses to explore its distinctive lines and shapes. These studies provided the foundation for developing the visual symbol.",
+            "vi": "Mình đã tìm hiểu đặc điểm giải phẫu và ký họa các tư thế, hoạt động của loài thỏ nhằm nghiên cứu những đường nét và hình dáng đặc trưng. Những nghiên cứu này là cơ sở cho quá trình phát triển thiết kế biểu tượng."
+          },
+          "images": [
+            "layer-0.jpg",
+            "img-20211008-105432-854-2-2.jpg",
+            "rabbit-sketch-1-2.jpg",
+            "rabbit-line1-2.jpg",
+            "rabbit-piece1-2.jpg"
+          ]
+        },
+        {
+          "title": "Symbol Design Exploration",
+          "text": {
+            "en": "I developed several logo concepts by incorporating rabbit-inspired forms into the design. Using basic geometric shapes, positive and negative space, and simplified lines, I explored ways to capture the rabbit's most distinctive characteristics in a recognizable symbol.",
+            "vi": "Mình đã phát triển nhiều ý tưởng thiết kế bằng cách lồng ghép hình tượng con thỏ vào biểu tượng đồ họa. Thông qua việc sử dụng các hình học cơ bản, âm bản dương bản và những đường nét tối giản, mình tìm cách khái quát những đặc điểm nổi bật nhất của loài thỏ thành một biểu tượng dễ nhận diện."
+          },
+          "images": [
+            "242055112-276648850965695-6194857290913191635-n-2.jpg",
+            "file-test-co-duyen-01.jpg"
+          ]
+        },
+        {
+          "title": "Final Symbol Design",
+          "text": {
+            "en": "Below is my finalized symbol design, developed from the initial research and sketching process.",
+            "vi": "Dưới đây là thiết kế biểu tượng hoàn thiện được mình phát triển từ quá trình nghiên cứu và phác thảo ban đầu."
+          },
+          "images": [
+            "layer-0-2.jpg"
+          ]
         }
       ]
     }
