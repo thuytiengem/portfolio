@@ -33,6 +33,7 @@ The owner writes in Vietnamese — reply in Vietnamese.
   `assets/css/portfolio-menu.css` (topbar "Portfolio" dropdown on every page; init after `initI18n`, before `initMenu`),
   `page-banner.js` + `assets/css/page-banner.css` (HUD page banner of games.html / art2d.html / art3d.html / graphic-design.html list; `titleFont()` = Montserrat
   fallback `.alt-font` (base.css) for titles with Vietnamese letters Qualy lacks — ă ơ ư ĩ ũ and stacked marks ả ạ ế ậ …).
+- `project-pager.js` + `assets/css/project-pager.css` — Previous / All / Next bar of project.html and graphic-design.html?id=… (+ `focusCardFromHash(prefix)`).
 - `portfolio-studio/` — local editor (server.mjs = no-dependency Node server + API; studio.js UI). Writes need the `X-Studio: 1` header; localhost only.
 
 ## Decisions already made (don't re-ask)
@@ -50,6 +51,7 @@ The owner writes in Vietnamese — reply in Vietnamese.
   variant 2's vertical stages + horizontal filmstrip + lightbox; Challenges = split cards, Learned = checklist. Every field optional,
   empty = hidden, section numbers count only rendered sections; no `roles` → `responsibilities` as one untitled role.
   Progression images = file names in `Database/Projects/<folder>/images/product-progression/<step id>/` (jelly-master has demo images).
+- Contact form submit button text = `form_send` "Send" / "Gửi" in web-config i18n, NOT "Explore" (owner); keep it when regenerating or rewriting web-config.json.
 - Contact form opens `mailto:` with the filled fields. Social links hidden when empty (15 networks, icons = Simple Icons in assets/icons/<key>.svg).
 - Fonts: Qualy (titles; misses some Vietnamese glyphs, free for personal use only), Montserrat (body; self-hosted variable woff2, OFL, full Vietnamese).
 - Lists render with round bullets (no "- " prefix).
@@ -129,6 +131,10 @@ The owner writes in Vietnamese — reply in Vietnamese.
   `.hm` in studio.css, legend in the sidebar note): Intro / Hồ sơ / Mạng xã hội / Explore links / rain word / tab title, Kinh nghiệm,
   UI text keys shown on home (`isHomeKey`: all but `pd_ games_ a2_ a3_ gd_`, plus `a2_count*`), the featured-project fields, and
   the 2D / 3D Artwork fields that feed the home sections. Add (H) to any new home-visible field.
+- Project page ends with the same Previous / All projects / Next bar as the Graphic Design detail (owner, for consistency): shared
+  `project-pager.js` + `assets/css/project-pager.css`; order = `Database/Projects/index.json` (non-featured included), no wrap-around, card
+  image via games/model.js; All projects → `games.html#game-<id>` (scrolls to + focuses the card, same as `#gd-<id>`); `?from=games` is kept on
+  prev / next. Labels `pd_prev_project` / `pd_next_project` / `pd_all_projects`.
 - Project page "← Back to projects" still → index.html#featured (owner hasn't decided whether it should go to games.html).
 
 ## Current status / next step

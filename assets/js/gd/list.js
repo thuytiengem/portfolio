@@ -7,7 +7,8 @@ import { lbl } from "../project/parts.js";
 import { pageBanner, titleFont } from "../page-banner.js";
 import { gameCard } from "../games/cards.js";
 import { projectHref } from "./model.js";
-import { metaLine, focusCardFromHash } from "./parts.js";
+import { focusCardFromHash } from "../project-pager.js";
+import { metaLine } from "./parts.js";
 
 /** project record → the Video Games card model (same look, no game stats / logo) */
 const toCard = p => ({
@@ -39,5 +40,5 @@ export function renderList(model, main) {
     h("div", { class: "container" }, t.projects
       ? h("div", { class: "gp-grid" }, model.projects.map(card))
       : lbl("p", "gd_empty", "gp-empty")));
-  focusCardFromHash();
+  focusCardFromHash("gd-");
 }

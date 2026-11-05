@@ -38,7 +38,7 @@ const MIME = {
   ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8", ".md": "text/markdown; charset=utf-8",
   ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp",
   ".gif": "image/gif", ".ico": "image/x-icon", ".ttf": "font/ttf", ".woff": "font/woff", ".woff2": "font/woff2",
-  ".mp4": "video/mp4", ".webm": "video/webm",
+  ".mp4": "video/mp4", ".webm": "video/webm", ".pdf": "application/pdf",
 };
 
 class HttpError extends Error { constructor(status, msg) { super(msg); this.status = status; } }

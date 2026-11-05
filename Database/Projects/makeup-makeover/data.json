@@ -10,6 +10,14 @@
     {
       "id": "character-1-design",
       "name": "Character 1 design",
+      "text": {
+        "en": [
+          "Based on the storyline of a Korean office worker, I designed the character with Asian facial features, complemented by office-appropriate outfits and makeup styles."
+        ],
+        "vi": [
+          "Dựa trên bối cảnh nhân vật là một nữ nhân viên công sở người Hàn Quốc, mình thiết kế ngoại hình với những đặc điểm gương mặt châu Á, kết hợp cùng trang phục và phong cách trang điểm phù hợp với môi trường công sở."
+        ]
+      },
       "images": [
         "frame-story-nv3.png",
         "demo-1.jpg",
@@ -25,6 +33,14 @@
     {
       "id": "character-2-design",
       "name": "Character 2 design",
+      "text": {
+        "en": [
+          "As the main character is a Russian woman, I researched distinctive European facial proportions and incorporated Western-inspired makeup trends to develop her visual appearance."
+        ],
+        "vi": [
+          "Với nhân vật chính là một cô gái người Nga, mình nghiên cứu đặc điểm tỷ lệ gương mặt châu Âu và kết hợp với những xu hướng trang điểm phương Tây để phát triển ngoại hình nhân vật."
+        ]
+      },
       "images": [
         "thumbnail-char9.png",
         "demo-1.jpg",
@@ -40,6 +56,14 @@
     {
       "id": "store-listing",
       "name": "Store Listing",
+      "text": {
+        "en": [
+          "Below are selected store listing materials I created for the game."
+        ],
+        "vi": [
+          "Dưới đây là một số sản phẩm store listing do mình thực hiện cho game."
+        ]
+      },
       "images": [
         "screenshot-1.jpg",
         "screenshot-2.jpg",
@@ -66,7 +90,23 @@
   },
   "roles": [
     {
-      "title": "Concept Artist"
+      "title": "Concept Artist",
+      "text": {
+        "en": [
+          "Designed two characters and gameplay assets for two in-game levels."
+        ],
+        "vi": [
+          "Thiết kế hai nhân vật và các asset gameplay cho hai level trong game."
+        ]
+      }
     }
-  ]
+  ],
+  "studio": "Champion Game Studio x Falcon Game Studio",
+  "period": {
+    "en": "since 2024",
+    "vi": "từ 2024"
+  },
+  "downloads": "1M+",
+  "members": 5,
+  "genre": "CASUAL"
 }

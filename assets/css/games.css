@@ -21,6 +21,7 @@
   background: linear-gradient(135deg, #d38cff 0 calc(var(--cut) * .72), transparent 0) top left / 40px 40px no-repeat,
               linear-gradient(-45deg, #d38cff 0 calc(var(--cut) * .72), transparent 0) bottom right / 40px 40px no-repeat;
 }
+.gcard:target, .gcard:focus { scroll-margin-top: calc(var(--topbar-h) + 30px); }
 .gcard:hover, .gcard:focus-visible { transform: translateY(-6px); }
 .gcard:hover::after, .gcard:focus-visible::after { box-shadow: inset 0 0 0 1px #e6c4ffcc, inset 0 0 34px #d38cff59; }
 .gcard:focus-visible::after { box-shadow: inset 0 0 0 2px var(--cyan), inset 0 0 34px #3ef2ff40; } /* clip-path hides an outline */

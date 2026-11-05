@@ -6,6 +6,7 @@ import { h } from "../utils.js";
 import { bind } from "../i18n.js";
 import { framedVideo } from "../youtube.js";
 import { storeButtons } from "../stores.js";
+import { projectPager } from "../project-pager.js";
 import { has } from "./model.js";
 import { filmstrip } from "./gallery.js";
 import {
@@ -60,6 +61,22 @@ export function renderProject(m, main) {
     const body = bodies[id](m);
     return body ? section(id, key, ++n, body) : null;
   }).filter(Boolean));
+}
+
+/** games = Video Games card models in index.json order; null when this project is not listed or is the only one */
+export function gamesPager(games, id) {
+  const index = games.findIndex(g => g.id === id);
+  if (index < 0 || games.length < 2) return null;
+  // arrived from the Video Games page → the neighbours keep their "Back to Video Games" link too
+  const fromGames = new URLSearchParams(location.search).get("from") === "games";
+  const side = g => g ? {
+    href: fromGames ? g.href : `project.html?id=${encodeURIComponent(g.id)}`,
+    name: g.title, image: g.image, contain: g.imageKind === "logo",
+  } : null;
+  return projectPager({
+    prev: side(games[index - 1]), next: side(games[index + 1]), all: `games.html#game-${encodeURIComponent(id)}`,
+    keys: { prev: "pd_prev_project", next: "pd_next_project", all: "pd_all_projects" },
+  });
 }
 
 export function renderNotFound(main) {

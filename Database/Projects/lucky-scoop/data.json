@@ -71,15 +71,71 @@
   "progression": [
     {
       "id": "asset-planning",
-      "name": "Asset Planning"
+      "name": "Asset Planning",
+      "text": {
+        "en": [
+          "After brainstorming and finalizing the art style and GDD, I created a comprehensive asset list and asset data based on the game's requirements. This helped me organize and assign tasks across the art team, track production progress, and manage the workload efficiently within the project's short 2–3-week art production timeline."
+        ],
+        "vi": [
+          "Sau khi brainstorm và thống nhất định hướng art style cùng GDD, mình xây dựng danh sách và dữ liệu chi tiết cho toàn bộ art asset dựa trên yêu cầu của game. Công việc này giúp mình tổ chức và phân chia đầu việc cho các thành viên trong team, theo dõi tiến độ sản xuất và quản lý khối lượng công việc hiệu quả trong thời gian sản xuất art ngắn (2–3 tuần)."
+        ]
+      },
+      "images": [
+        "layer-1.jpg",
+        "layer-2.jpg",
+        "layer-3.jpg"
+      ]
     },
     {
       "id": "art-assets",
-      "name": "Art Assets"
+      "name": "Art Assets",
+      "text": {
+        "en": [
+          "Alongside my responsibilities as Lead Artist and mentor, I also contributed directly to the production of selected art assets to help accelerate the project's progress."
+        ],
+        "vi": [
+          "Bên cạnh vai trò Lead Artist và mentor, mình cũng trực tiếp tham gia sản xuất một số art asset nhằm hỗ trợ và đẩy nhanh tiến độ dự án."
+        ]
+      },
+      "images": [
+        "source.jpg"
+      ]
     },
     {
       "id": "ui-design",
-      "name": "UI Design"
+      "name": "UI Design",
+      "text": {
+        "en": [
+          "Initially, a dedicated UI artist was responsible for the game's interface design. However, after reviewing and testing the initial results and identifying areas that needed improvement. As the assigned artist was also occupied with another project, I stepped in to revise and further develop the game's UI/UX to better meet its needs."
+        ],
+        "vi": [
+          "Ban đầu, một nhân sự UI được phân công phụ trách thiết kế giao diện cho game. Tuy nhiên, sau quá trình thử nghiệm và đánh giá, nhận thấy một số điểm trong UI/UX cần được cải thiện. Do nhân sự phụ trách đang đồng thời đảm nhận một dự án khác nên mình đã trực tiếp tham gia điều chỉnh và phát triển giao diện nhằm đáp ứng tốt hơn yêu cầu của game."
+        ]
+      },
+      "images": [
+        "home.jpg",
+        "demo-scoop.jpg",
+        "demo-scoop-done.jpg",
+        "demo-get-item-1.jpg",
+        "demo-get-item-2.jpg",
+        "demo-choose-gift-box.jpg",
+        "demo-choose-card.jpg",
+        "demo-choose-tag.jpg",
+        "diy-choose-item.jpg",
+        "diy-scoop-bead.jpg",
+        "diy-mirror.jpg",
+        "diy-complete.png",
+        "diy-livestream1-2.jpg",
+        "diy-finish-op-2.jpg",
+        "choose-case-2.jpg",
+        "apply-glue.jpg",
+        "spread-glue.jpg",
+        "glue-border.jpg",
+        "scoop-bead.jpg",
+        "decorate.jpg",
+        "choose-phone-chain.jpg",
+        "end.jpg"
+      ]
     }
   ],
   "description": {
@@ -89,5 +145,17 @@
     "vi": [
       "Một game mô phỏng casual, nơi người chơi xúc sticker và charm để hoàn thành đơn hàng theo danh sách có sẵn, hoặc thỏa sức sáng tạo trong chế độ DIY."
     ]
-  }
+  },
+  "challenges": [
+    {
+      "problem": {
+        "en": "Due to the tight project deadline and limited UI/UX resources, several issues arose during the game build process. The assigned UI/UX artist was occupied with another project and unable to join the revision process, leaving some interface elements unfinished.",
+        "vi": "Do deadline dự án ngắn và nguồn lực UI/UX hạn chế, quá trình build game phát sinh một số vấn đề cần điều chỉnh. Nhân sự UI/UX phụ trách đang bận với dự án khác và không thể tham gia quá trình chỉnh sửa, khiến một số hạng mục giao diện chưa được hoàn thiện."
+      },
+      "solution": {
+        "en": "I directly coordinated discussions with the team to identify and address UI/UX issues, revised the necessary interface elements, and completed the remaining tasks to keep the project on schedule.",
+        "vi": "Mình trực tiếp trao đổi với team để xác định và xử lý các vấn đề UI/UX, điều chỉnh những phần giao diện cần thiết và hoàn thiện các hạng mục còn thiếu nhằm đảm bảo tiến độ dự án."
+      }
+    }
+  ]
 }

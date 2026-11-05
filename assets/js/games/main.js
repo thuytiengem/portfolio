@@ -12,6 +12,7 @@ import { initMenu, setBrand } from "../topbar.js";
 import { initPortfolioMenu } from "../portfolio-menu.js";
 import { renderContact } from "../sections/about.js";
 import { pageBanner } from "../page-banner.js";
+import { focusCardFromHash } from "../project-pager.js";
 import { loadGames } from "./model.js";
 import { gameCard } from "./cards.js";
 
@@ -41,10 +42,12 @@ async function main() {
 
   $("#gamesGrid").append(...games.map((c, i) => {
     const el = gameCard(c, i);
+    el.id = `game-${c.id}`;                             // the project page's "All projects" comes back to this card
     el.style.setProperty("--d", `${(i % 3) * 90}ms`);   // staggered entrance along each row
     return reveal(el);
   }));
   $("#gamesEmpty").hidden = games.length > 0;
+  focusCardFromHash("game-");
 
   renderContact(config);
   initMenu();

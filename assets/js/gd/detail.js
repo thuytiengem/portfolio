@@ -7,6 +7,7 @@ import { setRich } from "../richtext.js";
 import { lbl, rich, num } from "../project/parts.js";
 import { filmstrip } from "../project/gallery.js";
 import { openLightbox } from "../project/lightbox.js";
+import { projectPager } from "../project-pager.js";
 import { listHref, projectHref, stepId } from "./model.js";
 import { title, imagesCount, stepsCount, metaLine, scrollToStep } from "./parts.js";
 
@@ -51,13 +52,11 @@ function stepRow(st, i) {
 
 /** ← previous · all projects · next → (at the ends: only the side that exists) */
 function pager(list, index) {
-  const side = (p, key, cls) => p ? h("a", { class: `gd-pg ${cls}`, href: projectHref(p.id) },
-    p.cover ? h("img", { src: p.cover, alt: "", loading: "lazy", decoding: "async" }) : h("span", { class: "gd-pg-ph", "aria-hidden": "true" }),
-    h("span", { class: "gd-pg-txt" }, lbl("small", key), title("b", p.name, "gd-pg-name"))) : h("span", { class: `gd-pg-void ${cls}` });
-  return h("nav", { class: "container gd-pager" },
-    side(list[index - 1], "gd_prev_project", "prev"),
-    Object.assign(lbl("a", "gd_all_projects", "gd-pg-all"), { href: listHref(list[index].id) }),
-    side(list[index + 1], "gd_next_project", "next"));
+  const side = p => p ? { href: projectHref(p.id), name: p.name, image: p.cover } : null;
+  return projectPager({
+    prev: side(list[index - 1]), next: side(list[index + 1]), all: listHref(list[index].id),
+    keys: { prev: "gd_prev_project", next: "gd_next_project", all: "gd_all_projects" },
+  });
 }
 
 export function renderDetail(model, p, index, main) {
@@ -68,6 +67,6 @@ export function renderDetail(model, p, index, main) {
         h("div", { class: "a3-kick" }, lbl("span", "gd_process"), h("i", { "aria-hidden": "true" })),
         h("ol", { class: "a2-steps" }, p.steps.map(stepRow)))) : null,
     model.projects.length > 1 ? pager(model.projects, index) : null].filter(Boolean));
-  $$(".gd-hero, .gd-process .a3-kick, .gd-process .a2-step, .gd-pager", main).forEach(reveal);
+  $$(".gd-hero, .gd-process .a3-kick, .gd-process .a2-step, .project-pager", main).forEach(reveal);
   scrollToStep("a2-step");   // ?id=…#step-2 → that step
 }

@@ -21,20 +21,60 @@
   "members": 16,
   "roles": [
     {
-      "title": "Lead Artist"
+      "title": "Lead Artist",
+      "text": {
+        "en": [
+          "Managed art production, task assignments, team workflow, and output quality.",
+          "Reviewed artwork and animations, and supervised outsourced production."
+        ],
+        "vi": [
+          "Quản lý quy trình sản xuất art, phân công công việc và theo dõi tiến độ, chất lượng đầu ra của team.",
+          "Kiểm duyệt art, animation và quản lý chất lượng sản phẩm outsource."
+        ]
+      }
     },
     {
-      "title": "Concept Artist"
+      "title": "Concept Artist",
+      "text": {
+        "en": [
+          "Contributed to concept development and in-game art production.",
+          "Prepared and separated artwork files for animation."
+        ],
+        "vi": [
+          "Trực tiếp tham gia phát triển concept và sản xuất art asset trong gameplay.",
+          "Tách và chuẩn bị file art cho quá trình animation."
+        ]
+      }
     }
   ],
   "progression": [
     {
       "id": "art-assets",
-      "name": "Art Assets"
+      "name": "Art Assets",
+      "text": {
+        "en": [
+          "Below are selected in-game levels and artwork that I created for the project."
+        ],
+        "vi": [
+          "Dưới đây là một số level in-game và sản phẩm art do mình trực tiếp thực hiện cho dự án."
+        ]
+      },
+      "images": [
+        "2.jpg",
+        "1.jpg"
+      ]
     },
     {
       "id": "store-listing",
       "name": "Store Listing",
+      "text": {
+        "en": [
+          "Created store listing materials based on the partner's requirements, including feature graphics and app icons."
+        ],
+        "vi": [
+          "Thiết kế các ấn phẩm store listing theo yêu cầu từ đối tác, bao gồm feature graphic và icon."
+        ]
+      },
       "images": [
         "feature.jpg",
         "icon-1.jpg",
@@ -47,5 +87,54 @@
   "thumbnail": "images/thumbnail.jpg",
   "cover": "images/cover.jpg",
   "genre": "PUZZLE",
-  "featured": false
+  "featured": false,
+  "description": {
+    "en": [
+      "A series of puzzle minigames featuring diverse gameplay mechanics, character transformations, and interactive challenges."
+    ],
+    "vi": [
+      "Một series minigame puzzle giải đố với nhiều cơ chế gameplay khác nhau, kết hợp các thử thách tương tác và biến hình nhân vật."
+    ]
+  },
+  "challenges": [
+    {
+      "problem": {
+        "en": "The project required at least 150 levels, each with unique gameplay, characters, and visual assets.",
+        "vi": "Dự án yêu cầu sản xuất tối thiểu 150 level, mỗi level có gameplay, nhân vật và hệ thống hình ảnh riêng."
+      },
+      "solution": {
+        "en": "I experimented with AI-assisted image generation to reduce the art workload and proposed outsourcing additional artists, while closely monitoring their output quality.",
+        "vi": "Mình thử nghiệm ứng dụng AI để hỗ trợ tạo hình ảnh nguồn, giảm tải khối lượng công việc và đề xuất thuê thêm artist outsource, đồng thời trực tiếp kiểm duyệt chất lượng đầu ra."
+      }
+    },
+    {
+      "problem": {
+        "en": "Some gameplay concepts required substantial revisions, resulting in repeated changes to art requirements.",
+        "vi": "Một số ý tưởng gameplay cần chỉnh sửa nhiều lần, dẫn đến sự thay đổi liên tục trong yêu cầu art."
+      },
+      "solution": {
+        "en": "I proposed more frequent brainstorming sessions between the Art and Game Design teams to align ideas and identify potential issues earlier.",
+        "vi": "Mình đề xuất tổ chức các buổi brainstorm thường xuyên giữa team Art và Game Design để thống nhất ý tưởng và phát hiện vấn đề sớm hơn."
+      }
+    },
+    {
+      "problem": {
+        "en": "Disagreements between the Art, Game Design, and Development teams occasionally disrupted the production workflow.",
+        "vi": "Những bất đồng giữa các team Art, Game Design và Development đôi khi ảnh hưởng đến quy trình sản xuất."
+      },
+      "solution": {
+        "en": "I initiated direct discussions and team meetings to clarify issues, align priorities, and agree on solutions.",
+        "vi": "Mình chủ động yêu cầu tổ chức các buổi trao đổi trực tiếp nhằm làm rõ vấn đề, thống nhất ưu tiên và đưa ra phương án giải quyết."
+      }
+    }
+  ],
+  "learned": [
+    {
+      "title": "Problem-solving & Decision-making",
+      "text": {
+        "en": "I learned to address production issues promptly and decisively, preventing unresolved problems from escalating and affecting the overall workflow.",
+        "vi": "Mình học được cách chủ động xử lý các vấn đề phát sinh một cách kịp thời và dứt khoát, tránh để những vấn đề tồn đọng ảnh hưởng đến toàn bộ quy trình sản xuất."
+      }
+    }
+  ]
 }

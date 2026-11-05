@@ -1,7 +1,7 @@
 {
   "intro": {
-    "en": "<i>Demo text — replace with your own.</i> 3D scenes and characters made in Blender: the final result first, then how each one was built.",
-    "vi": "<i>Chữ demo — thay bằng nội dung của bạn.</i> Các cảnh và nhân vật 3D làm bằng Blender: xem thành phẩm trước, rồi tới quá trình thực hiện."
+    "en": "My 3D art projects, featuring the creative process and development stages of each work. Scroll to explore more.",
+    "vi": "Các dự án 3D của mình, bao gồm quá trình sáng tạo và phát triển của từng sản phẩm. Cuộn để khám phá chi tiết."
   },
   "projects": [
     {
@@ -144,7 +144,7 @@
     },
     {
       "id": "crystal-shrine",
-      "name": "Bunny",
+      "name": "Personal Mascot Character",
       "tags": [
         "2D Concept Artist",
         "3D Modeling"
@@ -154,76 +154,43 @@
         "Adobe Photoshop"
       ],
       "text": {
-        "en": "Demo — a vertical (Shorts) turntable of a glass shrine. <i>The video id is reused from another project and only marked portrait to test the layout.</i>",
-        "vi": "Demo — video dọc (Shorts) xoay quanh một ngôi đền kính. <i>Id video mượn từ dự án khác, chỉ đánh dấu dọc để thử bố cục.</i>"
+        "en": "A personal 3D character modeling project featuring a rabbit mascot with braces and glasses.",
+        "vi": "Dự án cá nhân thực hiện modeling nhân vật 3D mascot chú thỏ đeo kính và niềng răng."
       },
       "final": {
-        "videos": [
-          {
-            "youtube": "Z8-sOhvWW0s",
-            "orientation": "portrait",
-            "caption": {
-              "en": "Demo — turntable (Shorts)",
-              "vi": "Demo — xoay 360° (Shorts)"
-            }
-          }
-        ],
         "images": [
-          "poster-01.jpg",
-          "poster-02.jpg"
+          "bunny-sculpt.jpg"
         ]
       },
       "steps": [
         {
-          "title": {
-            "en": "Blockout",
-            "vi": "Dựng khối"
-          },
+          "title": "Concept sketch",
           "text": {
-            "en": "Demo — big shapes and camera first.",
-            "vi": "Demo — dựng khối lớn và đặt camera trước."
+            "en": "As someone who loves rabbits, I chose one as the inspiration for my personal mascot. I also incorporated glasses and braces as distinctive features that reflect my own appearance and personality.",
+            "vi": "Vì yêu thích loài thỏ, mình lựa chọn hình tượng này để phát triển nhân vật mascot cá nhân. Đồng thời, mình cũng đưa thêm đặc điểm đeo kính và niềng răng của bản thân vào thiết kế nhằm tạo dấu ấn nhận diện riêng cho nhân vật."
           },
           "images": [
-            "blockout-01.jpg",
-            "blockout-02.jpg"
+            "sketch-gemchan-rabbit-ver.jpg"
           ]
         },
         {
-          "title": {
-            "en": "Sculpting",
-            "vi": "Điêu khắc"
+          "title": "Blockout",
+          "text": {
+            "en": "Based on the initial sketch, I started building the character's basic 3D forms and proportions through the blockout process.",
+            "vi": "Dựa trên bản phác thảo ban đầu, mình bắt đầu xây dựng các khối hình và tỷ lệ cơ bản của nhân vật trong không gian 3D."
           },
           "images": [
-            "sculpt-01.jpg",
-            "sculpt-02.jpg"
+            "blockout.jpg"
           ]
         },
         {
-          "title": {
-            "en": "Shading",
-            "vi": "Đổ bóng & chất liệu"
-          },
+          "title": "Sculpting",
           "text": {
-            "en": "Demo — glass shader with a thin-film tint.",
-            "vi": "Demo — shader kính có ánh màu cầu vồng mỏng."
+            "en": "After completing the blockout, I refined the character's forms through sculpting and developed the high-poly model.",
+            "vi": "Sau khi hoàn thành blockout, mình tiếp tục tinh chỉnh hình khối bằng sculpting và phát triển phiên bản high-poly cho nhân vật."
           },
           "images": [
-            "shading-01.jpg",
-            "shading-02.jpg",
-            "shading-03.jpg"
-          ]
-        },
-        {
-          "title": {
-            "en": "Compositing",
-            "vi": "Hậu kỳ"
-          },
-          "text": {
-            "en": "Demo — glow, lens dirt and colour grading.",
-            "vi": "Demo — phát sáng, bụi ống kính và chỉnh màu."
-          },
-          "images": [
-            "compositing-01.jpg"
+            "bunny-sculpt-2.jpg"
           ]
         }
       ]

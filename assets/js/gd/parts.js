@@ -27,17 +27,6 @@ export function metaLine(p, cls = "gd-meta") {
 export const notFound = () => h("div", { class: "container gd-missing" },
   lbl("p", "gd_not_found"), Object.assign(lbl("a", "gd_back_list", "pb-back"), { href: listHref() }));
 
-/** after "← All design projects": bring the card of the project you came from into view (#gd-<id>) */
-export function focusCardFromHash() {
-  const id = decodeURIComponent(location.hash.slice(1));
-  const card = id.startsWith("gd-") && document.getElementById(id);
-  if (!card) return;
-  document.fonts.ready.then(() => requestAnimationFrame(() => {
-    card.scrollIntoView({ block: "center" });
-    card.focus({ preventScroll: true });
-  }));
-}
-
 /** ?id=…#step-2 → that step, once the page (fonts + eager images above it) has its final height */
 export function scrollToStep(cls) {
   const el = document.getElementById(decodeURIComponent(location.hash.slice(1)));

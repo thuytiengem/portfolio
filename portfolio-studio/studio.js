@@ -24,7 +24,7 @@ const KEY_HINTS = {
   nav_home: "Menu: Home", nav_portfolio: "Menu: Portfolio", nav_about: "Menu: About me", nav_contact: "Menu: Contact",
   featured_title: "Tiêu đề section dự án", blender_title: "Tiêu đề section Blender", artworks_title: "Tiêu đề section 2D Artwork",
   artworks_other: "2D Artwork trang chủ: tiêu đề phần 02 (3 thẻ mục)", about_title: "Tiêu đề section About",
-  description: "Nhãn khung mô tả", responsibilities: "Nhãn khung trách nhiệm", explore: "Chữ trên nút Explore",
+  description: "Nhãn khung mô tả", responsibilities: "Nhãn khung trách nhiệm", explore: "Chữ trên nút Explore", read_cv: "Chữ trên nút xem CV (About)",
   other_title: "Tiêu đề khối dự án khác", other_text: "Mô tả khối dự án khác (<br> = xuống dòng)",
   profile_suffix: "Chữ sau tên ở About", photo: "Chữ khi chưa có ảnh", experience_title: "Tiêu đề kinh nghiệm",
   talk_title: "Tiêu đề footer", talk_text: "Đoạn giới thiệu footer (<br> = xuống dòng)", my_email: "Nhãn email", my_phone: "Nhãn số điện thoại",
@@ -61,6 +61,8 @@ const KEY_HINTS = {
   gd_tools: "Trang Graphic Design: nhãn trước danh sách công cụ", gd_open_images: "Trang Graphic Design: ảnh bìa — mô tả nút xem ảnh to (trình đọc màn hình, {n} = số hình)",
   gd_prev_project: "Trang Graphic Design: nút dự án trước (cuối trang chi tiết)", gd_next_project: "Trang Graphic Design: nút dự án tiếp",
   gd_all_projects: "Trang Graphic Design: nút về danh sách (giữa 2 nút trước / tiếp)",
+  pd_prev_project: "Trang dự án game: nút dự án trước (cuối trang)", pd_next_project: "Trang dự án game: nút dự án tiếp",
+  pd_all_projects: "Trang dự án game: nút về trang Video Games (giữa 2 nút trước / tiếp)",
 };
 
 // ══════════════ helpers ══════════════
@@ -403,7 +405,7 @@ function viewSettings() {
         <span class="ico"><img src="../assets/icons/${k}.svg" alt=""></span><b>${name}</b>
         <input type="url" data-path="social.${k}" value="${esc(CFG.d.social[k])}" placeholder="${ph}"></div>`).join(""), "để trống = không hiện trên trang") +
     sec(`Liên kết nút Explore${HM}`, `<div class="grid3">
-      ${inp("links.otherProjects", "Khối “Other game projects”", { ph: "games.html", hint: "Để trống hoặc # = trang Video Games." })}${inp("links.artworks", "Khối “Other 2D Projects”", { ph: "art2d.html", hint: "Để trống hoặc # = tab thứ 2 của trang 2D Artwork (thẻ đầu tiên của khối)." })}${inp("links.about", "Section About", { ph: "#" })}</div>
+      ${inp("links.otherProjects", "Khối “Other game projects”", { ph: "games.html", hint: "Để trống hoặc # = trang Video Games." })}${inp("links.artworks", "Khối “Other 2D Projects”", { ph: "art2d.html", hint: "Để trống hoặc # = tab thứ 2 của trang 2D Artwork (thẻ đầu tiên của khối)." })}${inp("links.about", "Nút Read CV (file PDF)", { ph: "assets/cv/....pdf" })}</div>
       <span class="hint">Nút Explore của từng dự án chỉnh trong trang của dự án. Explore của 3D Blender / Personal Artworks tự mở đúng dự án / mục trên trang 3D / 2D Artwork.</span>`) +
     sec("Khác", `<div class="grid2">
       ${inp("background.rainWord", `Chữ của hiệu ứng mưa chữ${HM}`, { key: "background.rainWord" })}

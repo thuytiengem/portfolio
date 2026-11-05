@@ -12,7 +12,8 @@ import { initMenu, setBrand } from "../topbar.js";
 import { initPortfolioMenu } from "../portfolio-menu.js";
 import { renderContact } from "../sections/about.js";
 import { normalize } from "./model.js";
-import { renderProject, renderNotFound } from "./render.js";
+import { renderProject, renderNotFound, gamesPager } from "./render.js";
+import { loadGames } from "../games/model.js";
 
 // a folder name only (no "/", no "..")
 const validId = id => !!id && /^[^/\\]+$/.test(id) && id !== "." && id !== "..";
@@ -31,7 +32,7 @@ async function main() {
   skipNextIntro(true);
   $("#brand").addEventListener("click", () => skipNextIntro(false));   // only the logo replays the intro, Home does not
   const id = new URLSearchParams(location.search).get("id")?.trim();
-  const [config, project] = await Promise.all([loadJSON("web-config.json"), loadProject(id), loadFrames()]);
+  const [config, project, games] = await Promise.all([loadJSON("web-config.json"), loadProject(id), loadGames(), loadFrames()]);
   initI18n(config);
   // Portfolio dropdown: after initI18n (labels), before initMenu (phone menu)
   initPortfolioMenu($('#nav a[data-i18n="nav_portfolio"]'));
@@ -48,8 +49,12 @@ async function main() {
   createRain($("#rain"), { word: config.background?.rainWord || "thuytiengem" });
 
   const main = $("#project");
-  if (project) renderProject(project, main); else renderNotFound(main);
-  $$(".pd-sec", main).forEach(reveal);
+  if (project) {
+    renderProject(project, main);
+    const pager = gamesPager(games, id);
+    if (pager) main.append(pager);
+  } else renderNotFound(main);
+  $$(".pd-sec, .project-pager", main).forEach(reveal);
 
   renderContact(config);
   initMenu();

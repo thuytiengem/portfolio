@@ -32,7 +32,10 @@ async function main() {
   const linkOr = (v, page) => (v && v.trim() && v.trim() !== "#" ? v.trim() : page);
   $("#otherExplore").href = linkOr(links.otherProjects, "games.html");
   $("#otherArtExplore").href = linkOr(links.artworks, "art2d.html");
-  $("#aboutExplore").href = links.about || "#";
+  // Read CV: the PDF opens in a new tab (the browser's own viewer)
+  const cvBtn = $("#aboutExplore");
+  cvBtn.href = links.about || "#";
+  if (links.about && links.about.trim() !== "#") { cvBtn.target = "_blank"; cvBtn.rel = "noopener"; }
 
   // background letter rain — only runs while the hero is not covering the screen
   const rain = createRain($("#rain"), { word: config.background?.rainWord || "thuytiengem" });

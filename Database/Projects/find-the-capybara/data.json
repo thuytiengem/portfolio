@@ -19,16 +19,40 @@
   "genre": "PUZZLE",
   "roles": [
     {
-      "title": "Lead Artist"
+      "title": "Lead Artist",
+      "text": {
+        "en": [
+          "Assigned tasks to the art team and reviewed and approved animation outputs."
+        ],
+        "vi": [
+          "Phân công công việc cho team Art, kiểm tra và duyệt chất lượng đầu ra animation."
+        ]
+      }
     },
     {
-      "title": "UI/UX Designer"
+      "title": "UI/UX Designer",
+      "text": {
+        "en": [
+          "Designed the complete in-game UI system."
+        ],
+        "vi": [
+          "Thiết kế toàn bộ hệ thống giao diện trong game."
+        ]
+      }
     }
   ],
   "progression": [
     {
       "id": "ui-design",
       "name": "UI Design",
+      "text": {
+        "en": [
+          "Based on the Game Designer's concept of a space-traveling capybara exploring different parts of the world, I developed the UI around a spaceship-inspired visual theme. Below are selected UI designs I created for the game."
+        ],
+        "vi": [
+          "Dựa trên định hướng của Game Designer về chủ đề chú capybara du hành vũ trụ và khám phá thế giới, mình phát triển giao diện game theo concept không gian bên trong tàu du hành. Dưới đây là một số thiết kế UI do mình thực hiện cho dự án."
+        ]
+      },
       "images": [
         "loading-screen.jpg",
         "home.jpg",
